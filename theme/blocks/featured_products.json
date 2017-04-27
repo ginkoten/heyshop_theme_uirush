@@ -1,0 +1,59 @@
+{
+    "name": "blocks/featured_products",
+    "title": "推荐商品",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1d12ks1mdnh619b8s6a013-%E6%8E%A8%E8%8D%90%E5%95%86%E5%93%81.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A"
+            }, {
+                "__layout__": "B"
+            }, {
+                "__layout__": "C"
+            }, {
+                "__layout__": "D"
+            }, {
+                "__layout__": "E"
+            }, {
+                "__layout__": "F"
+            }, {
+                "__layout__": "G"
+            }, {
+                "__layout__": "H"
+            }, {
+                "__layout__": "I"
+            }]
+        },
+        {
+            "title": "标题(仅用于部分布局)",
+            "id":"title",
+            "type": "Text"
+        },
+        {
+            "title": "设置商品列表",
+            "id":"products",
+            "type": "Product",
+            "limit": 12
+        },
+        {
+            "type": "Mask",
+            "condition": "__layout__=='I'",
+            "children": [{
+                "type": "Number",
+                "id":"columns",
+                "title": "展示列数",
+                "min": 2,
+                "max": 4,
+                "step": 1
+            }]
+        }
+    ],
+    "settings_data": {
+        "__layout__": "H",
+        "title": "Featured Products"
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

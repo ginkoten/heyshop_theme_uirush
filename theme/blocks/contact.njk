@@ -1,0 +1,43 @@
+
+
+
+{% component dataEditable="contact" %}
+  <div class="contact">
+    <div class="container--contact">
+        <div class="grid--full grid--rev">
+            <div class="grid__item">
+              <h1 class="text-center">CONTACT</h1>
+              {% if settings_data.paragraph %}
+                <p class="contact__paragraph text-center">{{settings_data.paragraph}}</p>
+              {% endif %}
+            </div>
+
+            <div class="grid__item small-up--col-1-2 contact__info">
+            {% if settings_data.image %}
+                <div class="illustration" style="background-image:url('{{settings_data.image|optimize(1000)}}');background-size:cover; width: 370px;padding-top:230px; background-repeat:no-repeat;  max-width: 100%;"></div>
+            {% endif %}
+                <div class="contact-info highlight-text-light">
+                    <h4 class="small--underline small--text-center with-top-margin">ADDRESS</h4>
+                    <span><i class="fa fa-map-marker highlight-primary"></i> {{shop.address}}</span>
+                </div>
+                <div class="contact-info highlight-text-light">
+                    <h4 class="small--underline small--text-center with-top-margin">CONTACT</h4>
+                    <span><i class="fa fa-phone highlight-primary"></i> {{shop.customer_phone}}</span>
+                    <span class="small--hidden">&nbsp;&nbsp;</span>
+                    <span><i class="fa fa-envelope highlight-primary"></i> {{shop.customer_email}}</span>
+                </div>
+
+            </div>
+            <div class="grid__item small-up--col-1-2 contact__form">
+                <!--contact form-->
+                <h4 class="small--underline small-up--hidden small--text-center with-top-margin">LEAVE A MESSAGE</h4>
+                {{ settings_data.custom_form | generate_form }}
+            </div>
+
+        </div>
+    </div>
+  </div>
+{% script %}
+{% endscript %}
+
+{% endcomponent %}

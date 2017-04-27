@@ -1,0 +1,101 @@
+{
+    "name": "blocks/header",
+    "title": "网页头部",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0ol6o1fnq1i4tqh8n5c01-header.jpg",
+    "settings_schema": [{
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A"
+            }, {
+                "__layout__": "B"
+            }, {
+                "__layout__": "C"
+            }, {
+                "__layout__": "D"
+            }, {
+                "__layout__": "E"
+            }, {
+                "__layout__": "F"
+            }]
+        },
+        {
+            "title": "头部导航",
+            "id": "menu",
+            "global": true
+        },
+        {
+            "title": "网站头部配色",
+            "id": "header_color",
+            "global": true
+        },
+        {
+            "title": "头部导航背景是否半透明",
+            "id": "has_opacity",
+            "type": "Selection",
+            "options": [{
+                "text": "半透明",
+                "value": true
+            }, {
+                "text": "不透明",
+                "value": false
+            }]
+        },
+        {
+            "type": "Mask",
+            "condition": "header_color == 'colored'",
+            "children": [{
+                "type": "Color",
+                "id": "header_colored_text",
+                "title": "主配色头部文本"
+            }]
+        },
+        {
+            "title": "网站Logo",
+            "id": "header_image",
+            "global": true
+        },
+        {
+            "title": "网站Logo高度",
+            "id": "header_image_height",
+            "type": "Number",
+            "min": 32,
+            "step": 1,
+            "unit": "像素"
+        },
+        {
+            "title": "导航条是否显示下边框(浅色有效)",
+            "id": "has_border",
+            "type": "Selection",
+            "options": [{
+                "text": "显示",
+                "value": true
+            }, {
+                "text": "不显示",
+                "value": false
+            }]
+        },
+        {
+            "title": "菜单条目间是否显示分割点",
+            "id": "nav_has_dot",
+            "type": "Selection",
+            "options": [{
+                "text": "显示",
+                "value": true
+            }, {
+                "text": "不显示",
+                "value": false
+            }]
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "header_colored_text": "rgba(255,255,255,1)",
+        "has_opacity": false,
+        "has_border": false,
+        "nav_has_dot": false,
+        "header_image_height": 50
+    },
+    "metafield": {
+        "category": "header"
+    }
+}

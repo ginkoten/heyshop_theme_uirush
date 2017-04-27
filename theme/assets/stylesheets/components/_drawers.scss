@@ -1,0 +1,330 @@
+
+/*============================================================================
+  #Drawers
+==============================================================================*/
+.js-drawer-open {
+  overflow: hidden;
+}
+
+.drawer {
+  @include transform(translate3d(0, 0, 0));
+  will-change: transform;
+  // display: none;
+  @include position(fixed, 0 0 0 0);
+  height: 100%;
+  width: 100%;
+  z-index: $zindex-drawer;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  @include transition(all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1));
+  display: none;
+  .js-drawer-open & {
+    display: block;
+  }
+}
+
+// .drawer--show {
+//     display: block;
+// }
+
+$drawerNavWidth: 300px;
+
+.drawer__body {
+  //width: $drawerNavWidth;
+  padding: 0 ($gutter / 2) ($gutter / 2);
+  height: 100%;
+  //max-width: 95%;
+  color: $color-drawer-text;
+  opacity: 0;
+  @include transition(opacity 0.3s ease-in-out);
+  &.drawer__body--show {
+    opacity: 1;
+    overflow-y: auto;
+  }
+  // background-color: $color-drawer-bg;
+  a {
+    color: $color-drawer-text;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  input,
+  textarea {
+    border-color: $color-drawer-border;
+  }
+
+  .mobile-nav {
+    // Negative of .drawer left/right padding for full-width link tap area
+    margin: (-$gutter / 2) (-$gutter / 2) 0 (-$gutter / 2);
+  }
+}
+
+.drawer--left {
+  @include transform(translate3d(-100%, 0, 0));
+
+  .drawer__body {
+    border-right: 1px solid $color-drawer-border;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .js-drawer-open-left & {
+    @include transform(translate3d(0, 0, 0));
+
+    .lt-ie9 & {
+      left: 0;
+    }
+  }
+}
+
+.is-moved-by-drawer {
+  @include transform(translate3d(0, 0, 0));
+  will-change: transform;
+
+  @include transition(all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1));
+
+  .js-drawer-open-left & {
+    @include transform(translate3d($drawerNavWidth, 0, 0));
+    .drawer--left {
+        @include transform(translate3d(0, 0, 0));
+    }
+  }
+
+  .js-drawer-open-right & {
+    @include transform(translate3d(-$drawerNavWidth, 0, 0));
+    .drawer--right {
+        @include transform(translate3d(0, 0, 0));
+    }
+  }
+}
+
+.drawer__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  display: table;
+  padding-top: 50px;
+  height: 70px;
+  width: 100%;
+  margin-bottom: $gutter * 2 - 40px;
+  .drawer__title,
+    .drawer__close {
+      color: white;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .drawer__title {
+      width: 100%;
+      a {
+        display: block;
+      }
+      img {
+        display: block;
+        height: 40px;
+      }
+    }
+    .drawer__close {
+  width: 1%;
+  text-align: center;
+  font-size: em(14px);
+}
+
+.drawer__close button {
+  position: relative;
+  right: -20px;
+  height: 100%;
+  padding: 0 20px;
+  color: white;
+  font-size: 1.4em;
+}
+}
+
+
+
+
+
+.navigation {
+    @include position(fixed, 0 0 0 0);
+    width: 100%;
+    height: 100%;
+    z-index: $zindex-drawer;
+}
+
+
+#drawer__canvas {
+  @include position(fixed, 0 0 0 0);
+  width: 100%;
+  height: 100%;
+}
+
+// override mobile nav style
+.drawer__body {
+    .mobile-nav {
+        margin: 0;
+        padding-top: 110px;
+    }
+    .mobile-nav > .mobile-nav__item {
+        background-color: transparent;
+    }
+    .mobile-nav__item::after {
+        content: initial;
+    }
+    .mobile-nav__item {
+        text-align: center;
+    }
+    .mobile-nav__item a {
+        display: inline;
+        color: white;
+        font-weight: 500;
+        letter-spacing: 1px;
+        font-size: em(24px);
+        line-height: 2;
+        padding: 0;
+        &:hover, &:focus {
+            opacity: 0.7;
+        }
+    }
+    .mobile-nav__sublist {
+        visibility: visible;
+        overflow: auto;
+        max-height: 100%;
+        .mobile-nav__item a {
+            line-height: 2.4;
+            letter-spacing: 0.8px;
+            font-size: em(16px);
+        }
+    }
+}
+
+/////////////// Drawer for product categories //////////////////////////////////
+.drawer--category {
+  @include transform(translate3d(0, 0, 0));
+  will-change: transform;
+  // display: none;
+  @include position(fixed, 0 0 0 0);
+  height: 100%;
+  width: 100%;
+  z-index: $zindex-drawer;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  @include transition(all 0.4s cubic-bezier(0.46, 0.01, 0.32, 1));
+  .js-drawer-category-open & {
+    display: block;
+  }
+}
+
+.drawer--category__body {
+  width: $drawerNavWidth;
+  padding: 0 ($gutter / 2) ($gutter / 2);
+  min-height: 100%;
+  max-width: 95%;
+  color: $color-drawer-text;
+  background-color: $color-drawer-bg;
+
+  a {
+    color: $color-drawer-text;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  input,
+  textarea {
+    border-color: $color-drawer-border;
+  }
+
+  .mobile-nav {
+    // Negative of .drawer left/right padding for full-width link tap area
+    margin: (-$gutter / 2) (-$gutter / 2) 0 (-$gutter / 2);
+  }
+
+  .drawer--category__header {
+      display: table;
+      height: 70px;
+      width: 100%;
+      margin-bottom: $gutter / 2;
+      border-bottom: 1px solid $color-drawer-border;
+    }
+
+    .drawer__title,
+    .drawer__close {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .drawer__title {
+      width: 100%;
+      a {
+        display: block;
+      }
+      img {
+        display: block;
+        height: 40px;
+      }
+    }
+
+    .drawer__close {
+      width: 1%;
+      text-align: center;
+      font-size: em(18px);
+    }
+
+    .drawer__close button {
+      position: relative;
+      right: -20px;
+      height: 100%;
+      padding: 0 20px;
+      color: inherit;
+      font-size: 1.4em;
+    }
+}
+
+
+.drawer--right--category {
+  @include transform(translate3d(100%, 0, 0));
+
+  .drawer--category__body {
+    border-left: 1px solid $color-drawer-border;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .js-drawer-open-right & {
+    @include transform(translate3d(0, 0, 0));
+
+    .lt-ie9 & {
+      left: 0;
+    }
+  }
+}
+
+
+.account-center {
+    display: block;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: solid 2px #fff;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    text-align: center;
+    margin: 0 auto 15px;
+    i {
+        color: #fff;
+        font-size: 20px;
+        line-height: 28px;
+        margin-left: 1px;
+    }
+}

@@ -1,0 +1,31 @@
+{# 1. 图片全图，文字在上
+2. 图片全图，文字在下
+3. 图片全图，文字在左
+4. 文字在上，下方小图
+5. 文字在左，右方小图
+6. 文字在右，左方小图
+7. 头像 + 下方文字
+8. 文字在左，右方全屏
+9. 文字在右，左方全屏 #}
+{% set customizeFlag = false %}
+{% if settings_data.colorSelection == "customize" %}
+  {% set customizeFlag = true %}
+{% endif %}
+
+{% component %}
+  <div class="text-image--full text-position--{{settings_data.textPosition or up}} small--hidden" style="{{ "background-color:"+settings_data.bgColor+";" if customizeFlag }}">
+    <img src="{{settings_data.image|optimize(2000)}}"></img>
+    <div class="text-image__caption text-center" heyshop-animation="{{settings_data.textAnimation}}">
+      <h1 class="text-image__title" style="{{ "color:"+settings_data.titleColor+";" if customizeFlag }}">{{settings_data.title}}</h1>
+      <p class="text-image__paragraph small--hidden" style="{{ "color:"+settings_data.textColor+";" if customizeFlag }}">{{settings_data.text}}</p>
+    </div>
+  </div>
+
+  <div class="text-image--full text-position--{{settings_data.textPosition or up}} small-up--hidden image-wrapper--originalsize">
+    <div class="img" style="background-image: url({{settings_data.image|optimize(2000)}}); min-height: {{settings_data.imageHeight or 300}}px;"></div>
+    <div class="text-image__caption text-center" heyshop-animation="{{settings_data.textAnimation}}">
+      <h1 class="text-image__title" style="{{ "color:"+settings_data.titleColor+";" if customizeFlag }}">{{settings_data.title}}</h1>
+      <p class="text-image__paragraph small--hidden" style="{{ "color:"+settings_data.textColor+";" if customizeFlag }}">{{settings_data.text}}</p>
+    </div>
+  </div>
+{% endcomponent %}

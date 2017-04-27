@@ -1,0 +1,8 @@
+{% component %}
+    {# <h1 class="text-center">{{page.title}}</h1> #}
+    {% set regExp = r/img.*/gi %}
+    {% if page.body_html|striptags(true)|trim != "" or regExp.test(page.body_html) %}
+        <article class="rte">{{page.body_html|sanitize|safe}}</article>
+    {% endif %}
+
+{% endcomponent %}

@@ -1,0 +1,102 @@
+{
+    "name": "blocks/image",
+    "icon": "",
+    "title": "单张图片横幅",
+    "settings_schema": [{
+            "type": "Boolean",
+            "id": "image_desktop_show",
+            "title": "PC端是否显示图片"
+        },
+        {
+            "type": "Mask",
+            "condition": "image_desktop_show == true",
+            "children": [{
+                    "type": "Image",
+                    "id": "image_desktop",
+                    "title": "PC端图片"
+                },
+                {
+                    "type": "Selection",
+                    "id": "image_desktop_display",
+                    "title": "PC端图片显示方式",
+                    "options": [
+                        { "text": "按原比例显示整张图片", "value": "front" },
+                        { "text": "图片适应板块尺寸", "value": "background" }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Mask",
+            "condition": "image_desktop_show == true && image_desktop_display == 'background'",
+            "children": [{
+                "type": "Text",
+                "id": "image_desktop_proportion",
+                "title": "PC端宽度与高度比例(建议在0.1到10之间)"
+            }, {
+                "type": "Number",
+                "id": "image_desktop_minheight",
+                "min": 100,
+                "max": 2000,
+                "step": 1,
+                "title": "PC端图片最小高度(像素)"
+            }]
+        },
+        {
+            "type": "Boolean",
+            "id": "image_mobile_show",
+            "title": "手机端是否显示图片"
+        },
+        {
+            "type": "Mask",
+            "condition": "image_mobile_show",
+            "children": [{
+                "type": "Boolean",
+                "id": "image_mobile_customize",
+                "title": "手机端是否需要自定义设置(否则设置与PC端相同)"
+            }]
+        },
+        {
+            "type": "Mask",
+            "condition": "image_mobile_show && image_mobile_customize",
+            "children": [{
+                    "type": "Image",
+                    "id": "image_mobile",
+                    "title": "手机端图片"
+                },
+                {
+                    "type": "Selection",
+                    "id": "image_mobile_display",
+                    "title": "手机端图片显示方式",
+                    "options": [
+                        { "text": "按原比例显示整张图片", "value": "front" },
+                        { "text": "图片适应板块尺寸", "value": "background" }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Mask",
+            "condition": "image_mobile_show == true && image_mobile_customize && image_mobile_display == 'background'",
+            "children": [{
+                "type": "Text",
+                "id": "image_mobile_proportion",
+                "title": "手机端宽度与高度比例(建议在0.1到10之间)"
+            }, {
+                "type": "Number",
+                "id": "image_mobile_minheight",
+                "min": 100,
+                "max": 2000,
+                "step": 1,
+                "title": "手机端图片最小高度(像素)"
+            }]
+        }
+    ],
+    "settings_data": {
+        "image_desktop_show": true,
+        "image_desktop": "https://up.img.heidiancdn.com/o_1b95pau2v1v081p25k5qm4i1hc70colletcion%20details.svg"
+    },
+    "metafield": {
+        "category": "image"
+    }
+}

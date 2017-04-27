@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="{{page.description}}">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta http-equiv="cleartype" content="on">
+
+    <title>{{page.title}}</title>
+
+    <link rel="icon" sizes="192x192" href="{{(shop.favicon or shop.logo)|optimize(640)}}">
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/justifiedGallery/3.6.3/css/justifiedGallery.min.css">
+    <link rel="stylesheet" href={{ 'stylesheets/vendor/animate.min.css' | global_asset_url }}>
+    <link rel="stylesheet" href={{ 'stylesheets/vendor/font-awesome.min.css' | global_asset_url }}>
+    <link rel="stylesheet" href={{ 'stylesheets/vendor/swiper.min.css' | asset_url }}>
+
+    {# <link rel="stylesheet" href={{ 'stylesheets/styles.css.njk' | asset_url }}> #}
+
+    {% include __STYLES__ %}
+
+  </head>
+  <body id="page-{{page.page_type}}">
+    {# {% block content %}{% endblock %} #}
+    {% include __COMPONENTS__ %}
+
+    {% include __HEYSHOPSDK__ %}
+    <script>
+      (function() {
+        function removeLoading() {
+          $('.mobile_loading').addClass('hidden');
+        }
+        if (HeyShop.ComponentsReady) {
+          removeLoading();
+        } else {
+          HeyShop.on('ComponentsReady', removeLoading);
+        }
+        setTimeout(removeLoading, 5000);
+      })();
+    </script>
+
+    <script src="//cdn.bootcss.com/justifiedGallery/3.6.3/js/jquery.justifiedGallery.min.js"></script>
+    <script src={{ 'javascripts/vendor/underscore.min.js' | global_asset_url }}></script>
+    <script src={{ 'javascripts/vendor/moment.min.js' | global_asset_url }}></script>
+    <script src={{ 'javascripts/vendor/moment-with-locales.min.js' | global_asset_url }}></script>
+    <script src={{ 'javascripts/vendor/swiper.min.js' | asset_url }}></script>
+    <script src={{ 'javascripts/vendor/masonry.pkgd.min.js' | asset_url }}></script>
+    <script src={{ 'javascripts/vendor/jquery.simplePagination.min.js' | global_asset_url }}></script>
+    <script src={{ 'javascripts/theme.min.js' | asset_url }}></script>
+
+    {% include __FINETUNING__ ignore missing %}
+
+  </body>
+</html>

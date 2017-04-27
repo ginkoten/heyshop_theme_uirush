@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+.idea/*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
+node_modules
+
+# Debug log from npm
+npm-debug.log
+
+# Local settings
+settings_local.js
+
+# Built js and css
+theme/assets/javascripts/theme.min.js
+theme/assets/stylesheets/*.css.njk

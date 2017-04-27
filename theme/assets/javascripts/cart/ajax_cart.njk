@@ -1,0 +1,42 @@
+<form method="get" action="/search/" class="search-box">
+    <input type="text" placeholder="搜索所有商品" name="q">
+    <button class="btn--link"><i class="icon-search"></i></button>
+</form>
+<div class="ajax_cart_lines_wrapper">
+    {% for item in cart.items %}
+    <div class="ajax_cart__row">
+        <div class="ajax_cart__image">
+            <div class="img" style="background-image:url('{{item.variant.image|optimize(320)}}')"></div>
+        </div>
+        <div>
+            <div class="ajax_cart__title">{{item.product.title}}</div>
+            <div class="ajax_cart__options">
+                <small>{{item.variant.options|join(' - ', 'value')}}</small>
+            </div>
+            <div class="">
+                <span>¥ </span>
+                <span class="ajax_cart__price">{{item.variant.price}}</span>
+                <span> （{{item.quantity}} 件）</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="ajax_cart__footer">
+    <span>前去购物车查看更多商品</span>
+    <a class="btn btn--full btn-checkout" href="/cart">前去结算</a>
+    <div class="text-center">
+        <div class="js-login-hide">
+            <i class="icon-profile" style="font-size:1.1em;"> </i>
+            <a href="/account/login">登录</a>
+            <span> | </span>
+            <a href="/account/register">注册</a>
+        </div>
+        <div class="js-login-show">
+            <i class="icon-profile" style="font-size:1.1em;"> </i>
+            <a href="/account">个人中心</a>
+            <span> | </span>
+            <a class="js-logout" href="javascript:void(0);">登出</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+
+/*==================================================
+  #Configs
+==================================================*/
+$viewport-increment: 1px !default;
+
+$small: 480px !default;
+$medium: 768px !default;
+$large: 1180px !default;
+
+$post-small: $small + $viewport-increment;
+$pre-medium: $medium - $viewport-increment;
+$post-medium: $medium + $viewport-increment;
+$pre-large: $large - $viewport-increment;
+$post-large: $large + $viewport-increment;
+
+$breakpoints: (
+  'small' '(max-width: #{$small})', // <= 480px
+  'small-up' '(min-width: #{$post-small})', // > 480
+
+  'medium' '(min-width: #{$post-small}) and (max-width: #{$medium})', // (480, 768]
+  'medium-down' '(max-width: #{$medium})', // <= 768
+  'medium-up' '(min-width: #{$post-medium})', // > 768
+
+  'large' '(min-width: #{$post-medium}) and (max-width: #{$large})', // (768, 1180]
+  'large-up' '(min-width: #{$post-large})' // > 1180
+);
+$breakpoint-has-widths: ('small', 'small-up', 'medium', 'medium-down', 'medium-up', 'large', 'large-up');
+
+/*==================================================
+  #Layouts
+==================================================*/
+
+$site-width: 1180px !default;
+$gutter: 30px !default;
+$grid-gutter: 30px !default; // can be a %, but nested grids will have smaller margins because of it
+$radius: 0px !default;
+
+// Z-index
+$zindex-header: 90 !default;
+$zindex-navbar: 100 !default;
+$zindex-nav-dropdowns: 200 !default;
+$zindex-drawer: 300 !default;
+$zindex-modal: 400 !default;
+
+/*==================================================
+  #Colors
+==================================================*/
+
+$color-primary: color('color-primary') !default;
+
+$color-btn-primary: color('color-primary') !default;
+$color-btn-primary-hover: color('color-primary', lighten 20%) !default;
+$color-btn-primary-active: color('color-primary', lighten 30%) !default;
+$color-btn-primary-text: color('color-btn-text') !default;
+
+$color-btn-secondary: color('color-secondary') !default;
+$color-btn-secondary-hover: color('color-secondary', lighten 20%) !default;
+$color-btn-secondary-active: color('color-secondary', lighten 30%) !default;
+$color-btn-secondary-text: color('color-btn-text') !default;
+
+// Text link colors
+$color-link: color('color-link') !default;
+$color-link-hover: color('color-link', lighten 20%) !default;
+
+// Text colors
+$color-text: color('color-text') !default;
+$color-text-darker: color('color-text', darken 10%) !default;
+$color-text-lighter: color('color-text', lighten 40%) !default;
+$color-text-light-white: color('color-text', lighten 60%) !default;
+$color-text-light-alpha: color('color-text', lighten 60%, alpha 0.8) !default;
+
+// Backgrounds
+$color-bg: color('color-bg') !default;
+$color-primary-alpha: color('color-primary', alpha 0.8) !default;
+
+// Border (or split line) colors
+// $color-border: color('color-text', lighten 90%) !default;
+$color-border: color('color-text', alpha 0.2) !default;
+
+// Utilities colors
+$color-disabled-bg: color('color-bg', darken 10%) !default;
+$color-disabled-text: color('color-text', lighten 50%) !default;
+$color-disabled-border: color('color-bg', darken 10%) !default;
+
+$color-error-text: #d02e2e !default;
+$color-error-bg: #fff6f6 !default;
+$color-success-text: #56ad6a !default;
+$color-success-bg: #ecfef0 !default;
+
+// Nav
+$color-nav-text: $color-link !default;
+$color-nav-text-hover: color('color-link', lighten 40%) !default;
+$color-nav-bg: $color-bg !default;
+
+// Drawer
+$color-drawer-text: $color-text !default;
+$color-drawer-bg: $color-bg !default;
+$color-drawer-border: $color-border !default;
+
+/*==================================================
+  #Fonts
+==================================================*/
+
+$font-weight-light: 200 !default;
+$font-weight-regular: 400 !default;
+$font-weight-bold: 600 !default;
+
+$font-family-sans-serif:  'Bal10',
+                          'PingFang SC', 'Hiragino Sans GB', 'Hiragino Sans GB W3', 'Source Han Sans',
+                          'Noto Sans CJK Sc', 'Microsoft YaHei', 'Microsoft Jhenghei',
+                          'Avenir', 'Helvetica Neue', 'Arial', sans-serif !default;
+
+$font-family-serif:       'Times New Roman', Georgia, Times, serif !default;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace:   Menlo, Monaco, Consolas, 'Courier New', monospace !default;
+$font-family-base:        $font-family-sans-serif !default;
+
+$font-size-base:          14px !default;
+$font-size-large:         18px !default;
+$font-size-small:         12px !default;
+
+$font-size-h1:            30px !default;
+$font-size-h2:            24px !default;
+$font-size-h3:            20px !default;
+$font-size-h4:            18px !default;
+$font-size-h5:            14px !default;
+$font-size-h6:            12px !default;
+
+$line-height-base:        (24 / 14) !default;
+$line-height-computed:    24px !default;
+
+/*==================================================
+  #Components
+==================================================*/
+$radius: 0px !default;
+
+$btn-border-radius-base:  $radius !default;
+$btn-border-radius-large: $radius !default;
+$btn-border-radius-small: $radius !default;
+
+
+$font-weight-product-single-title: 300;
+
+$font-weight-product-list-title: normal;
+$font-weight-product-list-price: 300 !default;
+$font-size-product-list-title: 16px !default;
+$font-size-product-list-price: 16px !default;
+$font-size-product-list-compare_at_price: 14px !default;

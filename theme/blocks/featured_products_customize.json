@@ -1,0 +1,64 @@
+{
+    "name": "blocks/featured_products_customize",
+    "title": "推荐商品(自定义封面)",
+    "icon": "http://up.img.heidiancdn.com/o_1b529fqf61tj8va51pctu6vee20rush-customize-featured-products.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "cover_left": false
+            }, {
+                "__layout__": "B",
+                "cover_left": true
+            }]
+        },
+        {
+            "title": "标题",
+            "id":"block_title",
+            "type": "Text"
+        },
+        {
+            "title": "链接地址",
+            "id":"block_link",
+            "type": "Text"
+        },
+        {
+            "title": "自定义封面",
+            "id":"cover",
+            "type": "Image"
+        },
+        {
+            "title": "悬浮效果",
+            "id":"effect",
+            "type": "Selection",
+            "options": [{
+                "text": "默认",
+                "value": "default"
+            },{
+                "text": "白色遮罩",
+                "value": "light"
+            },{
+                "text": "黑色遮罩",
+                "value": "dark"
+            }]
+        },
+        {
+            "title": "设置商品列表",
+            "id":"products",
+            "type": "Product",
+            "limit": 4
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "cover_left": false,
+        "block_title": "这是一段标题",
+        "block_link": "/search",
+        "cover": "http://up.img.heidiancdn.com/o_1b50kc3so1sii1vlk1n8kljdqqh02c2b82776c40397c785a412abc8cfd40.jpg",
+        "effect": "light"
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

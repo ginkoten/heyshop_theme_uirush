@@ -1,0 +1,26 @@
+{% component %}
+
+  <div class="logos {% if settings_data.section_title %}logos--hastitle{% endif %}" style="font-size: {{ settings_data.icon_height or 50 }}px;
+  {% if settings_data.colorSelection == "customize" %}
+    color: {{settings_data.textColor or '#000'}};
+    background-color: {{settings_data.bgColor or 'transparent'}};
+  {% endif %}
+
+  ">
+  {% set width_percent = settings_data.width_percent|int or 80 %}
+  {% if width_percent < 50 %}
+    {% set width_percent = 50 %}
+  {% endif %}
+  {% if width_percent > 100 %}
+    {% set width_percent = 100 %}
+  {% endif %}
+    <div class="container">
+    {% if settings_data.section_title %}
+      <div class="logos__title text-center" {% if settings_data.colorSelection == "customize" %}style="color: {{settings_data.textColor or '#000'}};" {% endif %}>
+        {{ settings_data.section_title }}
+      </div>
+    {% endif %}
+      <div class="logos__icongroups text-center" style="width: {{width_percent}}%; margin-left: auto; margin-right: auto;">{% for item in settings_data.icons %}<a href="{{item.link or 'javascript:void(0);'}}" class="logos__iconlink needsclick">{% if item.image %}<img src="{{item.image}}" alt="{{item.name}}" class="logos__iconimage"></img>{% else %}<div class="logos__iconcaption"  {% if settings_data.colorSelection == "customize" %}style="color: {{settings_data.textColor or '#000'}};" {% endif %}>{{item.name}}</div>{% endif %}</a>{% endfor %}</div></div>
+  </div>
+
+{% endcomponent %}

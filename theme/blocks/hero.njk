@@ -1,0 +1,376 @@
+
+{# ------------------------------ Cart and User ------------------------------ #}
+{% macro heroCartWrapper(settings, className, text_color) %}
+    <div class="cart-wrapper clearfix {{className}}">
+        <button class="shopping-cart-wrapper js-open-ajaxCart bracket" style="font-weight: 500;letter-spacing: 1px;color: {{ text_color or '#fff'}};">
+            <i class="icon-shopping-cart"></i> <small class="cart-count-wrapper">(<span class="js-cart-count">0</span>)</small>
+        </button>
+        {% if logo_left %}
+            {{ barsWrapper(settings.collapsed, 'medium-up--hidden', text_color) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro barsWrapper(collapsed, position, bars_className, text_color) %}
+    {% if collapsed %}
+        <button class="js-open-drawer nav__btn pull-{{ position }}" style="color: {{ text_color or '#ffffff' }}">
+            <i class="icon-menu"></i>
+        </button>
+    {% else %}
+        <button class="js-open-drawer nav__btn pull-{{ position }} {{ bars_className }}" style="color: {{ text_color or '#ffffff' }}">
+            <i class="icon-menu"></i>
+        </button>
+    {% endif %}
+{% endmacro %}
+
+{# -------------------------- Logo in affix navbar -------------------------- #}
+{% macro HeroAffixLogo(header_image, image_height, title, logo_className) %}
+    <div class="navbar__header {{logo_className}}">
+        {% if header_image %}
+            <a href="/" style="display: block;" class="logo__image">
+                <img src="{{header_image|optimize(320)}}" style="height: {{ image_height or 32 }}px;"/>
+            </a>
+        {% else %}
+            <a href="/" class="logo__title">{{title}}</a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# ------------------------------ Main Navbar ------------------------------ #}
+{# {% macro heroAffixNavbar(menuitems, header_image, title, settings, settings_data) %}
+    <ul class="site-nav site-nav--{{settings.nav_position}} {{ 'invisible' if settings.collapsed }}">
+        {% for item in menuitems %}
+            {% if item.links and item.links.length %}
+                <li class="site-nav--has-dropdown text-center small--hidden">
+                    <a class="site-nav__link level-1" href="{{item.url}}"
+                       style="color: {{ settings_data.text_color or '#fff'}};">{{item.title}}</a>
+                    <ul class="site-nav__dropdown">
+                        {% for subitem in item.links %}
+                            <li><a class="site-nav__link" href="{{subitem.url}}">{{subitem.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="medium-down--hidden">
+                    <a class="site-nav__link level-1 has-underline" href="{{item.url}}"
+                       style="color: {{ settings_data.text_color or '#fff'}};">
+                       <span class="site-nav__link--underline">{{item.title}}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if settings.nav_has_dot and not loop.last %}
+                <li class="medium-down--hidden" style="color: {{ settings_data.text_color or '#fff'}};">&middot;</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %} #}
+
+{# ------------------------------ Main Navbar ------------------------------ #}
+
+{% macro heroAffixNavbar(menuitems, header_image, title, settings, nav_has_dot, text_color, navbar_className) %}
+    <ul class="site-nav {{ navbar_className }} {{ 'invisible' if settings.collapsed }}">
+        {% for item in menuitems %}
+            {% if item.links and item.links.length %}
+                <li class="site-nav--has-dropdown text-center small--hidden">
+                    <a class="site-nav__link level-1" href="{{item.url}}"
+                       style="color: {{ text_color or '#fff' }}">{{item.title}}</a>
+                    <ul class="site-nav__dropdown">
+                        {% for subitem in item.links %}
+                            <li><a class="site-nav__link" href="{{subitem.url}}">{{subitem.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="small--hidden">
+                    <a class="site-nav__link level-1 has-underline" href="{{item.url}}"
+                       style="color: {{ text_color or '#fff' }}">
+                       <span class="site-nav__link--underline">{{item.title}}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if nav_has_dot and not loop.last %}
+                <li class="small--hidden" style="color: {{ stext_color or '#fff' }}">&middot;</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+
+{# ------------------------------ Hero Navbar ------------------------------ #}
+
+{% macro heroNavbar(settings, results, header_image, settings_customize) %}
+<div class="site-header small--hidden">
+        <div class="{{'text-center' if settings.logo_position == 'center' }}">
+            <div class="container--full">
+                <div class="js-affix row--nav-cart" style="height: 54px;">
+                    <nav class="navbar clearfix">
+                        {% if settings.logo_left %}
+                            {{HeroAffixLogo(header_image, settings_data.header_image_height, title, 'pull-left')}}
+                            {{barsWrapper(settings.collapsed, 'right', 'medium-up--hidden')}}
+                            {{heroCartWrapper(settings, 'pull-right', settings_customize.text_color)}}
+                        {% else %}
+                            {{HeroAffixLogo(header_image, settings_data.header_image_height, title, 'absolute-center')}}
+                            {{barsWrapper(settings.collapsed, 'left', 'large-up--hidden')}}
+                            {{heroCartWrapper(settings, 'pull-right', settings_customize.text_color)}}
+                        {% endif %}
+
+                        {% if settings.nav_position == 'right' %}
+                            {{heroAffixNavbar(results, header_image, shop.title, settings, settings_data.nav_has_dot, settings_data.text_color, 'pull-right medium-down--hidden')}}
+                        {% elif settings.nav_position == 'left' %}
+                            {% if settings.logo_left %}
+                                {{heroAffixNavbar(results, header_image, shop.title, settings, settings_data.nav_has_dot, settings_data.text_color, 'pull-left medium-down--hidden')}}
+                            {% else %}
+                                {{heroAffixNavbar(results, header_image, shop.title, settings, settings_data.nav_has_dot, settings_data.text_color, 'pull-left large--hidden medium-down--hidden')}}
+                            {% endif %}
+                        {% else %}
+                            {{heroAffixNavbar(results, header_image, shop.title, settings, settings_data.nav_has_dot, settings_data.text_color, 'absolute-center medium-down--hidden')}}
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% component %}
+    {% asyncset results = menu.query(global.menu) %}
+    {% set header_image = settings_data.header_image or shop.theme.settings_data.header_image %}
+    {% if settings_data.__layout__ == "A" %}
+        {% set data_layout = {
+                layout_name: "A",
+                nav_position: "left",
+                pagination_style: "lines",
+                link_btn_outline: false,
+                link_btn_radius: false,
+                logo_left: true,
+                collapsed: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "B" %}
+        {% set data_layout = {
+                layout_name: "B",
+                nav_position: "left",
+                link_btn_outline: false,
+                link_btn_radius: true,
+                logo_left: false,
+                collapsed: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "D" %}
+        {% set data_layout = {
+                layout_name: "D",
+                nav_position: "right",
+                pagination_style: "tab",
+                link_btn_outline: true,
+                link_btn_radius: true,
+                logo_left: true,
+                collapsed: true
+            }
+        %}
+    {% elif settings_data.__layout__ == "E" %}
+        {% set data_layout = {
+                layout_name: "E",
+                nav_position: "left",
+                pagination_style: "bullets",
+                link_btn_outline: false,
+                link_btn_radius: true,
+                logo_left: false,
+                collapsed: true
+            }
+        %}
+    {% else %}
+        {% set data_layout = {
+                layout_name: "C",
+                collapsed: true,
+                nav_position: "left",
+                pagination_style: "lines",
+                link_btn_outline: true,
+                link_btn_radius: false,
+                logo_left: false,
+                collapsed: false
+            }
+        %}
+    {% endif %}
+
+  <div class="theme-hero">
+
+    <div class="js-hero-swiper swiper-container">
+      <div class="swiper-wrapper">
+          {% for item in settings_data.carousel %}
+            <div class="swiper-slide carousel__item">
+              {% if settings_data.customize_height %}
+                  <div class="img small--hidden" style="width: 100vw;height: {{settings_data.height_web or 600}}px; background-image: url('{{item.image|optimize(2000)}}');">
+                  </div>
+                  <div class="img small-up--hidden" style="width: 100vw;height: {{settings_data.height_mobile or 360}}px;background-image: url('{{(item.image_small or item.image)|optimize(1200)}}');">
+                  </div>
+              {% else %}
+                  <div class="img small--hidden" style="width: 100vw;height: 100vh; background-image: url('{{item.image|optimize(2000)}}');">
+                  </div>
+                  <div class="img small-up--hidden" style="width: 100vw;height: 100vh;background-image: url('{{(item.image_small or item.image)|optimize(1200)}}');">
+                  </div>
+              {% endif %}
+
+              <div class="carousel__caption caption-layout--{{data_layout.layout_name}} {{ 'has-border-top' if (item.video_title or item.video_description) }}" style="z-index: 1; color: {{settings_data.text_color or '#fff' }}">
+                {% if item.carousel_title and data_layout.pagination_style != 'tab' %}
+                  <h2 class="caption__title" style="color: {{settings_data.text_color or '#fff'}};">{{item.carousel_title}}</h2>
+                {% endif %}
+
+                {% if item.carousel_description %}
+                  <div class="caption__description small--hidden" style="color: {{settings_data.text_color or '#fff'}};">{{item.carousel_description|truncate(100, true)}}</div>
+                  <div class="caption__description small-up--hidden" style="color: {{settings_data.text_color or '#fff'}};">{{item.carousel_description|truncate(50, true)}}</div>
+                {% endif %}
+
+
+                <div class="caption__link-wrapper" style="{{ 'visibility: hidden' if not item.carousel_link }}">
+                    <a href="{{item.carousel_link}}" class="btn btn--primary caption__link {{'btn--outline' if settings_data.link_btn_outline}} {{'btn--radius' if settings_data.link_btn_radius}}"
+                    style=" color: {{settings_data.text_color or '#fff'}};
+                            background-color: {{ 'transparent' if settings_data.link_btn_outline else settings_data.btn_bg }};
+                            border-color: {{ settings_data.text_color if (settings_data.link_btn_outline and settings_data.text_color) else 'transparent' }};">
+                        {{item.carousel_link_text or '更多' }}
+                    </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+      </div>
+      {% if not data_layout.pagination_style %}
+        <div class="hero__swiper-button-prev small--hidden" style="color: {{settings_data.text_color or '#fff'}};">
+          <i class="icon-arrow-left1" aria-hidden="true"></i>
+        </div>
+        <div class="hero__swiper-button-next small--hidden" style="color: {{settings_data.text_color or '#fff'}};">
+          <i class="icon-arrow-right1" aria-hidden="true"></i>
+        </div>
+      {% endif %}
+
+      <div class="swiper-pagination pagination--{{data_layout.pagination_style}} {{ ' small-up--hidden' if settings_data.carousel.length <= 1 or not data_layout.pagination_style }}"></div>
+    </div>
+    {{ heroNavbar(data_layout, results, header_image, settings_data) }}
+  </div>
+  {% script %}
+
+    var $carousel = $el.find('.js-hero-swiper');
+
+    {# --------------------- toggle fixed navigation -------------------- #}
+
+    var toggleAffix = _.throttle(function() {
+        var $affix = $el.find('.js-affix');
+        var gap = $affix.offset().top;
+        var scrollTop = $(window).scrollTop();
+        var screen_width = $(window).width();
+        if(screen_width > 480) {
+            if (scrollTop >= gap) {
+                $affix.find('.navbar').addClass('navbar--fixed');
+                $affix.find('.navbar').css({
+                    "background-color": '{{settings_data.fixed_navbar_bg or '#000'}}'
+                });
+                $el.find('.js-affix-show.hidden').removeClass('hidden');
+                $el.find('.js-affix-hide').addClass('hidden');
+                $el.find('.js-affix-invisible').addClass('invisible');
+            } else {
+                $affix.find('.navbar').removeClass('navbar--fixed');
+                $affix.find('.navbar').css({
+                    "background-color": 'transparent'
+                });
+                $el.find('.js-affix-show').addClass('hidden');
+                $el.find('.js-affix-hide.hidden').removeClass('hidden');
+                $el.find('.js-affix-invisible').removeClass('invisible');
+            }
+        }else {
+            $affix.find('.navbar').addClass('navbar--fixed');
+            $affix.find('.navbar').css({
+                "background-color": '{{settings_data.fixed_navbar_bg or '#000'}}'
+            });
+            $el.find('.js-affix-show.hidden').removeClass('hidden');
+            $el.find('.js-affix-hide').addClass('hidden');
+            $el.find('.js-affix-invisible').addClass('invisible');
+        }
+    }, 50);
+    toggleAffix();
+    $(window).scroll(toggleAffix);
+
+
+    var title_array = ({{settings_data.carousel|dump|safe}}).map(function(element, index) {
+        return element['carousel_title'];
+    });
+
+
+    var heroSwiper = new Swiper($carousel, {
+      effect: 'fade',
+      simulateTouch: false,
+      loop: true,
+      autoplay: {{+settings_data.interval or 5000}},
+      pagination: '.swiper-pagination',
+      paginationClickable: true,
+      nextButton: $carousel.find('.hero__swiper-button-next'),
+      prevButton: $carousel.find('.hero__swiper-button-prev'),
+      {% if data_layout.pagination_style == 'tab' %}
+      paginationBulletRender: function (index, className) {
+        return '<div class="hero-pagination-tab ' + className + '" style="width: {{ 100 / (settings_data.carousel|length)}}%;">'
+             + '<div class="pagination_tab">' + title_array[index] + '</div>'
+             + '</div>';
+      },
+      {% endif %}
+      breakpoints: {
+        480: {
+          simulateTouch: true,
+          paginationBulletRender: function (index, className) {
+            return '<span class="' + className + '"></span>';
+          },
+        }
+      }
+    });
+
+    $el.on('click', '.js-hero__btn--readmore', function() {
+      $('body').animate({
+          scrollTop: $carousel.outerHeight()
+      }, 700);
+    });
+
+    ////////////////////////////// navbar //////////////////////////////////////
+
+    $el.on('click', '.js-open-drawer', function() {
+        Rush.drawerLeft.open();
+    });
+    $el.on('click', '.js-close-drawer', function() {
+        Rush.drawerLeft.close();
+    });
+
+    $el.on('click', '.js-open-ajaxCart', function(e) {
+        if ($('body').width() > 480) {
+            e.preventDefault && e.preventDefault();
+            Rush.ajaxCart.open($(this));
+        }else {
+            window.location.href = '/cart';
+        }
+    });
+
+    HeyShop.cart.on('change', function() {
+      $el.find('.js-cart-count').text(HeyShop.cart.count() || '0');
+    });
+
+    $el.find('.js-cart-count').text(HeyShop.cart.count() || '0');
+
+    function initActiveNav() {
+      var pathname = location.pathname;
+      _.each($el.find('.site-nav__link.level-1.has-underline'), function(nav) {
+        if($(nav).data('href') == pathname) {
+          $(nav).find('.site-nav__link--underline').addClass('active');
+        }
+      })
+    }
+    initActiveNav();
+
+
+    $('.js-goto-chinese-site').on('click', function(e) {
+        e.preventDefault() && e.stopPropagation();
+        location.hostname = 'offline.com'
+    });
+    $('.js-goto-english-site').on('click', function(e) {
+        e.preventDefault() && e.stopPropagation();
+        location.hostname = 'en.offline.com'
+    });
+
+  {% endscript %}
+{% endcomponent %}

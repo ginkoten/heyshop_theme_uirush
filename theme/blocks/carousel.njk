@@ -1,0 +1,78 @@
+{% set block_height = settings_data.block_height or 400 %}
+{% set arrow_style = settings_data.arrow_style or "none" %}
+{% set navigation_style = settings_data.navigation_style or "none" %}
+{% set text_align = settings_data.text_align or "leftright" %}
+{% component %}
+    <div class="{{ 'container' if settings_data.carousel_container }}">
+        <div class="carousel js-slider">
+            <div class="swiper-wrapper">
+            {% for item in settings_data.carousel %}
+
+                <div class="carousel__item swiper-slide" >
+                    <div class="img small--hidden"
+                        style="height: {{block_height}}px;
+                               background-image: url('{{item.image|optimize(2000)}}');">
+                    </div>
+                    <div class="img small-up--hidden img__mobile"
+                        style="height: {{block_height}}px;
+                               background-image: url('{{(item.image_small or item.image)|optimize(2000)}}');">
+                    </div>
+                    {% if navigation_style != "tab" %}
+                    <div class="carousel__caption carousel__caption--{{text_align}}">
+                        <div class="carousel__text carousel__title" style="color:{{item.text_color or "black"}};{% if item.link %}cursor:pointer;{% endif %}" {% if item.link %}onclick="location.href='{{item.link}}';"{% endif %}>
+                            {{item.carousel_title}}
+                        </div>
+                        <div class="carousel__text carousel__description" style="color:{{item.text_color or "black"}};">
+                            {{item.carousel_description}}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+            <div class="swiper-pagination swiper-pagination--{{navigation_style}}"></div>
+
+            <div class="swiper-button-prev swiper-button-arrow--{{arrow_style}}">
+                <i class="icon-button-prev"></i>
+            </div>
+            <div class="swiper-button-next swiper-button-arrow--{{arrow_style}}">
+                <i class="icon-button-next"></i>
+            </div>
+        </div>
+    </div>
+    {% script %}
+    {% if settings_data.carousel and settings_data.carousel|length > 0 %}
+        var title_array = ({{settings_data.carousel|dump|safe}}).map(function(element, index) {
+            return element['carousel_title'];
+        });
+        var $carousel = $el.find('.js-slider');
+        var swiper = new Swiper($carousel, {
+        effect: "{{settings_data.effect or "fade"}}",
+          loop: true,
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          {% if navigation_style == 'tab' %}
+          paginationBulletRender: function (index, className) {
+            return '<div class="' + className + '" style="width: {{ 100 / (settings_data.carousel|length)}}%;">'
+                 + '<div class="pagination_tab">' + title_array[index] + '</div>'
+                 + '</div>';
+          },
+          {% endif %}
+          {# paginationBulletRender: function (swiper, index, className) {
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+          }, #}
+          breakpoints: {
+            480: {
+              simulateTouch: true
+            }
+          }
+          {% if settings_data.interval and settings_data.interval >= 1000 %}
+          ,
+          autoplay: {{settings_data.interval}}
+          {% endif %}
+        });
+    {% endif %}
+	{% endscript %}
+{% endcomponent %}

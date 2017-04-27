@@ -1,0 +1,87 @@
+{% component %}
+{% if settings_data.color_style == "customize" %}
+{% set customize = true %}
+{% endif %}
+{% set random_id = range(1000) | random %}
+{% set onecolumn = settings_data.onecolumn %}
+<div class="cta cta--{{settings_data.__layout__ or 'A'}}
+        {{"cta--center" if settings_data.onecolumn}}
+        {{"cta--colored" if settings_data.color_style == "colored"}}
+        {{"cta--fixheight" if settings_data.block_height }}
+        "
+
+    id="cta{{random_id}}" style="height: {{settings_data.block_height + 'px' if settings_data.block_height }};
+    {{"background-color:" + settings_data.bg_color + ";" if customize}} "
+        >
+<div class="container container--cta ">
+    <div class="{# small-up--pull-left  #}cta__left  {% if settings_data.help_text %}{% else %}no-content{% endif %}">
+        <div class="cta__help" >
+            <div class="cta__content">
+              {% if settings_data.help_text %}
+                <p
+                class="{% if settings_data.align != "center" %} small-up--text-{{settings_data.align}} {% endif %}"
+                style="{{"color:" + settings_data.text_color + ";" if customize}}">{{settings_data.help_text}}</p>
+              {% endif %}
+            </div>
+            {% if onecolumn %}
+              <div class="cta__button small--text-center {% if settings_data.align != "center" %} small-up--text-{{settings_data.align}} {% endif %}" >
+                {% if customize %}
+                <style>
+                    #cta{{random_id}} .btn--cta {
+                        color: {{settings_data.btn_text_color or '#FFF' }};
+                        border-color: {{settings_data.btn_text_color or '#FFF' }};
+                        background-color: {{settings_data.btn_bg_color or '#000' }};
+                    }
+
+                    #cta{{random_id}} .btn--outline:hover,
+                    #cta{{random_id}} .btn--pill:hover {
+                        color: {{settings_data.btn_bg_color or '#000' }};
+                        border-color: transparent;
+                        background-color: {{settings_data.btn_text_color or '#FFF' }};
+                    }
+
+                    #cta{{random_id}} .btn--underline:hover {
+                        color: {{settings_data.btn_text_color or '#FFF' }};
+                        border-color: {{settings_data.btn_text_color or '#FFF' }};
+                        background-color: transparent;
+                    }
+                </style>
+                {% endif %}
+                    <a class="btn--{{settings_data.btnstyle or "outline"}} btn--cta" style="{{'border-width: 0;' if customize and not settings_data.border_width}}" href="{{settings_data.link}}"
+                    >{{settings_data.link_text}}</a>
+              </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if not onecolumn %}
+    <div class="{# small-up--pull-right  #}cta__right">
+        <div class="cta__button small--text-center" >
+            {% if customize %}
+            <style>
+                #cta{{random_id}} .btn--cta {
+                    color: {{settings_data.btn_text_color or '#FFF'}};
+                    border-color: {{settings_data.btn_text_color or '#FFF' }};
+                    background-color: {{settings_data.btn_bg_color or '#000' }};
+                }
+                #cta{{random_id}} .btn--outline:hover,
+                #cta{{random_id}} .btn--pill:hover {
+                    color: {{settings_data.btn_bg_color or '#000' }};
+                    border-color: transparent;
+                    background-color: {{settings_data.btn_text_color or '#FFF' }};
+                }
+
+                #cta{{random_id}} .btn--underline:hover {
+                    color: {{settings_data.btn_text_color or '#FFF' }};
+                    border-color: {{settings_data.btn_text_color or '#FFF' }};
+                    background-color: transparent;
+                }
+            </style>
+            {% endif %}
+                <a class="btn--{{settings_data.btnstyle or "outline"}} btn--cta" style="{{'border-width: 0;' if customize and not settings_data.border_width}}" href="{{settings_data.link}}"
+                >{{settings_data.link_text}}</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</div>
+{% endcomponent %}

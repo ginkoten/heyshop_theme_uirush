@@ -1,0 +1,65 @@
+{
+    "name": "blocks/footer_simple",
+    "category": "footer",
+    "title": "简易底部",
+    "icon": "http://up.img.heidiancdn.com/o_1anhon7unen214vsu0mudm1fjq0.png",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "annotation": "左右布局",
+                "left_right": true
+            }, {
+                "__layout__": "B",
+                "annotation": "中间布局",
+                "left_right": false
+            }]
+        },
+        {
+            "title": "板块内容限宽",
+            "id":"container",
+            "type": "Selection",
+            "options": [
+                { "text": "限宽", "value": "container" },
+                { "text": "不限宽", "value": "container--full" }
+            ]
+        },
+        {
+            "title": "底部菜单",
+            "id":"footmenu",
+            "global": true
+        },
+        {
+            "title": "配色风格",
+            "id":"colorstyle",
+            "type": "Selection",
+            "options": [
+                { "text": "深色", "value": "dark" },
+                { "text": "浅色", "value": "light" }
+            ]
+        },
+        {
+            "title": "是否包含社交账号",
+            "type": "Boolean",
+            "id":"social"
+        },
+        {
+            "title": "是否包含菜单",
+            "id":"menu_simple",
+            "type": "Boolean"
+        }
+    ],
+    "settings_data": {
+        "social": true,
+        "colorstyle": "light",
+        "left-right": false,
+        "container": "container",
+        "menu_simple": true,
+        "annotation": "中间布局",
+        "__layout__": "B"
+    },
+    "metafield": {
+        "category": "footer"
+    }
+}

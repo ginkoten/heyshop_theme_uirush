@@ -1,0 +1,88 @@
+{
+    "name": "blocks/hero_video",
+    "title": "背景视频(带导航)",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0r1dqo1tn31qqg40q1bam03-hero.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A"
+            }, {
+                "__layout__": "B"
+            }, {
+                "__layout__": "C"
+            }]
+        },
+        {
+            "id":"video",
+            "title": "背景视频(不大于10MB的MP4格式，桌面端显示)",
+            "type": "Video",
+            "is_bg_video": true
+        },
+        {
+            "id":"video_poster",
+            "title": "视频替代图片",
+            "description": "移动端图片替代视频，大小为屏幕宽高",
+            "type": "Image"
+        },
+        {
+            "id":"video_title",
+            "title": "视频标题(可选)",
+            "type": "Text"
+        },
+        {
+            "id":"video_description",
+            "title": "视频简介(可选)",
+            "type": "Text"
+        },
+        {
+            "id":"text_color",
+            "type": "Color",
+            "title": "文字颜色"
+        },
+        {
+            "id":"fixed_navbar_bg",
+            "type": "Color",
+            "title": "悬浮导航背景色"
+        },
+        {
+            "title": "菜单条目间是否显示分割点",
+            "id": "nav_has_dot",
+            "type": "Selection",
+            "options": [{
+                "text": "显示",
+                "value": true
+            }, {
+                "text": "不显示",
+                "value": false
+            }]
+        },
+        {
+            "id":"menu",
+            "title": "头部导航",
+            "global": true
+        },
+        {
+            "id":"header_image",
+            "title": "网站头图(仅用于当前版块)",
+            "type": "Image"
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "video": {
+            "src": "http://up.img.heidian.co/hd-online-video-Sunset-Lapse.mp4",
+            "autoplay": true,
+            "loop": true
+        },
+        "video_title": "标题",
+        "video_description": "这里是一段简介文字",
+        "enable_pause": false,
+        "nav_has_dot": false,
+        "text_color": "rgba(255,255,255,1)",
+        "fixed_navbar_bg": "rgba(0,0,0,1)"
+    },
+    "metafield": {
+        "category": "header"
+    }
+}

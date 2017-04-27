@@ -1,0 +1,76 @@
+{
+  "name": "juice",
+  "title": "JuiceShop",
+  "color": "#FFF",
+  "description": "简约清新的风格\n内容与图片的独特穿插\n元气满满背景展示\n完美地适用于食品与饮料等行业",
+  "demo": "http://rush-juice.heidianer.com/",
+  "screenshot": "http://up.img.heidiancdn.com/o_1b3fm7e6a1ekn1onr1p2iu9t020web.jpg",
+  "screenshot_mobile": "http://up.img.heidiancdn.com/o_1b3fm407bqks1ic015uugsldrb0mobile.jpg",
+  "tags": ["珠宝与美妆", "食品与饮料", "母婴与玩具", "健康与养生", "运动与户外"],
+  "assets": [
+    "stylesheets/styles.css.njk",
+    "stylesheets/customize.css.njk"
+  ],
+  "settings_data": {
+    "wechat": "http://up.img.heidiancdn.com/o_1b3c8509oerr1j72uet1958mev0%E5%98%BF%E5%BA%97qcode%E4%BA%8C%E7%BB%B4%E7%A0%81.png",
+    "menu": {
+      "name": "main"
+    },
+    "header_color": "light",
+    "douban": "https://www.douban.com/people/143053284/",
+    "footmenu": {
+      "name": "secondary"
+    },
+    "show_demo_products": false,
+    "current_presets": "default",
+    "colors": {
+      "color-secondary": "rgba(120,120,120,1)",
+      "color-primary": "rgba(0,0,0,1)",
+      "color-text": "rgba(0,0,0,1)",
+      "color-link": "rgba(51,51,51,1)",
+      "color-bg": "rgba(255,255,255,1)",
+      "color-btn-text": "rgba(255,255,255,1)"
+    },
+    "weibo": "http://weibo.com/",
+    "header_image": "http://up.img.heidiancdn.com/o_1b3bsmibocpk1rfib1i1clslci0juice-logo.png"
+  },
+  "private_settings_data": {
+    "toolbar_layout": "B",
+    "is_beian_number_visible": true,
+    "toolbar_menu": {
+      "name": "mobile"
+    },
+    "is_login_module_visible": true,
+    "is_toolbar_module_visible": true,
+    "header_layout": "A",
+    "toolbar_color_style": "light",
+    "drawer_color_style": "light",
+    "toolbar_icon_list": [
+      {
+        "name": "home",
+        "url": "https://up.img.heidiancdn.com/mobile/icons/home.png"
+      },
+      {
+        "name": "terms",
+        "url": "https://up.img.heidiancdn.com/mobile/icons/terms.png"
+      },
+      {
+        "name": "catagories",
+        "url": "https://up.img.heidiancdn.com/mobile/icons/catagories.png"
+      },
+      {
+        "name": "collection",
+        "url": "https://up.img.heidiancdn.com/mobile/icons/collection.png"
+      },
+      {
+        "name": "account",
+        "url": "https://up.img.heidiancdn.com/mobile/icons/account.png"
+      }
+    ],
+    "drawer_layout": "A",
+    "drawer_menu": {
+      "name": "main"
+    },
+    "product_color_style": "dark"
+  }
+}

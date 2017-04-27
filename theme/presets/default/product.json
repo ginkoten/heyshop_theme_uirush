@@ -1,0 +1,20 @@
+{
+    "settings_data": {
+        "components": [{
+            "name": "blocks/header",
+            "settings_data": {
+                "__layout__": "A",
+                "has_opacity": false,
+                "header_image_height": 50
+            }
+        }, {
+            "name": "blocks/product_single",
+            "settings_data": {
+                "__layout__": "A",
+                "alignment": "left",
+                "description": true,
+                "collapsed": true
+            }
+        }]
+    }
+}

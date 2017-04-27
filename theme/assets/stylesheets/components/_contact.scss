@@ -1,0 +1,110 @@
+.contact {
+  padding-top: 70px;
+  padding-bottom: 118px;
+}
+.container--contact {
+  margin:0 auto;
+  max-width: 1180px;
+  padding: 70px 13.8%;
+  background-color: color('color-bg', alpha 0.85);
+}
+
+
+.contact-form {
+  font-size: 13px;
+  .hr--double {
+    margin: 8px 0;
+  }
+  .contact__title {
+    margin-bottom: 0;
+  }
+  label,
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+  }
+  label {
+    margin-bottom: 6px;
+  }
+  button {
+    width: 100px;
+    @include grid-media-query('small') {
+      width: 100%;
+    }
+  }
+  .contact-info {
+    margin-bottom: 40px;
+    span {
+      display: block;
+    }
+  }
+  label:first-child {
+    display: none;
+  }
+}
+
+
+.contact-info, .contact__form {
+    h4 {
+        padding: 8px;
+    }
+}
+.contact__info.grid__item {
+    @include grid-media-query('small-up') {
+      padding-left: 80px;
+    }
+}
+.contact__form {
+    form {
+        input, label, textarea, button {
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+            border-color: $color-text-lighter;
+        }
+        @include grid-media-query('large') {
+            button {
+                width: 130px;
+            }
+        }
+    }
+    .heyshop-form .heyshop-form-group>label {
+      display: none;
+    }
+    .heyshop-form-group {
+      font-size: 0;
+
+    }
+    .btn {
+      margin-top: 10px;
+      border-radius: 100px;
+      &.disabled {
+        pointer-events: none;
+      }
+    }
+}
+.heyshop-form .heyshop-form-group>.inline {
+  margin-left: 20px;
+  margin-top: -10px;
+  margin-bottom: 0;
+}
+.heyshop-form .heyshop-form-group {
+  padding: 0;
+  margin: 0;
+}
+
+.heyshop-form {
+  margin: 0 auto;
+  text-align: left;
+}
+
+input.heyshop-form-control {
+  margin-bottom: 10px;
+}
+
+.contact__paragraph {
+  max-width: 550px;
+  margin: 0 auto;
+  margin-bottom: 70px;
+}

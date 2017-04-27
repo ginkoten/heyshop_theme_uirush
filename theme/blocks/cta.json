@@ -1,0 +1,115 @@
+{
+    "name": "blocks/cta",
+    "title": "CTA横幅",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s171l8j1ndl1rh5q9n1oqm08-CTA.jpg",
+    "settings_schema": [{
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "btnstyle": "outline",
+                "btnicon": "none",
+                "onecolumn": false,
+                "align": "center"
+            }, {
+                "__layout__": "B",
+                "btnstyle": "pill",
+                "btnicon": "none",
+                "onecolumn": false,
+                "align": "center"
+            }, {
+                "__layout__": "C",
+                "btnstyle": "outline",
+                "btnicon": "arrow",
+                "onecolumn": true,
+                "align": "center"
+            }, {
+                "__layout__": "D",
+                "btnstyle": "underline",
+                "btnicon": "none",
+                "onecolumn": true,
+                "align": "left"
+            }, {
+                "__layout__": "E",
+                "btnstyle": "underline",
+                "btnicon": "none",
+                "onecolumn": true,
+                "align": "right"
+            }]
+        },
+        {
+            "title": "板块高度",
+            "id": "block_height",
+            "type": "Number"
+        },
+        {
+            "title": "提示文字",
+            "id": "help_text",
+            "type": "Text"
+        },
+        {
+            "title": "按钮链接",
+            "id": "link",
+            "type": "Text"
+        },
+        {
+            "title": "按钮文字",
+            "id": "link_text",
+            "type": "Text"
+        },
+        {
+            "type": "Selection",
+            "id": "color_style",
+            "title": "配色风格",
+            "options": [
+                { "text": "主题默认", "value": "theme" },
+                { "text": "主题色作背景", "value": "colored" },
+                { "text": "自定义配色", "value": "customize" }
+            ]
+        },
+        {
+            "type": "Mask",
+            "condition": "color_style=='customize'",
+            "children": [{
+                    "type": "Color",
+                    "id": "bg_color",
+                    "title": "背景色"
+                },
+                {
+                    "type": "Color",
+                    "id": "text_color",
+                    "title": "提示文字色"
+                },
+                {
+                    "type": "Color",
+                    "id": "btn_bg_color",
+                    "title": "按钮背景色"
+                },
+                {
+                    "type": "Color",
+                    "id": "btn_text_color",
+                    "title": "按钮文字色"
+                },
+                {
+                    "type": "Boolean",
+                    "id": "border_width",
+                    "title": "按钮是否需要边框"
+                }
+            ]
+        }
+    ],
+    "settings_data": {
+        "help_text": "有任何需求或疑惑，请不要迟疑，立刻联系我们吧。",
+        "link": "/page/contact",
+        "link_text": "在线咨询",
+        "block_height": "400",
+        "__layout__": "A",
+        "btnstyle": "outline",
+        "btnicon": "none",
+        "onecolumn": false,
+        "align": "center",
+        "border_width": true
+    },
+    "metafield": {
+        "category": "text"
+    }
+}

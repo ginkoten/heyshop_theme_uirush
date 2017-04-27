@@ -1,0 +1,114 @@
+/*============================================================================
+  #Rich Text Editor
+==============================================================================*/
+
+.rte {
+    overflow: hidden;
+    margin: 0 auto ($gutter / 2);
+    padding: 0 $gutter / 2;
+    max-width: $site-width;
+    color: $color-text;
+    word-wrap: break-word;
+    line-height: 2;
+    font-size: $font-size-base;
+    font-family: $font-family-base;
+    font-weight: $font-weight-regular;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    $line-height-computed-rte: $line-height-computed * 2;
+    div,
+    p,
+    blockquote,
+    pre,
+    ul,
+    ol,
+    table,
+    figure,
+    section,
+    article,
+    header,
+    footer {
+        padding: 0;
+        margin: 0;
+    }
+    >div,
+    >p,
+    >blockquote,
+    >pre,
+    >ul,
+    >ol,
+    >table,
+    >figure,
+    >section,
+    >article,
+    >header,
+    >footer {
+        padding: 0;
+        margin: ($gutter / 2) auto;
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    >ul,
+    >ol {
+        margin-left: 20px;
+        >div,
+        >p,
+        >blockquote,
+        >pre,
+        >ul,
+        >ol,
+        >table,
+        >figure,
+        >section,
+        >article,
+        >header,
+        >footer {
+            margin-top: 0;
+            margin-bottom: 0
+        }
+    }
+    iframe {
+        display: block;
+        margin: ($gutter / 2) auto;
+    }
+    img,
+    video {
+        max-width: 100%!important;
+    }
+    p {
+        margin-top: $gutter / 2;
+        margin-bottom: $gutter / 2;
+    }
+    h1,
+    h2 {
+        line-height: $line-height-computed-rte * 2;
+        margin-top: $line-height-computed-rte * 2;
+    }
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: $line-height-computed-rte;
+        margin-top: $line-height-computed-rte;
+    }
+    a {
+        text-decoration: underline;
+    }
+    i,
+    em {
+        font-style: italic;
+    }
+    b,
+    strong {
+        font-weight: bold;
+    }
+}
+
+.rte--header {
+    margin-bottom: 0;
+}

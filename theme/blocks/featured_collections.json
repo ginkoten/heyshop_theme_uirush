@@ -1,0 +1,28 @@
+{
+    "name": "blocks/featured_collections",
+    "title": "推荐专题",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1e1b9u3jf1bl919hfk07014-%E6%8E%A8%E8%8D%90%E4%B8%93%E9%A2%98.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "description": "4col"
+            }, {
+                "__layout__": "B",
+                "description": "slider"
+            }]
+        },
+        {
+            "type": "Collection",
+            "id":"collections",
+            "title": "设置专题列表"
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A"
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

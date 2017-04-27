@@ -1,0 +1,72 @@
+{
+    "name": "blocks/video",
+    "title": "视频",
+    "icon": "http://up.img.heidiancdn.com/o_1b55hljit5dpcqv14g99n8hmg0hd-rush-block-video.jpg",
+    "settings_schema": [
+        {
+            "title": "视频(不大于10MB的MP4格式)",
+            "id":"video",
+            "type": "Video"
+        },
+        {
+            "title": "视频封面",
+            "id": "video_poster",
+            "type": "Image"
+        },
+        {
+            "title": "视频样式",
+            "id": "video_size",
+            "type": "Selection",
+            "options": [
+                { "text": "固定高度", "value": "fixed_height" },
+                { "text": "固定宽高比", "value": "fixed_ratio" }
+            ]
+        },
+        {
+            "type": "Mask",
+            "condition":"video_size=='fixed_height'",
+            "children":[
+                {
+                    "title": "桌面端视频高度(像素)",
+                    "id":"video_height",
+                    "type": "Number",
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "title": "视频宽高比",
+            "id":"video_ratio",
+            "type": "Selection",
+            "options": [
+                {
+                    "text": "16:9",
+                    "value": 0.5625
+                },{
+                    "text": "4:3",
+                    "value": 0.75
+                }
+            ]
+        },
+        {
+            "title": "是否允许暂停",
+            "id":"enable_pause",
+            "type": "Boolean"
+        }
+    ],
+    "settings_data": {
+        "video": {
+            "src": "http://up.img.heidian.co/hd-online-video-Sunset-Lapse.mp4",
+            "autoplay": true,
+            "loop": true
+        },
+        "video_poster": "",
+        "video_size": "fixed_ratio",
+        "video_ratio": 0.5625,
+        "video_height": 700,
+        "enable_pause": false
+    },
+    "metafield": {
+        "category": "misc"
+    }
+}

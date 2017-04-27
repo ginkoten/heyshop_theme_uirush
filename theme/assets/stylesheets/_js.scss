@@ -1,0 +1,119 @@
+.js-input-qty {
+    position: relative;
+    // margin-bottom: 1em;
+    max-width: 120px;
+    min-width: 100px;
+    overflow: visible;
+    display: block;
+    input {
+        display: block;
+        background: none;
+        text-align: center;
+        width: 100%;
+        padding: 0 25px;
+        margin: 0;
+        font-size: 12px;
+        line-height: 22px;
+        font-weight: $font-weight-bold;
+        border-color: transparent;
+    }
+}
+
+.js-input-qty__adjust {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    border: 0 none;
+    padding: 0 5px;
+    background: none;
+    text-align: center;
+    overflow: hidden;
+    @include user-select(none);
+    font-size: 10px;
+    line-height: 100%;
+    font-weight: $font-weight-bold;
+    border: 2px solid $color-border;
+    @include transition(all .15s ease-in-out);
+    &:hover {
+        color: $color-bg;
+        border-color: $color-primary;
+        background-color: $color-primary;
+    }
+}
+
+.js-input-qty__adjust--plus {
+    right: 0;
+    // border-left: 1px solid $color-border;
+}
+
+.js-input-qty__adjust--minus {
+    left: 0;
+    // border-right: 1px solid $color-border;
+}
+
+.js-dropdown-content {
+    .dropdown__title {
+        position: relative;
+        padding: 9px 0;
+        font-size: 20px;
+        font-weight: 500;
+        .js-toggle-dropdown {
+            position: absolute;
+            top: 9px;
+            right: 0;
+            padding: 9px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    }
+    .js-toggle-dropdown:hover, .js-toggle-dropdown.active {
+        opacity: 0.6;
+    }
+    .js-dropdown-closed {
+        display: block;
+    }
+    .js-dropdown-opened {
+        display: none;
+    }
+    .dropdown__content {
+        display: none;
+    }
+    &.opened {
+        .js-dropdown-closed {
+            display: none;
+        }
+        .js-dropdown-opened {
+            display: block;
+        }
+        .dropdown__content {
+            display: block;
+        }
+    }
+}
+
+.js-product-quickview {
+    .js-slide-prev,
+    .js-slide-next {
+        position: absolute;
+        font-size: 30px;
+        line-height: 1;
+        top: 50%;
+        margin-top: -15px;
+    }
+    .js-slide-prev {
+        left: 0;
+    }
+    .js-slide-next {
+        right: 0;
+    }
+    & + .js-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        line-height: 1;
+        font-size: 20px;
+        opacity: 0.5;
+    }
+}

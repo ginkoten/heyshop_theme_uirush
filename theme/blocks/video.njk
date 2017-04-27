@@ -1,0 +1,121 @@
+
+{% component  %}
+
+    <div class="theme-video">
+        {% if settings_data.video.src %}
+            <div class="video-wrapper small--hidden" style="width: 100vw;padding-top: {{ (settings_data.video_ratio * 100) if settings_data.video_size != 'fixed_height' else 0 }}%;overflow: hidden;">
+                <video preload class="video {{ 'video--fixed-height' if settings_data.video_size == 'fixed_height' }}" poster="{{settings_data.video_poster or (settings_data.video.src + '?vframe/jpg/offset/0/')}}"
+                    {% if settings_data.video.autoplay %} autoplay {% endif %}
+                    {% if settings_data.video.loop %} loop {% endif %}>
+                        <source src="{{settings_data.video.src}}" type="video/mp4">
+                </video>
+                {% if settings_data.enable_pause  %}
+                    <div class="video-controls">
+                        <div class="play-pause {{ 'playing' if settings_data.video.autoplay }}">
+                          <i class="btn--play icon-music-player" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="small-up--hidden img js-video-poster" style="padding-top: {{ settings_data.video_ratio * 100 if settings_data.video_ratio else 56.25 }}%" data-bg-src="{{settings_data.video_poster or (settings_data.video.src + '?vframe/jpg/offset/0/')}}">
+                <div class="play-pause">
+                    <i class="btn--play icon-music-player" aria-hidden="true"></i>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+  {% script %}
+    {% if settings_data.video.src %}
+    var $video = $el;
+    var video_fixed_height = {{ true if settings_data.video_size == 'fixed_height' else false }};
+    var video_ratio = '{{ settings_data.video_ratio * 100 or 56.25 }}%';
+    console.log(video_ratio)
+    var allow_pause = {{ settings_data.enable_pause or false }};
+    var auto_play = {{ settings_data.video.autoplay or false }};
+
+    var video = $video.find('video') && $video.find('video')[0];
+    var playing = video.paused ? false : true;
+
+    var autoPlayVideo = function() {
+        console.log('play');
+        if(auto_play) {
+            video.play();
+            if(allow_pause) {
+                $video.find('.play-pause').addClass('playing');
+            }
+        }
+    }
+
+    $el.on('click', '.js-video-poster, .play-pause', autoPlayVideo);
+
+    var updateVideo = function() {
+        if (HeyShop && HeyShop.isWeixin) {
+
+        } else {
+          $el.find(".video-wrapper").removeClass('small--hidden');
+          $el.find(".js-video-poster").addClass('small--hidden');
+        }
+
+
+        if($(window).width() > 481 ) {
+            if(video_fixed_height) {
+                $el.find('.video-wrapper').css({
+                    'height': {{ settings_data.video_height or 700 }},
+                    'padding-top': 0
+                })
+            }
+        }else {
+            $el.find('.video-wrapper').css({
+                'padding-top': video_ratio,
+                'height': 'auto'
+            })
+        }
+    }
+    $(window).on('resize', _.debounce(updateVideo, 200));
+    updateVideo();
+
+
+    {# ------------------------- video in home slide ------------------------ #}
+
+    $video.on('click', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      if(allow_pause) {
+          if(video.paused) {
+            $video.find('.play-pause').addClass('playing');
+            video.play();
+          }else {
+            video.pause();
+            $video.find('.play-pause').removeClass('playing');
+          }
+      }
+    });
+
+
+    function scaleHeroVideoSize(element){
+
+      var windowWidth = $(window).width(),
+          windowHeight = $(window).height() + 5,
+          videoWidth,
+          videoHeight;
+
+      $(element).each(function(){
+        $(this).width(windowWidth);
+
+        if(windowWidth < 1000){
+            videoHeight = windowHeight;
+            videoWidth = windowWidth;
+            $(this).css({'margin-top' : 0, 'margin-left' : 0});
+
+            $(this).width(videoWidth).height(videoHeight);
+        }
+
+      });
+    }
+
+    $(window).on('resize', function() {
+    });
+    {% endif %}
+
+  {% endscript %}
+{% endcomponent %}

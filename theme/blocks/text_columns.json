@@ -1,0 +1,57 @@
+{
+    "name": "blocks/text_columns",
+    "title": "多列文本",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1314apaun11bdcsbou006-text.jpg",
+    "settings_schema": [
+        {
+            "type": "Selection",
+            "id":"align",
+            "title": "标题位置",
+            "options": [
+                { "text": "靠左", "value": "left" },
+                { "text": "靠右", "value": "right" },
+                { "text": "靠中", "value": "center" }
+            ]
+        },
+       {
+            "type": "Array",
+            "id":"paragraphs",
+            "title": "文章段落设置",
+            "children": [
+                {
+                    "title": "段落标题",
+                    "id":"title",
+                    "type": "Text"
+                },
+                {
+                    "title": "段落内容",
+                    "id":"content",
+                    "type": "Paragraph"
+                }
+            ],
+            "limit": 12
+        },
+        {
+            "type": "Selection",
+            "id":"columns",
+            "title": "列数",
+            "options": [
+                { "text": "单列", "value": 1 },
+                { "text": "双列", "value": 2 },
+                { "text": "三列", "value": 3 },
+                { "text": "四列", "value": 4 }
+            ]
+        }
+    ],
+    "settings_data": {
+        "section_title": "板块标题",
+        "columns": 1,
+        "paragraphs": [{
+            "title": "标题1",
+            "content": "文章1"
+        }]
+    },
+    "metafield": {
+        "category": "text"
+    }
+}

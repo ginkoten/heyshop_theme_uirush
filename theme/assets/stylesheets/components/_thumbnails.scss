@@ -1,0 +1,63 @@
+
+.thumbnail {
+  display: block;
+  margin: ($gutter / 2) auto;
+  max-width: 360px;
+  padding: ($gutter / 2);
+  text-align: center;
+}
+
+.thumbnail__image {
+  padding: 0 $gutter;
+  margin: ($gutter / 2) auto $gutter;
+  .img {
+    padding-top: percentage(4 / 3);
+
+  }
+}
+
+.thumbnail__title {
+  font-weight: bolder;
+  margin: ($gutter / 2) auto;
+}
+
+.thumbnail__text {
+  margin: ($gutter / 2) auto $gutter;
+}
+
+.thumbnail--circle {
+  @extend .thumbnail;
+  .thumbnail__image .img {
+    padding-top: 100%;
+    border-radius: 50%;
+  }
+}
+
+.thumbnail--hover {
+  @extend .thumbnail--circle;
+  padding: $gutter * 1.5;
+  @include transition(box-shadow .35s ease-in-out);
+  &:hover {
+    box-shadow: 0 10px 30px rgba(#000, 0.1);
+  }
+  margin-bottom: 30px;
+}
+
+[hd-editable-name="blocks/team"] {
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-image: none;
+  }
+
+  .swiper-button-prev::before {
+    content: $icon-arrow-left3;
+    font-size: 32px;
+    font-family: 'icomoon_rush';
+  }
+
+  .swiper-button-next::before {
+    content: $icon-arrow-right3;
+    font-size: 32px;
+    font-family: 'icomoon_rush';
+  }
+}

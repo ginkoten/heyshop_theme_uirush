@@ -1,0 +1,110 @@
+{
+    "name": "blocks/footer",
+    "title": "网页底部",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0qvmi1hotfvolfdapm02-footer.jpg",
+    "settings_schema": [
+        {
+            "title": "底部图片",
+            "id":"footer_image",
+            "global": true
+        },
+        {
+            "title": "底部图片高度",
+            "id":"footer_image_height",
+            "global": true
+        },
+        {
+            "title": "底部菜单",
+            "id":"footmenu",
+            "global": true
+        },
+        {
+            "id":"colorstyle",
+            "title": "配色风格",
+            "type": "Selection",
+            "options": [
+                { "text": "深色", "value": "dark" },
+                { "text": "浅色", "value": "light" }
+            ]
+        },
+        {
+            "id":"opacity",
+            "title": "背景色透明度",
+            "type": "Range",
+            "min":0,
+            "max":1,
+            "step":0.1
+        },
+        {
+            "title": "微信二维码",
+            "id":"wechat",
+            "global": true
+        },
+        {
+            "title": "微博地址",
+            "id":"weibo",
+            "global": true
+        },
+        {
+            "title": "豆瓣地址",
+            "id":"douban",
+            "global": true
+        },
+        {
+            "title": "链接网址(仅在布局D中有效)",
+            "id":"link",
+            "type": "Text"
+        },
+        {
+            "title": "链接文字(仅在布局D中有效)",
+            "id":"caption",
+            "type": "Text"
+        },
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "container": "container--full"
+            }, {
+                "__layout__": "B",
+                "container": "container"
+            }, {
+                "__layout__": "C",
+                "container": "container"
+            }, {
+                "__layout__": "D",
+                "container": "container"
+            }, {
+                "__layout__": "E",
+                "container": "container"
+            }, {
+                "__layout__": "F",
+                "container": "container--full"
+            }, {
+                "__layout__": "G",
+                "container": "container--full"
+            }, {
+                "__layout__": "H",
+                "container": "container"
+            }, {
+                "__layout__": "I",
+                "container": "container"
+            }, {
+                "__layout__": "J",
+                "container": "container--full"
+            }, {
+                "__layout__": "K",
+                "container": "container--full"
+            }]
+        }
+    ],
+    "settings_data": {
+        "colorstyle": "light",
+        "opacity": 1,
+        "__layout__": "C",
+        "container": "container"
+    },
+    "metafield": {
+        "category": "footer"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "name": "blocks/product_single",
+    "permanent": true,
+    "title": "商品详情",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "alignment": "left",
+                "description": true,
+                "collapsed": true
+            }, {
+                "__layout__": "B",
+                "alignment": "right",
+                "description": false,
+                "collapsed": false
+            }, {
+                "__layout__": "C",
+                "alignment": "left",
+                "description": false,
+                "collapsed": false
+            }, {
+                "__layout__": "D",
+                "alignment": "left",
+                "description": true,
+                "collapsed": false
+            }]
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "alignment": "left",
+        "description": true,
+        "collapsed": true
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

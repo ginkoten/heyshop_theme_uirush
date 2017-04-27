@@ -1,0 +1,27 @@
+
+{# ------------------------------ Component ------------------------------ #}
+{% component %}
+  <div class="features-wrapper clearfix {{ 'blocks' if settings_data.blocks }}">
+    <div class="features__cover"
+         style="background-image: url('{{ settings_data.cover }}');background-repeat: no-repeat;background-position: center; background-size: cover;">
+      <div class="features__caption">
+        <div class="caption__content">
+          <h1 class="caption__title">{{settings_data.title}}</h1>
+          <p class="caption__description">{{settings_data.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="container--full">
+      <div class="features__items-wrapper grid">
+        {% for item in settings_data.items %}
+          <div class="grid__item features__item text-center {{ 'medium-down--col-1-1 medium-up--col-1-3' if settings_data.blocks else 'col-1-1' }}">
+            <div class="item__icon" style="background-image: url('{{item.icon}}');background-repeat: no-repeat;background-position: center center;"></div>
+            <div class="item__title">{{item.item_title}}</div>
+            <div class="item__description">{{item.item_description}}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endcomponent %}

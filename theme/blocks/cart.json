@@ -1,0 +1,8 @@
+{
+    "name": "blocks/cart",
+    "title": "购物车",
+    "permanent": true,
+    "metafield": {
+        "category": "misc"
+    }
+}

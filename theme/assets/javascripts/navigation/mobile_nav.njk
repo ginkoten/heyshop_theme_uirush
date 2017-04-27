@@ -1,0 +1,27 @@
+
+{% asyncset results = menu.query({'name': 'mobile'}) %}
+{# <div class="navbar--footer">
+    <style>
+    @media only screen and (max-width: 480px) {
+        #components-root {
+            padding-bottom: 50px;
+        }
+    }
+    </style>
+    <ul class="site-nav--justify">
+        {% for item in results %}
+            {% if item.links and item.links.length %}
+                <li class="site-nav--has-dropdown text-center">
+                    <a class="site-nav__link" href="{{item.url}}">{{item.title}}</a>
+                    <ul class="site-nav__dropdown">
+                        {% for subitem in item.links %}
+                            <li><a class="site-nav__link" href="{{subitem.url}}">{{subitem.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="text-center"><a class="site-nav__link" href="{{item.url}}">{{item.title}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div> #}

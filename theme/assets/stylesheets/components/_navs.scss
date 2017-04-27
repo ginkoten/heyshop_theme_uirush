@@ -1,0 +1,512 @@
+
+/*========== Navbar ==========*/
+$navbarHeight: $line-height-computed + $gutter;
+
+.navbar {
+  height: $navbarHeight;
+  background-color: $color-nav-bg;
+  position: relative;
+  z-index: $zindex-navbar;
+}
+
+.navbar--fixed {
+  @extend .navbar;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: $zindex-navbar;
+  padding: 0 $gutter;
+  box-shadow: 0 0 5px rgba(#000, 0.1);
+  @include transform(translate3d(0, 0, 0));
+  will-change: transform;
+  @include grid-media-query('small') {
+      padding: 0 $gutter / 2;
+      opacity: 1;
+      visibility: visible !important;
+      @include transition(none);
+      &.invisible {
+          @include transform(translate3d(0, 0, 0));
+      }
+  }
+
+  &.color--light {
+    background-color: #fff;
+    .opacity-true & {
+        background-color: rgba(#fff, 0.8);
+    }
+  }
+  &.color--dark {
+    background-color: #000;
+    .opacity-true & {
+        background-color: rgba(#000, 0.8);
+    }
+  }
+  &.color--colored {
+    background-color: $color-primary;
+    .opacity-true & {
+        background-color: $color-primary-alpha;
+    }
+  }
+}
+
+.navbar__header {
+  // margin-left: (-$gutter / 2);
+  button, a, img {
+    display: block;
+    float: left;
+  }
+  button, a {
+    padding: $gutter / 2;
+  }
+  a {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+  img {
+    height: $navbarHeight - $gutter + 2 * 4px;
+    margin: 0;
+  }
+  // .navbar--fixed & {
+  //   left: auto;
+  //   position: relative;
+  //   z-index: $zindex-navbar + 1;
+  // }
+
+  @include grid-media-query('small') {
+    // margin-left: 0;
+    img {
+        max-height: 32px;
+    }
+  }
+}
+
+.navbar__header--normal {
+  // margin-left: (-$gutter / 2);
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  z-index: $zindex-navbar + 1;
+  button, a, img {
+    display: block;
+  }
+  button,a {
+    padding: $gutter / 2;
+  }
+  a {
+    padding-top: 11px;
+    padding-bottom: 11px;
+  }
+
+  .navbar--fixed & {
+    left: auto;
+  }
+
+  @include grid-media-query('small') {
+    img {
+        max-height: 32px;
+    }
+  }
+}
+
+.navbar--footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $zindex-navbar;
+  box-shadow: 0 0 5px rgba(#000, 0.1);
+  @include transition(all .2s ease-in-out);
+  @include transform(translate3d(0, 0, 0));
+  will-change: transform;
+  &.invisible {
+      @include transform(translate3d(0, -100%, 0));
+  }
+  display: none;
+  @include grid-media-query('small') {
+    display: block;
+    @include transition(none);
+    &.invisible {
+      @include transform(translate3d(0, 0, 0));
+    }
+  }
+}
+
+/*========== Container of nav items ==========*/
+.site-nav {
+  cursor: default;
+  margin: 0;
+  display: inline-block;
+
+  li {
+    margin: 0;
+    display: block;
+  }
+
+  > li {
+    position: relative;
+    display: inline-block;
+  }
+}
+
+.site-nav--justify {
+  @extend .site-nav;
+  display: table;
+  > li {
+    display: table-cell;
+    width: 1%;
+  }
+}
+
+.site-nav--right {
+    @extend .site-nav;
+    float: right;
+}
+
+.site-nav--mobile {
+  // Home to hamburger and cart that toggle drawers
+  @extend .site-nav;
+
+  .text-right & {
+    margin: 0 (-$gutter / 2) 0 0;
+  }
+}
+
+.site-nav__link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: $gutter / 2;
+  white-space: nowrap;
+  color: $color-nav-text;
+  background-color: $color-nav-bg;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $color-nav-text-hover;
+  }
+
+  .icon-arrow-down {
+    position: relative;
+    top: -2px;
+    font-size: 10px;
+    padding-left: $gutter / 4;
+  }
+
+  .site-nav--active > & {
+    font-weight: bold;
+  }
+
+  .site-nav--mobile & {
+    display: inline-block;
+  }
+}
+
+/*================ Dropdowns ================*/
+.site-nav__dropdown {
+  display: none;
+  z-index: $zindex-nav-dropdowns;
+  position: absolute;
+  left: 50%;
+  margin: 0;
+  min-width: 150px;
+  border: 1px solid $color-link;
+
+  @include animation(fadeIn .3s);
+  @include transform(translate3d(-50%, 0, 0));
+
+  .site-nav--has-dropdown:first-child & {
+    left: 0;
+    @include transform(translate3d(0, 0, 0));
+  }
+
+  .site-nav--has-dropdown:last-child & {
+    left: auto;
+    right: 0;
+    @include transform(translate3d(0, 0, 0));
+  }
+
+  .navbar--footer & {
+    bottom: 100%;
+    // right: 0;
+    // left: 0;
+    // min-width: 0;
+    // @include transform(translate3d(0, 0, 0));
+    border: 0;
+    box-shadow: 0 0 5px rgba(#000, 0.1);
+  }
+
+  // .supports-no-touch .site-nav--has-dropdown:hover &,
+  html.desktop .site-nav--has-dropdown:hover &,
+  .site-nav--has-dropdown.nav-hover &,
+  .nav-focus + & {
+    display: block;
+  }
+
+  a {
+    background-color: $color-nav-bg;
+  }
+}
+
+/*================ Dropdowns--up ================*/
+.site-nav__dropdown--up {
+  display: none;
+  z-index: $zindex-nav-dropdowns;
+  position: absolute;
+  left: 50%;
+  margin: 0;
+  min-width: 150px;
+  border: 1px solid $color-link;
+
+  // @include animation(fadeIn .3s);
+  @include transition(all .3s ease-in-out);
+  @include transform(translate3d(-50%, 200%, 0));
+
+  .site-nav--has-dropdown:first-child & {
+    left: 0;
+    @include transform(translate3d(0, 200%, 0));
+  }
+
+  .site-nav--has-dropdown:last-child & {
+    left: auto;
+    right: 0;
+    @include transform(translate3d(0, 200%, 0));
+  }
+
+  html.desktop .site-nav--has-dropdown:hover &,
+  .site-nav--has-dropdown.nav-hover &,
+  .nav-focus + & {
+    @include transform(translate3d(-50%, 0%, 0));
+  }
+
+  html.desktop .site-nav--has-dropdown:first-child:hover &,
+  .site-nav--has-dropdown:first-child.nav-hover & {
+    @include transform(translate3d(0, 0%, 0));
+  }
+
+  html.desktop .site-nav--has-dropdown:last-child:hover &,
+  .site-nav--has-dropdown:first-child.nav-hover & {
+    @include transform(translate3d(0, 0%, 0));
+  }
+
+}
+
+/*================ Search bar in header ================*/
+.nav-search {
+  position: relative;
+  padding: 10px 0;
+
+  @media screen and (max-width: $medium) {
+    padding: 0 0 ($gutter / 2);
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+/*============================================================================
+  #Mobile Nav
+  - List of items inside the mobile drawer
+==============================================================================*/
+.mobile-nav {
+  li {
+    margin-bottom: 0;
+  }
+}
+
+.mobile-nav__search {
+  padding: $gutter / 2;
+
+  form {
+    position: relative;
+  }
+  input {
+    width: 100%;
+    @include placeholder {
+      font-size: 0.9em;
+    }
+  }
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .search-bar {
+    margin-bottom: 0;
+  }
+}
+
+.mobile-nav__item {
+  position: relative;
+  display: block;
+
+  // Background color on top level items so there is no
+  // element overlap on subnav's CSS toggle animation
+  .mobile-nav > & {
+    // background-color: $colorDrawers;
+    background-color: $color-nav-bg;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: $gutter / 2;
+    right: $gutter / 2;
+    border-bottom: 1px solid $color-drawer-border;
+  }
+
+  .mobile-nav > &:last-child:after {
+    display: none;
+  }
+}
+
+// Login/logout links can't have a class on them, so style <a> element
+.mobile-nav__item a {
+  display: block;
+}
+
+.mobile-nav__item a,
+.mobile-nav__toggle button {
+  // color: $colorDrawerText;
+  color: $color-nav-text;
+  padding: $gutter / 2;
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $color-nav-text-hover;
+  }
+}
+
+.mobile-nav__item--active {
+  font-weight: bold;
+}
+
+.mobile-nav__has-sublist {
+  display: table;
+  width: 100%;
+
+  .mobile-nav__link {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    position: relative;
+  }
+}
+
+.drawer .mobile-nav__has-sublist .mobile-nav__link::after {
+    content: $icon-add;
+    font-family: 'icomoon_rush';
+    position: absolute;
+    padding: 0 1em;
+    right: -3em;
+    top: -0.1em;
+    font-size: .8em;
+    color: inherit;
+    // @include transition(transform .25s ease-in-out);
+    // @include transform(rotate(0deg));
+}
+.drawer .mobile-nav__has-sublist .mobile-nav__link.expanded::after {
+    content: $icon-minus;
+    // @include transform(rotate(180deg));
+}
+
+.mobile-nav__toggle {
+  display: table-cell;
+  vertical-align: middle;
+  width: 1%;
+  button {
+    font-size: 1.4em;
+    line-height: $line-height-base / 1.4;
+  }
+}
+
+.mobile-nav__toggle-open {
+  .mobile-nav--expanded & {
+    display: none;
+  }
+}
+
+.mobile-nav__toggle-close {
+  display: none;
+
+  .mobile-nav--expanded & {
+    display: block;
+  }
+}
+
+.mobile-nav__sublist {
+  margin: 0;
+  max-height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  @include transition(all 300ms cubic-bezier(0.57, 0.06, 0.05, 0.95));
+  @include backface-visibility(hidden);
+
+  .mobile-nav--expanded + & {
+    visibility: visible;
+    max-height: 700px;
+    overflow: auto;
+    transition: all 700ms cubic-bezier(0.57, 0.06, 0.05, 0.95);
+  }
+
+  .mobile-nav__item:after {
+    top: 0;
+    bottom: auto;
+  }
+
+  .mobile-nav__link {
+    padding-left: $gutter;
+    font-weight: normal;
+  }
+}
+
+//
+.translate-btns.has-dropdown {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    @include transform(translate3d(-50%, 0, 0));
+    .dropdown-btn {
+        color: #fff;
+        padding: 8px 12px;
+        position:relative;
+        &::after {
+            position: absolute;
+            content: $icon-arrow-down;
+            font-family: 'icomoon_rush';
+            font-size: .5em;
+            left: 50%;
+            margin-left: -3px;
+            bottom: 1px;
+            color: inherit;
+        }
+    }
+    > ul.dropdown-list {
+        background-color: #fff;
+        list-style: none;
+        margin: 0;
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        visibility: hidden;
+        opacity: 1;
+        @include transition(all .25s ease-in-out);
+        @include transform(translateX(-50%));
+        color: #000;
+    }
+    &.expanded > ul.dropdown-list {
+        visibility: visible;
+        opacity: 1;
+    }
+    li {
+        margin: 0;
+    }
+    a.dropdown__btn-link {
+        padding: 8px 15px;
+        display: block;
+        text-align: center;
+    }
+}

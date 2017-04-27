@@ -1,0 +1,115 @@
+{
+    "name": "blocks/gallery",
+    "title": "图集",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s151600rqjrdc1rkq4ul07-gallery.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                    "__layout__": "A",
+                    "gallerycontent": "div",
+                    "lightbox": true,
+                    "columns": 4,
+                    "column_padding": "0"
+                }, {
+                    "__layout__": "B",
+                    "gallerycontent": "div",
+                    "lightbox": false,
+                    "columns": false,
+                    "column_padding": "25px"
+                }, {
+                    "__layout__": "C",
+                    "gallerycontent": "div",
+                    "lightbox": false,
+                    "columns": false
+                }, {
+                    "__layout__": "D",
+                    "gallerycontent": "div",
+                    "lightbox": true,
+                    "columns": false
+                }, {
+                    "__layout__": "E",
+                    "gallerycontent": "img",
+                    "lightbox": false,
+                    "columns": false
+                }, {
+                    "__layout__": "F",
+                    "gallerycontent": "div",
+                    "lightbox": true,
+                    "columns": 2,
+                    "column_padding": "25px"
+                }
+
+            ]
+        },
+        {
+            "title": "标题文字",
+            "id":"title",
+            "type": "Text"
+        },
+        {
+            "title": "文章内容",
+            "id":"text",
+            "type": "Paragraph"
+        },
+        {
+            "title": "照片设置",
+            "id":"images",
+            "type": "Array",
+            "children": [
+                {
+                    "title": "图片",
+                    "id":"image",
+                    "type": "Image"
+                }
+            ]
+        },
+        {
+            "type": "Selection",
+            "id":"colorSelection",
+            "title": "颜色使用",
+            "options": [
+                { "text": "使用全局配色", "value": "theme" },
+                { "text": "自定义配色", "value": "customize" }
+            ]
+        },
+        {
+            "type": "Color",
+            "id":"titleColor",
+            "title": "标题颜色"
+        },
+        {
+            "type": "Color",
+            "id":"textColor",
+            "title": "文字颜色"
+        },
+        {
+            "type": "Color",
+            "id":"bgColor",
+            "title": "背景色"
+        }
+    ],
+    "settings_data": {
+        "components": [],
+        "column_padding": "0",
+        "title": "标题文字",
+        "gallerycontent": "div",
+        "columns": 4,
+        "lightbox": true,
+        "text": "文章内容",
+        "colorSelection": "theme",
+        "images": [{
+            "image": "http://up.img.heidiancdn.com/o_1b3c0p22mifm1frd1eseg59t950ec2c5d0ba3ee2bcb16f3bde7b5d4f287a221b359.jpg"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3c0p22l18p91f8oum114co6b20e585fce782d59da129dbe0a591c2ab1772c642b1.jpg"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3c0p22mifm1frd1eseg59t950ec2c5d0ba3ee2bcb16f3bde7b5d4f287a221b359.jpg"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3c0p22l18p91f8oum114co6b20e585fce782d59da129dbe0a591c2ab1772c642b1.jpg"
+        }],
+        "__layout__": "A"
+    },
+    "metafield": {
+        "category": "image"
+    }
+}

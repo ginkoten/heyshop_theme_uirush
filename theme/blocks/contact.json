@@ -1,0 +1,29 @@
+{
+    "name": "blocks/contact",
+    "title": "联系我们",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1h15pjka2uou1t1g10vl016-Contact.jpg",
+    "settings_schema": [
+        {
+            "type": "Paragraph",
+            "id":"paragraph",
+            "title": "文章"
+        },
+        {
+            "type": "Form",
+            "id":"custom_form",
+            "title": "联系表单"
+        }
+    ],
+    "settings_data": {
+        "custom_form": {
+            "list": [
+                { "type": "name", "title": "你的名字", "icon": "icon user" },
+                { "type": "email", "title": "你的邮箱", "icon": "icon mail" },
+                { "type": "comment", "title": "你的留言", "icon": "icon comment" }
+            ]
+        }
+    },
+    "metafield": {
+        "category": "misc"
+    }
+}

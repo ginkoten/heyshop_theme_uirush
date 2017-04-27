@@ -1,0 +1,86 @@
+{
+    "name": "blocks/logos",
+    "title": "品牌图标",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s181v6r1u4j1dco1h0p1sr509-logos.jpg",
+    "settings_schema": [
+        {
+            "type": "Text",
+            "id":"section_title",
+            "title": "标题"
+        },
+        {
+            "type": "Number",
+            "id":"icon_height",
+            "title": "图标高度"
+        },
+        {
+            "type": "Number",
+            "id":"width_percent",
+            "title": "链接区域宽度百分比"
+        },
+        {
+            "type": "Array",
+            "id":"icons",
+            "title": "图标设置",
+            "children": [
+                {
+                    "type": "Text",
+                    "id":"name",
+                    "title": "名称"
+                },
+                {
+                    "type": "Image",
+                    "id":"image",
+                    "title": "图标图片"
+                },
+                {
+                    "type": "Text",
+                    "id":"link",
+                    "title": "对应链接"
+                }
+            ]
+        },
+        {
+            "type": "Selection",
+            "id":"colorSelection",
+            "title": "颜色使用",
+            "options": [
+                { "text": "使用全局配色", "value": "theme" },
+                { "text": "自定义配色", "value": "customize" }
+            ]
+        },
+        {
+            "type": "Color",
+            "id":"textColor",
+            "title": "文字颜色"
+        },
+        {
+            "type": "Color",
+            "id":"bgColor",
+            "title": "背景色"
+        }
+    ],
+    "settings_data": {
+        "icons": [{
+            "image": "http://up.img.heidiancdn.com/o_1b3cncqf92ce1cqtpvsea91ico0amazon.png?imageMogr2/thumbnail/!71p|imageMogr2/crop/!177x52a0a0"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3cncqfa3s9157jepmo7t1as10disnep.png?imageMogr2/thumbnail/!71p|imageMogr2/crop/!153x63a0a0"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3cncqfc1n1qklj1daj87v1enp0zhaoshangyinhang.png?imageMogr2/thumbnail/!71p|imageMogr2/crop/!216x56a0a0"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3cncqfatumpe012911bpu1c0s0lenovo.png?imageMogr2/thumbnail/!71p|imageMogr2/crop/!211x47a0a0"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3cnh90h188a6b932jvr1p360qiaqia.png?imageMogr2/thumbnail/!71p|imageMogr2/crop/!143x64a0a0"
+        }],
+        "textColor": "rgba(255,255,255,1)",
+        "section_title": "我们的合作伙伴",
+        "bgColor": "rgba(0,0,0,0.7)",
+        "width_percent": "90",
+        "colorSelection": "customize",
+        "components": [],
+        "icon_height": "25"
+    },
+    "metafield": {
+        "category": "image"
+    }
+}

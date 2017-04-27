@@ -1,0 +1,85 @@
+
+<section class="modal-content js-product-quickview" style="max-width:900px;">
+    <div class="container--full">
+        <div class="grid">
+            <div class="grid__item col-5-12">
+                <div class="product-single__variants js-variants" style="margin-bottom: 15px; margin-top: {{0 if product.options.length else 150}}px;">
+                    <input type="hidden" name="variant" value="">
+                    <h1 classs="product-single__title" style="margin-top: 0;font-weight: 400;">{{product.title}}</h1>
+                    <h4>
+                        <span class="product-single__price">
+                            <span>¥</span>
+                            <span class="js-price">{{product.price}}</span>
+                        </span>
+                        {% if product.compare_at_price %}
+                        <small class="product-single__price--compare">
+                            <span>¥</span>
+                            <span class="js-compare_at_price">{{product.compare_at_price}}</span>
+                        </small>
+                        {% endif %}
+                    </h4>
+                    <p class="js-inventory-wrapper small">
+                        <span>库存</span>
+                        <span class="variants-inventory js-inventory">{{product.inventory_quantity}}</span>
+                        <span>件</span>
+                    </p>
+                    {% for option in product.options %}
+                    <fieldset class="product-option text-center">
+                        <div class="product-option__title">{{option.title}}</div>
+                        <div class="product-option__dropdown js-toggle" data-title="{{option.title}}">
+                            <span></span>
+                            <ul>
+                                <li class="js-value" data-title="{{option.title}}" data-value="">
+                                    <input type="radio" name="{{option.title}}" value=""><span>选择{{option.title}}</span>
+                                </li>
+                                {% for value in option.values %}
+                                <li class="js-value" data-title="{{option.title}}" data-value="{{value}}">
+                                    <input type="radio" name="{{option.title}}" value="{{value}}"><span>{{value}}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </fieldset>
+                    {% endfor %}
+                    <div class="text-center" style="width: 160px;">
+                        <div class="js-input-qty" style="margin: 2em auto;">
+                            <button class="js-input-qty__adjust js-input-qty__adjust--minus" type="button">
+                                <span class="icon-minus"></span>
+                            </button>
+                            <input type="text" name="quantity" value="1" autocomplete="off">
+                            <button class="js-input-qty__adjust js-input-qty__adjust--plus" type="button">
+                                <span class="icon-add"></span>
+                            </button>
+                        </div>
+                        <button class="btn btn--full btn--large js-add-to-cart">加入购物车</button>
+                        <a href="/products/{{product.name}}/" class="quickview-link-to-detail">查看商品详情</a>
+                    </div>
+                </div>
+            </div>
+            <div class="grid__item col-7-12">
+                <div class="product-single__images swiper-container js-carousel">
+                    <div class="swiper-wrapper">
+                        {% for image in product.images %}
+                        <div class="swiper-slide">
+                            <div class="img"
+                                style="background-image:url('{{image.src|optimize(1200)}}'); padding-top:133%;"></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if shouldSlide %}
+    <a href="javascript:void(0);" class="js-slide-prev">
+        <i class="icon-arrow-left1"></i>
+    </a>
+    <a href="javascript:void(0);" class="js-slide-next">
+        <i class="icon-arrow-right1"></i>
+    </a>
+    {% endif %}
+</section>
+<a href="javascript:void(0);" class="js-close">
+    <i class="icon-close1"></i>
+</a>

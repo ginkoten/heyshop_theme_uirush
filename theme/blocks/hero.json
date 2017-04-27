@@ -1,0 +1,163 @@
+{
+    "name": "blocks/hero",
+    "title": "首页大图(带导航)",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0r1dqo1tn31qqg40q1bam03-hero.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A"
+            }, {
+                "__layout__": "B"
+            }, {
+                "__layout__": "C"
+            }, {
+                "__layout__": "D"
+            }, {
+                "__layout__": "E"
+            }]
+        },
+        {
+            "title": "设置",
+            "id":"carousel",
+            "type": "Array",
+            "children": [
+                {
+                    "title": "PC版图片",
+                    "id":"image",
+                    "type": "Image"
+                },
+                {
+                    "title": "手机版图片",
+                    "id":"image_small",
+                    "type": "Image"
+                },
+                {
+                    "title": "幻灯片标题",
+                    "id":"carousel_title",
+                    "type": "Text"
+                },
+                {
+                    "title": "简介",
+                    "id":"carousel_description",
+                    "type": "Text"
+                },
+                {
+                    "title": "链接地址(站内地址如'/search', 站外地址如'http://heidianer.com')",
+                    "id":"carousel_link",
+                    "type": "Text"
+                },
+                {
+                    "title": "链接文字(不超过6个字)",
+                    "id":"carousel_link_text",
+                    "type": "Text"
+                }
+            ],
+            "limit": 10
+        },
+        {
+            "title": "菜单条目间是否显示分割点",
+            "id": "nav_has_dot",
+            "type": "Selection",
+            "options": [{
+                "text": "显示",
+                "value": true
+            }, {
+                "text": "不显示",
+                "value": false
+            }]
+        },
+        {
+            "title": "是否自定义图片高度",
+            "id":"customize_height",
+            "type": "Selection",
+            "options": [{
+                "text": "是",
+                "value": true
+            }, {
+                "text": "不是",
+                "value": false
+            }]
+        },{
+            "type": "Mask",
+            "condition":"customize_height==true",
+            "children":[
+                {
+                    "title": "PC版图片高度",
+                    "id":"height_web",
+                    "type": "Number",
+                    "min": 100,
+                    "step": 1
+                },
+                {
+                    "title": "手机版图片高度",
+                    "id":"height_mobile",
+                    "type": "Number",
+                    "min": 100,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "title": "切换时间",
+            "id":"interval",
+            "type": "Range",
+            "max": 10000,
+            "step": 500
+        },
+        {
+            "type": "Color",
+            "id":"text_color",
+            "title": "文字颜色"
+        },
+        {
+            "type": "Color",
+            "id":"fixed_navbar_bg",
+            "title": "悬浮导航背景色"
+        },
+        {
+            "type": "Color",
+            "id":"btn_bg",
+            "title": "按钮背景色"
+        },
+        {
+            "title": "头部导航",
+            "id":"menu",
+            "global": true
+        },
+        {
+            "title": "导航LOGO(仅用于当前版块)",
+            "id":"header_image",
+            "type": "Image"
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "interval": 5000,
+        "nav_has_dot": false,
+        "customize_height": false,
+        "height_web": 600,
+        "height_mobile": 360,
+        "text_color": "rgba(255,255,255,1)",
+        "fixed_navbar_bg": "rgba(0,0,0,1)",
+        "btn_bg": "rgba(27,139,249,0.5)",
+        "carousel": [{
+            "image": "http://up.img.heidian.co/o_1amasqehi66r1eis55e1vvnmia0.jpg",
+            "image_small": "http://up.img.heidian.co/o_1amasqehi66r1eis55e1vvnmia0.jpg",
+            "carousel_title": "标题1",
+            "carousel_description": "花非花，雾非雾，夜半来，天明去。来如春梦不多时，去似朝云无觅处。花非花，雾非雾，夜半来，天明去。",
+            "carousel_link": "/",
+            "carousel_link_text": "链接文字1"
+        }, {
+            "image": "http://up.img.heidian.co/o_1amasqu6d1c5fo9garq1i5cgg80.jpg",
+            "image_small": "http://up.img.heidian.co/o_1amasqu6d1c5fo9garq1i5cgg80.jpg",
+            "carousel_title": "标题2",
+            "carousel_description": "花非花，雾非雾，夜半来，天明去。来如春梦不多时，去似朝云无觅处。花非花，雾非雾，夜半来，天明去。",
+            "carousel_link": "/",
+            "carousel_link_text": "链接文字2"
+        }]
+    },
+    "metafield": {
+        "category": "header"
+    }
+}

@@ -1,0 +1,95 @@
+{
+    "name": "blocks/testimonial",
+    "title": "客户反馈",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1b1d10lgm15sl1sp89lf011-Testimonial.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "slide": false
+            }, {
+                "__layout__": "B",
+                "slide": true
+            }]
+        },
+        {
+            "id":"styleClass",
+            "title": "展现方式",
+            "type": "Selection",
+            "options": [
+                { "text": "正式", "value": "basic" },
+                { "text": "现代", "value": "modern" },
+                { "text": "悬浮", "value": "hover" },
+                { "text": "浮夸", "value": "flow" }
+            ]
+        },
+        {
+            "id":"sectionTitle",
+            "type": "Text",
+            "title": "标题"
+        },
+        {
+            "id":"textColor",
+            "type": "Color",
+            "title": "文字颜色"
+        },
+        {
+            "id":"people",
+            "title": "人物",
+            "type": "Array",
+            "children": [
+                {
+                    "id":"avatar",
+                    "title": "头像",
+                    "type": "Image"
+                },
+                {
+                    "id":"name",
+                    "title": "姓名",
+                    "type": "Text"
+                },
+                {
+                    "id":"title",
+                    "title": "职位",
+                    "type": "Text"
+                },
+                {
+                    "id":"bio",
+                    "title": "简介",
+                    "type": "Text"
+                }
+            ],
+            "limit": 10
+        }
+    ],
+    "settings_data": {
+        "components": [],
+        "sectionTitle": "来自客户的反馈",
+        "textColor": "rgba(0,0,0,1)",
+        "slide": true,
+        "styleClass": "modern",
+        "people": [{
+            "name": "客户A",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png",
+            "bio": "“用了XX的产品后，腿也不酸了，腰也不疼了。”"
+        }, {
+            "name": "客户B",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png",
+            "bio": "“XX的产品解决了我的痛点，为我打通了全流程解决方案。”"
+        }, {
+            "name": "客户C",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png",
+            "bio": "“XX的产品质量高，价格优，我推荐我的朋友也用它。”"
+        }, {
+            "name": "客户D",
+            "title": "",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png",
+            "bio": "“XX的客服非常仔细贴心，长得也很漂亮。”"
+        }],
+        "__layout__": "B"
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

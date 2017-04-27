@@ -1,0 +1,32 @@
+{
+    "name": "blocks/featured_articles",
+    "title": "推荐文章",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1g1quflsvok6vhi5j9015-%E6%8E%A8%E8%8D%90%E5%8D%9A%E5%AE%A2.jpg",
+    "settings_schema": [
+        {
+            "type": "Article",
+            "id":"articles",
+            "title": "设置文章列表"
+        },
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "name": "swiper"
+            }, {
+                "__layout__": "B",
+                "name": "card"
+            }]
+        }
+    ],
+    "settings_data": {
+        "articles": {
+            "page_size": "4"
+        },
+        "__layout__": "A",
+        "name": "swiper"
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

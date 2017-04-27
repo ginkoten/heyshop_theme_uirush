@@ -1,0 +1,79 @@
+{
+    "name": "blocks/featured_customize",
+    "title": "自定义推荐(自定义封面和链接)",
+    "icon": "http://up.img.heidiancdn.com/o_1b52jgoauvj31m101a9m1qp9nqb0rush-customize-featured.jpg",
+    "settings_schema": [
+        {
+            "title": "每行最多展示列数",
+            "id":"columns",
+            "type": "Selection",
+            "options": [{
+                "text": "1个",
+                "value": 1
+            }, {
+                "text": "2个",
+                "value": 2
+            }, {
+                "text": "3个",
+                "value": 3
+            }, {
+                "text": "4个",
+                "value": 4
+            }]
+        },
+        {
+            "title": "设置",
+            "id":"items",
+            "type": "Array",
+            "children": [
+                {
+                    "title": "图片",
+                    "id":"item_image",
+                    "type": "Image"
+                },
+                {
+                    "title": "标题",
+                    "id":"item_title",
+                    "type": "Text"
+                },
+                {
+                    "title": "链接地址",
+                    "id":"item_link",
+                    "type": "Text"
+                }
+            ],
+            "limit": 6
+        },
+        {
+            "title": "悬浮效果",
+            "id":"effect",
+            "type": "Selection",
+            "options": [{
+                "text": "默认",
+                "value": "default"
+            }, {
+                "text": "白色遮罩",
+                "value": "light"
+            }, {
+                "text": "黑色遮罩",
+                "value": "dark"
+            }]
+        }
+    ],
+    "settings_data": {
+        "columns": 3,
+        "items": [{
+            "item_image": "http://up.img.heidiancdn.com/o_1b50kc3so1sii1vlk1n8kljdqqh02c2b82776c40397c785a412abc8cfd40.jpg",
+            "item_title": "标题1",
+            "item_link": "/collections"
+        }, {
+            "item_image": "http://up.img.heidiancdn.com/o_1b50kc3so1sii1vlk1n8kljdqqh02c2b82776c40397c785a412abc8cfd40.jpg",
+            "item_title": "标题2",
+            "item_link": "/search"
+        }],
+        "effect": "light"
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

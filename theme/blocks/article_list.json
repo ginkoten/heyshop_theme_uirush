@@ -1,0 +1,35 @@
+{
+    "name": "blocks/article_list",
+    "title": "文章列表",
+    "permanent": true,
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "card": false
+            }, {
+                "__layout__": "B",
+                "card": true
+            }, {
+                "__layout__": "C",
+                "card": true
+            }, {
+                "__layout__": "D",
+                "card": false
+            }]
+        },
+        {
+            "type": "Color",
+            "id":"color_bg",
+            "title": "背景色"
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "card": false
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

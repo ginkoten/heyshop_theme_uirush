@@ -1,0 +1,46 @@
+{% component %}
+{% set big_title = 0 %}
+{% if settings_data.section_title %}
+  {% set big_title = 1 %}
+{% endif %}
+{% set row_height = settings_data.row_height or 300 %}
+{% set columns = settings_data.columns or 1 %}
+{% set align = settings_data.align or 'left' %}
+
+
+{% if columns == 1 %}
+    {% set titlesize = 'medium' %}
+{% elif columns < 4 %}
+    {% set titlesize = 'small' %}
+{% else %}
+    {% set titlesize = 'xsmall' %}
+{% endif %}
+
+{% set titlespace = false %}
+{% for paragraph in settings_data.paragraphs %}
+    {% if paragraph.title %}
+        {% set titlespace = true %}
+    {% endif %}
+{% endfor %}
+<div class="container container--text-columns">
+    <div class="grid--full text__grid--{{align}}">
+    {% for paragraph in settings_data.paragraphs %}
+
+            <div class="grid__item small-up--col-1-{{columns}}">
+                    {% if titlespace %}
+                    <div class="text__title text__title--{{titlesize}} small-up--text-{{align}} small--text-center">
+                        {{paragraph.title or '&nbsp'|safe }}
+                    </div>
+                    {% endif %}
+                    <div class="text__content">
+                        {{paragraph.content}}
+                    </div>
+
+            </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endcomponent %}
+

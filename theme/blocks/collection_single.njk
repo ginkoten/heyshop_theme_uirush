@@ -1,0 +1,120 @@
+
+
+{% component dataEditable="collection_single" %}
+
+    <div class="container--collection collection-single">
+        <div class="collection-single__image">
+            <div class="image-wrapper--wide">
+                <div class="img" style="background-image: url({{collection.image|optimize(1200)}})"></div>
+            </div>
+        </div>
+
+        <div class="container">
+          <h1 class="collection-single__title">{{collection.title}}</h1>
+          <div class="rte collection-single__body">{{ collection.body_html|sanitize|safe }}</div>
+          <div class="collection-single__share">
+            <a class="btn--link pull-right" data-toggle="share" data-target="wechat-mobile"><i class="icon-share"> </i>分享专辑</a>
+          </div>
+        </div>
+        <div class="products collection-single__products">
+            {# <div class="grid-uniform">
+                {% for product_single in collection.collects %}
+                    {% set product = product_single.product %}
+                    <div class="grid__item products__item medium-down--col-1-1 large--col-1-{{ settings_data.column_count - 1 or '2' }} large-up--col-1-{{ settings_data.column_count or '3' }}" data-item="{{product| dump}}">
+                      <a class="image-wrapper products__item__image" href="/products/{{product.name}}/">
+                        <div class="img" data-bg-src="{{product.image|optimize(600)}}"></div>
+                        <div class="products__item__mask {{ 'color_bg' if settings_data.button == 'both' else ''}}">
+                          {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                            <div class="discount-badge {{ 'hidden' if not settings_data.badge }}">打折</div>
+                          {% endif %}
+                          {% if settings_data.badge %}
+                            <div class="new-sale-badge hidden">新品</div>
+                          {% endif %}
+
+                          {% if settings_data.button == 'both' %}
+                            <div class="middle-btn text-center clearfix {{settings_data.button}}">
+                              <div class="btn--circle js-open-quickview"><span class="icon-eye-quick-view"></span></div>
+                              <div class="btn--circle js-add-to-cart"><span class="icon-cart-quick-view"></span></div>
+                            </div>
+                          {% elif settings_data.button == 'add_to_cart' %}
+                            <div class="bottom-btn clearfix {{settings_data.button}}">
+                              <div class="btn--border btn--full btn--height js-add-to-cart">加入购物车</div>
+                            </div>
+                          {% else %}
+                            <div class="middle-btn clearfix {{settings_data.button}}">
+                              <div class="btn js-open-quickview">快速查看 +</div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </a>
+
+                      <div class="products__item__caption">
+                        <div class="caption">
+                          <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                          <div class="center-block splitter hd-color-divider"></div>
+                          <div class="price-wrapper">
+                            {% if product.inventory_quantity > 0 %}
+                              <span class="price">¥ {{+product.price}}</span>
+                              {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                                <small class="compare_at_price">￥ {{+product.compare_at_price}}</small>
+                              {% endif %}
+                            {% else %}
+                              <div class="price">售罄</div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+              </div> #}
+        </div>
+    </div>
+    {% script %}
+    var refreshProductJs = function() {
+        var $product_area = $el.find('.collection-single__products');
+        Rush.renderCollectProducts($product_area, {{collection.id}}, {{settings_data|dump|safe or {} }});
+
+        {# $el.off('click', '.js-open-quickview');
+        $el.off('click', '.js-add-to-cart');
+        $el.off('click', '.products__more'); #}
+        $el.on('click', '.products__more', function() {
+            $el.find('.products__more').remove();
+            Rush.renderCollectProductsNext($product_area, {{collection.id}}, {{settings_data|dump|safe or {} }});
+        });
+    };
+    $el.on('click', '.js-open-quickview', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      var product = $(e.target).closest('.products__item').data('item');
+      Rush.collectProductQuickview(product);
+    });
+
+    $el.on('click', '.js-add-to-cart', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      var product = $(e.target).closest('.products__item').data('item');
+      if(product.inventory_quantity && product.variants && product.variants.length) {
+        var variant_valid = _.findWhere(product.variants, function(variant) { return variant.inventory_quantity >= 1 });
+        variant_id = variant_valid.id;
+        HeyShop.cart.add(variant_id, 1, function(err) {
+          if (err) {
+            HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+          } else {
+            HeyShop.toast.popupToast('商品添加成功！', 1500);
+          }
+        });
+      }else {
+        HeyShop.toast.popupToast('出错了，商品信息有误或库存不足', 1500);
+      }
+    });
+
+
+
+    _.each($el.find('.products__item'), function(product) {
+      if(moment().diff(moment($(product).data('item').published_at), 'days') <= 7) {
+        $(product).find('.new-sale-badge.hidden').removeClass('hidden');
+      }
+    });
+
+    refreshProductJs();
+
+    {% endscript %}
+{% endcomponent %}

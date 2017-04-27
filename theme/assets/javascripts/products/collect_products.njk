@@ -1,0 +1,54 @@
+
+<div class="grid-uniform">
+    {% for product in collection_product %}
+      {# {% set product = product_single.product %} #}
+        <div class="grid__item products__item medium-down--col-1-1 large--col-1-{{ settings_data.column_count - 1 or '2' }} large-up--col-1-{{ settings_data.column_count or '3' }}" data-item="{{product| dump}}">
+          <a class="image-wrapper products__item__image" href="/products/{{product.name}}/">
+            <div class="img" style="background-image: url('{{product.image|optimize(600)}}');"""></div>
+            <div class="products__item__mask {{ 'color_bg' if settings_data.button == 'both' else ''}}">
+              {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                <div class="discount-badge {{ 'hidden' if not settings_data.badge }}">打折</div>
+              {% endif %}
+              {% if settings_data.badge %}
+                <div class="new-sale-badge hidden">新品</div>
+              {% endif %}
+
+              {% if settings_data.button == 'both' %}
+                <div class="middle-btn text-center clearfix {{settings_data.button}}">
+                  <div class="btn--circle js-open-quickview"><span class="icon-eye-quick-view"></span></div>
+                  <div class="btn--circle js-add-to-cart"><span class="icon-cart-quick-view"></span></div>
+                </div>
+              {% elif settings_data.button == 'add_to_cart' %}
+                <div class="bottom-btn clearfix {{settings_data.button}}">
+                  <div class="btn--border btn--full btn--height js-add-to-cart">加入购物车</div>
+                </div>
+              {% else %}
+                <div class="middle-btn clearfix {{settings_data.button}}">
+                  <div class="btn js-open-quickview">快速查看 +</div>
+                </div>
+              {% endif %}
+            </div>
+          </a>
+
+          <div class="products__item__caption">
+            <div class="caption">
+              <div class="item__title">{{product.title|truncate(50, true)}}</div>
+              <div class="center-block splitter hd-color-divider"></div>
+              <div class="price-wrapper">
+                {% if product.inventory_quantity > 0 %}
+                  <span class="price">¥ {{+product.price}}</span>
+                  {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                    <small class="compare_at_price">￥ {{+product.compare_at_price}}</small>
+                  {% endif %}
+                {% else %}
+                  <div class="price">售罄</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+</div>
+    {% if next != null %}
+    <a class="btn products__more" style="display: block; margin: 15px auto; width: 150px;">查看更多</a>
+    {% endif %}

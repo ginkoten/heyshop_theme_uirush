@@ -1,0 +1,153 @@
+
+.clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}
+
+// Grids
+// -------------------------
+
+.grid,
+.grid-uniform {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-left: -$grid-gutter;
+  @include clearfix;
+}
+
+.grid__item {
+  box-sizing: border-box;
+  float: left;
+  min-height: 1px;
+  padding-left: $grid-gutter;
+  vertical-align: top;
+  width: 100%; // mobile first
+  &.clear {
+    clear: both;
+  }
+}
+
+.grid--rev {
+  @extend .grid;
+  direction: rtl;
+  text-align: left;
+
+  > .grid__item {
+    direction: ltr;
+    text-align: left;
+    float: right;
+  }
+}
+
+.grid--full {
+  @extend .grid;
+  margin-left: 0;
+
+  > .grid__item {
+    padding-left: 0;
+  }
+}
+
+// Responsive width and helper classes
+// -------------------------
+
+@mixin grid-media-query($media-query) {
+  $breakpoint-found: false;
+
+  @each $breakpoint in $breakpoints {
+    $name: nth($breakpoint, 1);
+    $declaration: nth($breakpoint, 2);
+
+    @if $media-query == $name and $declaration {
+      $breakpoint-found: true;
+
+      @media only screen and #{$declaration} {
+        @content;
+      }
+    }
+  }
+
+  @if $breakpoint-found == false {
+    @warn "Breakpoint '#{$media-query}' does not exist";
+  }
+}
+
+@mixin device-type($namespace:"") {
+  @for $i from 2 through 12 {
+    @for $j from 1 through $i {
+      .#{$namespace}col-#{$j}-#{$i} {
+        width: percentage($j / $i);
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .#{$namespace}col-#{$i} {
+      width: percentage($i / 12);
+    }
+  }
+}
+
+@mixin clearfix-helper($namespace:"") {
+  .grid-uniform {
+    .#{$namespace}col-1-2:nth-child(2n+1),
+    .#{$namespace}col-1-3:nth-child(3n+1),
+    .#{$namespace}col-1-4:nth-child(4n+1),
+    .#{$namespace}col-1-5:nth-child(5n+1),
+    .#{$namespace}col-1-6:nth-child(6n+1),
+    .#{$namespace}col-2-6:nth-child(3n+1),
+    .#{$namespace}col-3-6:nth-child(2n+1),
+    .#{$namespace}col-2-8:nth-child(4n+1),
+    .#{$namespace}col-4-8:nth-child(2n+1),
+    .#{$namespace}col-5-10:nth-child(2n+1),
+    .#{$namespace}col-1-12:nth-child(12n+1),
+    .#{$namespace}col-2-12:nth-child(6n+1),
+    .#{$namespace}col-3-12:nth-child(4n+1),
+    .#{$namespace}col-4-12:nth-child(3n+1),
+    .#{$namespace}col-6-12:nth-child(2n+1),
+    .#{$namespace}col-1:nth-child(12n+1),
+    .#{$namespace}col-2:nth-child(6n+1),
+    .#{$namespace}col-3:nth-child(4n+1),
+    .#{$namespace}col-4:nth-child(3n+1),
+    .#{$namespace}col-6:nth-child(2n+1)    { clear: both; }
+  }
+}
+
+@mixin device-helper($namespace:"") {
+  .#{$namespace}hidden        { display: none!important; }
+
+  .#{$namespace}text-left     { text-align: left!important; }
+  .#{$namespace}text-right    { text-align: right!important; }
+  .#{$namespace}text-center   { text-align: center!important; }
+  .#{$namespace}text-justify   { text-align: justify!important; }
+
+  .#{$namespace}img-left {
+    display: block; margin-left: 0; margin-right: auto;
+  }
+  .#{$namespace}img-right {
+    display: block; margin-left: auto; margin-right: 0;
+  }
+  .#{$namespace}img-center {
+    display: block; margin-left: auto; margin-right: auto;
+  }
+
+
+  .#{$namespace}pull-left     { float: left!important; }
+  .#{$namespace}pull-right    { float: right!important; }
+}
+
+@include device-type();
+@include device-helper();
+@include clearfix-helper();
+
+@each $name in $breakpoint-has-widths {
+  @include grid-media-query($name) {
+    @include device-type('#{$name}--');
+    @include device-helper('#{$name}--');
+    @include clearfix-helper('#{$name}--');
+  }
+}

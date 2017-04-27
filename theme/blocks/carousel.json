@@ -1,0 +1,118 @@
+{
+    "name": "blocks/carousel",
+    "title": "幻灯片",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0t1tt55os1i0n14pmebt04-slider.jpg",
+    "settings_schema": [
+        {
+            "title": "两边是否留白",
+            "id": "carousel_container",
+            "type": "Selection",
+            "options": [
+                { "text": "是", "value": true },
+                { "text": "不是", "value": false}
+            ]
+        },
+        {
+            "title": "设置",
+            "id":"carousel",
+            "type": "Array",
+            "children": [
+                {
+                    "title": "PC版图片",
+                    "id":"image",
+                    "type": "Image"
+                },
+                {
+                    "title": "手机版图片",
+                    "id":"image_small",
+                    "type": "Image"
+                },
+                {
+                    "title": "幻灯片标题",
+                    "id":"carousel_title",
+                    "type": "Text"
+                },
+                {
+                    "title": "幻灯片文字",
+                    "id":"carousel_description",
+                    "type": "Text"
+                },
+                {
+                    "title": "标题链接(站内地址请填如『/search』，站外地址请填写完整路径如『http://www.heidianer.com』)",
+                    "id": "link",
+                    "type": "Text"
+                },
+                {
+                    "type": "Color",
+                    "id":"text_color",
+                    "title": "文字颜色"
+                }
+            ],
+            "limit": 10
+        },
+        {
+            "title": "切换时间",
+            "id":"interval",
+            "type": "Range",
+            "max": 10000,
+            "step": 500
+        },
+        {
+            "type": "Number",
+            "id":"block_height",
+            "title": "PC端板块高度(像素)"
+        },
+        {
+            "type": "Selection",
+            "id":"text_align",
+            "title": "文字排列",
+            "options": [
+                { "text": "左右", "value": "leftright" },
+                { "text": "上下", "value": "updown" }
+            ]
+        },
+        {
+            "type": "Selection",
+            "id":"arrow_style",
+            "title": "箭头样式",
+            "options": [
+                { "text": "长箭头", "value": "long" },
+                { "text": "短箭头", "value": "angle" },
+                { "text": "无", "value": "none" }
+            ]
+        },
+        {
+            "type": "Selection",
+            "id":"navigation_style",
+            "title": "分页导航样式",
+            "options": [
+                { "text": "圆形靠右下", "value": "bullets_right" },
+                { "text": "圆形靠下", "value": "bullets_bottom" },
+                { "text": "标签页", "value": "tab" },
+                { "text": "无", "value": "none" }
+            ]
+        }
+    ],
+    "settings_data": {
+        "carousel_container": false,
+        "block_height": 300,
+        "interval": 2000,
+        "text_align": "leftright",
+        "arrow_style": "angle",
+        "navigation_style": "tab",
+        "carousel": [{
+            "image": "http://up.img.heidiancdn.com/o_1b3bsnfqcc4r18nfvkk118f1m1k0banner0.jpeg",
+            "carousel_title": "花重锦官城",
+            "carousel_description": "花非花，雾非雾，夜半来，天明去。来如春梦不多时，去似朝云无觅处。花非花，雾非雾，夜半来，天明去。",
+            "text_color": "white"
+        }, {
+            "image": "http://up.img.heidiancdn.com/o_1b3bsnfqdnj45127svk8mar50banner2.jpg",
+            "carousel_title": "花重锦官官",
+            "carousel_description": "花非花，雾非雾，夜半来，天明去。来如春梦不多时，去似朝云无觅处。花非花，雾非雾，夜半来，天明去。",
+            "text_color": "white"
+        }]
+    },
+    "metafield": {
+        "category": "image"
+    }
+}

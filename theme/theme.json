@@ -1,0 +1,148 @@
+{
+    "id": 3260,
+    "name": "rush-uirush",
+    "title": "UI Rush",
+    "author": "Jing@HeyShop",
+    "layouts": [
+        "default"
+    ],
+    "locales": ["zh", "en"],
+    "language": "zh",
+    "blocks": [
+        "hero",
+        "video",
+        "hero_video",
+        "header",
+        "cta",
+        "features",
+        "team",
+        "logos",
+        "gallery",
+        "contact",
+        "carousel",
+        "featured_articles",
+        "featured_products",
+        "featured_collections",
+        "featured_customize",
+        "featured_products_customize",
+        "cart",
+        "page_body",
+        "article_single",
+        "article_list",
+        "collection_single",
+        "collection_list",
+        "product_single",
+        "product_list",
+        "footer_simple",
+        "footer",
+        "text_image_fullheight",
+        "text_image_fixheight",
+        "text_rows",
+        "text_columns",
+        "text_simple",
+        "image",
+        "blank"
+    ],
+    "assets": [
+        "images/app-icon.png",
+        "images/loading.png",
+        "javascripts/theme.min.js",
+        "javascripts/vendor/swiper.min.js",
+        "javascripts/vendor/masonry.pkgd.min.js",
+        "javascripts/vendor/jquery.simplePagination.js",
+        "stylesheets/styles.css.njk",
+        "stylesheets/customize.css.njk",
+        "stylesheets/vendor/swiper.min.css",
+        "fonts/icomoon_rush.svg",
+        "fonts/icomoon_rush.eot",
+        "fonts/icomoon_rush.ttf",
+        "fonts/icomoon_rush.woff",
+        "fonts/icomoon_rush.woff2",
+        "fonts/bal10/bal10-light-webfont.eot",
+        "fonts/bal10/bal10-light-webfont.svg",
+        "fonts/bal10/bal10-light-webfont.ttf",
+        "fonts/bal10/bal10-light-webfont.woff",
+        "fonts/bal10/bal10-light-webfont.woff2",
+        "fonts/montserrat/montserrat-bold-webfont.eot",
+        "fonts/montserrat/montserrat-bold-webfont.svg",
+        "fonts/montserrat/montserrat-bold-webfont.ttf",
+        "fonts/montserrat/montserrat-bold-webfont.woff",
+        "fonts/montserrat/montserrat-bold-webfont.woff2",
+        "fonts/montserrat/montserrat-light-webfont.eot",
+        "fonts/montserrat/montserrat-light-webfont.svg",
+        "fonts/montserrat/montserrat-light-webfont.ttf",
+        "fonts/montserrat/montserrat-light-webfont.woff",
+        "fonts/montserrat/montserrat-light-webfont.woff2",
+        "fonts/montserrat/montserrat-regular-webfont.eot",
+        "fonts/montserrat/montserrat-regular-webfont.svg",
+        "fonts/montserrat/montserrat-regular-webfont.ttf",
+        "fonts/montserrat/montserrat-regular-webfont.woff",
+        "fonts/montserrat/montserrat-regular-webfont.woff2",
+        "fonts/oswald/oswald-bold-webfont.eot",
+        "fonts/oswald/oswald-bold-webfont.svg",
+        "fonts/oswald/oswald-bold-webfont.ttf",
+        "fonts/oswald/oswald-bold-webfont.woff",
+        "fonts/oswald/oswald-bold-webfont.woff2",
+        "fonts/oswald/oswald-light-webfont.eot",
+        "fonts/oswald/oswald-light-webfont.svg",
+        "fonts/oswald/oswald-light-webfont.ttf",
+        "fonts/oswald/oswald-light-webfont.woff",
+        "fonts/oswald/oswald-light-webfont.woff2",
+        "fonts/oswald/oswald-regular-webfont.eot",
+        "fonts/oswald/oswald-regular-webfont.svg",
+        "fonts/oswald/oswald-regular-webfont.ttf",
+        "fonts/oswald/oswald-regular-webfont.woff",
+        "fonts/oswald/oswald-regular-webfont.woff2"
+    ],
+    "presets": [
+        "default"
+    ],
+    "current_preset": "default",
+    "settings_schema": {
+        "menu": {
+            "type": "Navigation"
+        },
+        "footmenu": {
+            "type": "Navigation"
+        },
+        "wechat": {
+            "type": "Image"
+        },
+        "weibo": {
+            "type": "Text"
+        },
+        "douban": {
+            "type": "Text"
+        },
+        "header_color": {
+            "type": "Selection",
+            "options": [{
+                "text": "浅色",
+                "value": "light"
+            }, {
+                "text": "深色",
+                "value": "dark"
+            }, {
+                "text": "主配色",
+                "value": "colored"
+            }]
+        },
+        "header_image": {
+            "type": "Image"
+        },
+        "footer_image": {
+            "type": "Image"
+        },
+        "footer_image_height": {
+            "type": "Number"
+        },
+        "__colors__": {
+            "color-text": "文字",
+            "color-bg": "背景",
+            "color-link": "链接",
+            "color-primary": "主色（品牌色）",
+            "color-secondary": "辅色（建议和主色统一色相）",
+            "color-btn-text": "按钮文字"
+        }
+    }
+}

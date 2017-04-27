@@ -1,0 +1,45 @@
+{
+    "name": "blocks/collection_single",
+    "permanent": true,
+    "title": "专题详情",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "sidebar": true,
+                "badge": false,
+                "button": "both",
+                "column_count": 3
+            }, {
+                "__layout__": "B",
+                "sidebar": true,
+                "badge": true,
+                "button": "add_to_cart",
+                "column_count": 2
+            }, {
+                "__layout__": "C",
+                "sidebar": true,
+                "badge": true,
+                "button": "quick_view",
+                "column_count": 3
+            }, {
+                "__layout__": "D",
+                "sidebar": true,
+                "badge": true,
+                "button": "quick_view",
+                "column_count": 3
+            }]
+        }
+    ],
+    "settings_data": {
+        "__layout__": "C",
+        "sidebar": true,
+        "badge": true,
+        "button": "quick_view",
+        "column_count": 3
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

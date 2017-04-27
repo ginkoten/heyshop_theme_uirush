@@ -1,0 +1,78 @@
+{
+    "name": "blocks/features",
+    "title": "FEATURES",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1cin1u0d11771ur47jt012-features.jpg",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "blocks": false
+            }, {
+                "__layout__": "B",
+                "blocks": true
+            }]
+        },
+        {
+            "title": "背景图(可选，仅用于样式A)",
+            "id":"cover",
+            "type": "Image"
+        },
+        {
+            "title": "标题(字数不宜过长)",
+            "id":"title",
+            "type": "Text"
+        },
+        {
+            "title": "简介(字数不宜过长)",
+            "id":"description",
+            "type": "Text"
+        },
+        {
+            "title": "设置",
+            "type": "Array",
+            "id": "items",
+            "children": [
+                {
+                    "title": "图标(建议尺寸为60x60的png或者svg)",
+                    "id": "icon",
+                    "type": "Image"
+                },
+                {
+                    "title": "标题",
+                    "id": "item_title",
+                    "type": "Text"
+                },
+                {
+                    "title": "简介",
+                    "id": "item_description",
+                    "type": "Text"
+                }
+            ],
+            "limit": 3
+        }
+    ],
+    "settings_data": {
+        "__layout__": "A",
+        "blocks": false,
+        "cover": "http://up.img.heidiancdn.com/material/o_1ap29jm63p7o1kae1fv7iql42m0%E5%B9%B3%E9%93%BA%E7%89%A9%E5%93%81.jpeg?imageView2/1/w/800/h/800/ignore-error/1",
+        "title": "我们提供免费升级与终身维护",
+        "description": "我们的数据分析师曾长期在美为实验室提供基因数据分析支持。",
+        "items": [{
+            "icon": "http://up.img.heidian.co/hd-theme-rush-icon-twitter.svg",
+            "item_title": "HTML5 / CSS3",
+            "item_description": "全球建站的最新利器，加载快，延展性强，动态效果完美，突破全新视觉体验。"
+        }, {
+            "icon": "http://up.img.heidian.co/hd-theme-rush-icon-weibo.svg",
+            "item_title": "海外技术支持",
+            "item_description": "拥有高端设计与先进技术的支持，时刻保持全球建站行业的领先水平。"
+        }, {
+            "icon": "http://up.img.heidian.co/hd-theme-rush-icon-linkedin.svg",
+            "item_title": "更了解用户需求",
+            "item_description": "我们严格控制项目数量，拒绝量产，只做精品，提供完善周全的售后服务。"
+        }]
+    },
+    "metafield": {
+        "category": "text"
+    }
+}

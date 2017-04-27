@@ -1,0 +1,157 @@
+{% asyncset results = menu.query(global.footmenu) %}
+
+
+{% macro copyright(name='', align='left', styles={}) %}
+<div class="footer__copyright small-up--text-{{align}} small--text-center">
+  Copyright © 2017. By <span class="footer__shopname">{{shop.title}}</span> All Rights Reserved.
+  <a href="http://www.miitbeian.gov.cn/">{{shop.beian_number|safe}}</a>
+</div>
+{% endmacro %}
+
+{% macro social(name='', align='left', styles={}) %}
+{% set text = "text" in name.split('_') or false %}
+
+<div class="footer__social{{'--text' if text}} small-up--text-{{align}} small--text-center">
+  {% if shop.weixin_qr %}
+  <a href="javascript:void(0);" class="footer__social--link footer__wechat">
+    <i class="icon-wechat"></i> {{'&nbsp;微信'|safe if text}}
+    <div class="footer__wechat--qrcode img" data-bg-src="{{shop.weixin_qr|optimize(250)}}"></div>
+  </a>
+  {% endif %}
+  {% if shop.weibo_id %}
+  <a href="{{shop.weibo_id}}" class="footer__social--link">
+    <i class="icon-weibo"></i> {{'&nbsp;微博'|safe if text}}
+  </a>
+  {% endif %}
+</div>
+
+{% endmacro %}
+
+{# {% macro logo(name='', align='left', styles={}) %}
+<div class="footer__logo--area">
+  {% if shop.theme.settings_data.footer_image %}
+  <img class="footer__logo--img img small-up--img-{{align}} small--img-center" data-src="{{shop.theme.settings_data.footer_image|optimize(500)}}"
+        style="height: {{shop.theme.settings_data.footer_image_height}}px">
+  </img>
+  {% endif %}
+
+  {% if 'slogan' in name.split('_') %}
+    <div class="footer__slogan small-up--text-{{align}} small--text-center">
+      {{shop.slogan}}
+    </div>
+  {% endif %}
+
+  {% if 'social' in name.split('_') %}
+    {{ social('social', align, styles) }}
+  {% endif %}
+
+</div>
+
+{% endmacro %} #}
+
+{% macro menu(name='', align='left', styles={}, limit=3) %}
+  {% set complicated = 'complicated' in name.split('_') or false %}
+
+  {# it's simple and aligned in a row #}
+    <div class="footer__menu footer__menu--{{name.split('_')[1]}} footer__menu--singlecol small-up--text-{{align}} small--text-center">
+
+    {% for item in results %}
+            <a class="footer__menu--link footer__menu--main" href="{{item.url}}" >{{item.title}}</a>
+    {% endfor %}
+
+    </div>
+  {# {% endif %} #}
+
+{% endmacro %}
+
+
+
+
+{# layout #}
+{% component dataEditable="footer_simple"%}
+<div class="footer--{{settings_data.colorstyle}} footer--simple
+footer--simple--{% if settings_data.left_right %}lr{% else %}center{% endif %}" style="background-color:{% if settings_data.colorstyle == 'dark' %}black; {% else %}white;{% endif %}">
+    <div class="{{settings_data.container}} container--footer">
+      {# left-right
+        preference:
+        1. menu_simple social
+                copyright
+        2. copyright social
+        3. copyright menu_simple
+        4.      copyright
+       #}
+      {% if settings_data.left_right %}
+      {% set contentNum = 0 %}
+      {% set footerend = false %}
+        <div class="grid--rev footer__row">
+          {% if settings_data.social %}
+            {% set contentNum = contentNum + 1 %}
+            <div class="grid__item small-up--col-1-2">
+              {{ social("social", "right", {}) }}
+            </div>
+          {% endif %}
+
+          {% if settings_data.menu_simple %}
+            {% set contentNum = contentNum + 1 %}
+            <div class="grid__item small-up--col-1-2">
+              {% if contentNum != 2 %}
+              {{ menu("menu_simple", 'right' , {}, 1) }}
+              {% else %}
+              {{ menu("menu_simple", 'left' , {}, 1) }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if contentNum == 1 %}
+            {% set footerend = true %}
+            <div class="grid__item small-up--col-1-2">
+              {{ copyright("copyright", 'left' , {}) }}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if not footerend %}
+          <div class="grid footer__row">
+            <div class="grid__item small-up--col-1-1">
+              {{ copyright("copyright", 'center' , {}) }}
+            </div>
+          </div>
+        {% endif %}
+
+      {% else %}
+      {# center
+        preference:
+         social
+         menu_simple
+         copyright
+       #}
+
+          {% if settings_data.social %}
+          <div class="grid footer__row">
+            <div class="grid__item small-up--col-1-1">
+              {{ social("social", "center", {}) }}
+            </div>
+          </div>
+          {% endif %}
+
+          {% if settings_data.menu_simple %}
+          <div class="grid footer__row">
+            <div class="grid__item small-up--col-1-1">
+              {{ menu("menu_simple", 'center' , {}, 1) }}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="grid footer__row">
+            <div class="grid__item small-up--col-1-1">
+              {{ copyright("copyright", 'center' , {}) }}
+            </div>
+          </div>
+
+      {% endif %}
+    </div>
+</div>
+    {% script %}
+
+    {% endscript %}
+{% endcomponent %}

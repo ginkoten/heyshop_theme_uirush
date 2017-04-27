@@ -1,0 +1,58 @@
+{% component dataEditable="image" %}
+{% set image_desktop_show = settings_data.image_desktop_show or false %}
+{% set image_mobile_show = settings_data.image_mobile_show or false %}
+{% if image_mobile_show %}
+    {% set image_mobile_inherit = image_mobile_customize or false %}
+{% else %}
+    {% set image_mobile_inherit = false %}
+{% endif %}
+
+
+{% set image_desktop = settings_data.image_desktop %}
+{% set image_desktop_proportion = settings_data.image_desktop_proportion | float %}
+{% if image_desktop_proportion and image_desktop_proportion >= 0.1 and image_desktop_proportion <= 10 %}
+    {% set image_desktop_padding_top = 100 / (image_desktop_proportion) %}
+{% else %}
+    {% set image_desktop_padding_top = 61.8 %}
+{% endif %}
+{% if image_desktop_show and image_desktop %}
+{% if settings_data.link %}<a href="{{settings_data.link}}">{% endif %}
+    <div class="{{"small--hidden" if not image_mobile_inherit}}">  
+        {% set image_desktop_display = settings_data.image_desktop_display or "front" %}
+        {% if image_desktop_display == "front" %}
+            <img class="hdimg--full" data-src="{{image_desktop|optimize(2000)}}"></img>
+        {% else %}
+            <div class="hdimg--background" data-bg-src="{{image_desktop|optimize(2000)}}"
+                style="min-height: {{settings_data.image_desktop_minheight or 100}}px;
+                       padding-top: {{image_desktop_padding_top}}%;"
+            ></div>
+        {% endif %}
+    </div>
+{% if settings_data.link %}</a>{% endif %}
+{% endif %}
+
+
+{% set image_mobile = settings_data.image_mobile or image_desktop %}
+{% set image_mobile_proportion = settings_data.image_mobile_proportion | float %}
+{% if image_mobile_proportion and image_mobile_proportion >= 0.1 and image_mobile_proportion <= 10 %}
+    {% set image_mobile_padding_top = 100 / (image_mobile_proportion) %}
+{% else %}
+    {% set image_mobile_padding_top = 61.8 %}
+{% endif %}
+{% if image_mobile_show and (not image_mobile_inherit) and image_mobile %}
+{% if settings_data.link %}<a href="{{settings_data.link}}">{% endif %}
+    <div class="small-up--hidden">  
+        {% set image_mobile_display = settings_data.image_mobile_display or "front" %}
+        {% if image_mobile_display == "front" %}
+            <img class="hdimg--full" data-src="{% if image_mobile == image_desktop %} {{image_mobile|optimize(2000)}} {% else %} {{image_mobile|optimize(600)}} {% endif %}"></img>
+        {% else %}
+            <div class="hdimg--background" data-bg-src="{% if image_mobile == image_desktop %} {{image_mobile|optimize(2000)}} {% else %} {{image_mobile|optimize(600)}} {% endif %}"
+                style="min-height: {{settings_data.image_mobile_minheight or 100}}px;
+                       padding-top: {{image_mobile_padding_top}}%;"
+            ></div>
+        {% endif %}
+    </div>
+{% if settings_data.link %}</a>{% endif %}
+{% endif %}
+
+{% endcomponent %}

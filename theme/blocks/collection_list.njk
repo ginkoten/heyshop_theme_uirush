@@ -1,0 +1,177 @@
+{% set pagination %}
+    {# {% if paginate.pages > 1 %}
+    <div class="pagination">
+      {% if paginate.prev %}
+        <span class="page prev">
+          <a href="{{paginate.prev.url}}"><i class="pagination__prev icon-arrow-left5"></i></a>
+        </span>
+      {% endif %}
+      {% for item in paginate.items %}
+        <span class="page {{'current' if item.page == paginate.current_page}}">
+          <a href="{{item.url}}">{{item.page}}</a>
+        </span>
+      {% endfor %}
+      {% if paginate.next %}
+        <span class="page next">
+          <a href="{{paginate.next.url}}"><i class="pagination__next icon-arrow-right5"></i></a>
+        </span>
+      {% endif %}
+    </div>
+    {% endif %} #}
+{% endset %}
+
+{% component dataEditable="collection_list" %}
+{% if settings_data.__layout__ == "B" %}
+    <div class="container--collections collections collections--{{settings_data.__layout__}} small--hidden" style="background-color: {{settings_data.color_bg or '#f6f6f7'}}; {% if paginate.pages > 1 %}padding-bottom: 30px;{% endif %}">
+    {% set cls = cycler("odd", "even") %}
+      {% for collection in collections %}
+      <div class="collections__item" {% if loop.index != 1 %}heyshop-animation="heyshop-animation-fadeInUp"{% endif %}>
+        <div class="image-wrapper--wide">
+          <img class="img collections__img" data-src-scroll{{ "-1" if loop.index == 1 }}="{{collection.image|optimize(800)}}"></img>
+        </div>
+        <div class="collections__caption collections__caption--{{cls.next()}}">
+            <div class="caption-wrapper">
+                <h3 class="collections__title text-center">{{collection.title}}</h3>
+
+                <a class="collections__btn btn--pill needsclick"
+                    href="/collections/{{collection.name}}">查看详情</a>
+
+                <div class="text-center">SHOP THIS COLLECTION</div>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    {# {{pagination|safe}} #}
+    <div class="pagination"></div>
+    </div>
+
+
+    <div class="container--collections collections collections--A small-up--hidden"  style="background-color: {{settings_data.color_bg or '#f6f6f7'}}; {% if paginate.pages > 1 %}padding-bottom: 30px;{% endif %}">
+
+    {% for collection in collections %}
+        <div class="grid--full {{'grid--rev' if loop.index % 2 == 0}}" {% if loop.index != 1 %}{# heyshop-animation="heyshop-animation-fadeInUp" #}{% endif %}>
+            <div class="grid__item small-up--col-1-2">
+                <div class="image-wrapper--wide">
+                  <div class="img collections__img" data-bg-src="{{collection.image|optimize(800)}}"></div>
+                </div>
+            </div>
+            <div class="grid__item small-up--col-1-2 cap">
+                <div class="collections__caption">
+                    <h3 class="collections__title small--text-center">{{collection.title}}</h3>
+                    <p class="small--text-center">{{collection.description|truncate(150, true)}}</p>
+                    <a class="collections__btn btn needsclick"
+                        href="/collections/{{collection.name}}">查看详情</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {# {{pagination|safe}} #}
+    <div class="pagination"></div>
+    </div>
+    {% script %}
+    var loadImages = _.throttle(function() {
+        $el.find("[data-src-scroll]").each(function() {
+            if ($(this).offset().top < $(window).scrollTop() + 800) {
+                $(this).off("load");
+                $(this).on("load", function() {
+                    var window_width = $(window).width() * 2;
+                    var img_width = $(this).width();
+                    if (img_width < 100)
+                        return;
+                    var times = Math.ceil(window_width / img_width);
+                    $(this).css("opacity", 1);
+                    for (var i = 0; i < times + 1; i++) {
+                        $(this).parent().append($(this).clone());
+                    }
+                    $(this).parent().css("width", (times + 1) * img_width);
+                });
+                $(this).attr("src", $(this).attr("data-src-scroll"))
+                       .removeAttr("data-src-scroll");
+
+            }
+        });
+    },200);
+    var loadFirst = function() {
+        if ($el.find("[data-src-scroll-1]").length >= 1) {
+            var $image = $($el.find("[data-src-scroll-1]")[0]);
+            $image.on("load", function() {
+                var window_width = $(window).width() * 2;
+                var img_width = $image.width();
+                if (img_width < 100)
+                    return;
+                var times = Math.ceil(window_width / img_width);
+                $image.css("opacity", 1);
+                for (var i = 0; i < times + 1; i++) {
+                    $image.parent().append($image.clone());
+                }
+                $image.parent().css("width", (times + 1) * img_width);
+            });
+            $image.attr("src", $image.attr("data-src-scroll-1"))
+                  .removeAttr("data-src-scroll-1");
+        }
+    }
+    loadFirst();
+    $(window).on("scroll", loadImages);
+    loadImages();
+    {# $el.find(".collections__img").each(function() {
+      var window_width = $(window).width() * 2;
+      var img_width = $(this).width();
+      if (img_width < 100) return;
+      var times = Math.ceil(window_width / img_width);
+      for (var i = 0; i < times; i++) {
+        $(this).parent().append($(this).clone());
+      }
+      $(this).parent().css("width", (times + 1) * img_width);
+    }); #}
+    {% endscript %}
+{% else %}
+    <div class="container--collections collections collections--{{settings_data.__layout__}}"  style="background-color: {{settings_data.color_bg or '#f6f6f7'}}; {% if paginate.pages > 1 %}padding-bottom: 30px;{% endif %}">
+
+    {% for collection in collections %}
+        <div class="grid--full {{'grid--rev' if loop.index % 2 == 0}}" {% if loop.index != 1 %}{# heyshop-animation="heyshop-animation-fadeInUp" style="opacity: 0;"  #}{% endif %} >
+            <div class="grid__item small-up--col-1-2">
+                <div class="image-wrapper--wide">
+                  <div class="img collections__img" data-bg-src="{{collection.image|optimize(800)}}"></div>
+                </div>
+            </div>
+            <div class="grid__item small-up--col-1-2 cap">
+                <div class="collections__captionwrapper">
+                <div class="collections__caption">
+                    <h3 class="collections__title small--text-center">{{collection.title}}</h3>
+                    <p class="small--text-center">{{collection.description|truncate(150, true)}}</p>
+                    <a class="collections__btn btn"
+                        href="/collections/{{collection.name}}">查看详情</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {# {{pagination|safe}} #}
+    <div class="pagination"></div>
+    </div>
+
+{% endif %}
+{% script %}
+{########################### Init Paginations ################################}
+var totalPages = {{paginate.pages}};
+$el.find('.pagination').pagination({
+    pages: totalPages,
+    hrefTextPrefix: '/collections?page=',
+    itemsOnPage: 10,
+    selectOnClick: false,
+    ellipsePageSet: false,
+    {% if paginate.prev %}
+    prevText: '<i class="pagination__prev icon-arrow-left5"></i>',
+    {% else %}
+    prevText: '',
+    {% endif %}
+    {% if paginate.next %}
+    nextText: '<i class="pagination__next icon-arrow-right5"></i>',
+    {% else %}
+    nextText: '',
+    {% endif %}
+    currentPage: {{paginate.current_page}}
+});
+
+{% endscript %}
+{% endcomponent %}

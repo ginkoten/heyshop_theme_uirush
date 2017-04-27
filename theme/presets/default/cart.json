@@ -1,0 +1,15 @@
+{
+    "settings_data": {
+        "components": [{
+            "name": "blocks/header",
+            "settings_data": {
+                "__layout__": "A",
+                "has_opacity": false
+            }
+        }, {
+            "name": "blocks/cart"
+        }, {
+            "name": "blocks/footer"
+        }]
+    }
+}

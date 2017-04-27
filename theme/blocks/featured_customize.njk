@@ -1,0 +1,25 @@
+{% from "blocks/featured_products_customize" import customize_grid_image_link_item %}
+
+{% component dataEditable="featured_customize" %}
+    {% asyncset results = products.query(settings_data.products) %}
+    {% if settings_data.columns == 1 %}
+        {% set className = 'medium-up--col-1-1 medium-down--col-1-1' %}
+    {% elif settings_data.columns == 2 %}
+        {% set className = 'medium-up--col-1-2 medium-down--col-1-1' %}
+    {% elif settings_data.columns == 3 %}
+        {% set className = 'medium-up--col-1-3 medium-down--col-1-1' %}
+    {% else %}
+        {% set className = 'medium-up--col-1-4 medium--col-1-2 small--col-1-1' %}
+    {% endif %}
+    <div class="container container--featured_customize">
+        <div class="grid-uniform">
+            {% for item in settings_data.items %}
+                <div class="grid__item customize_featured_products_item-image-wrapper {{ className }} ">
+                    {{ customize_grid_image_link_item(item.item_image, item.item_title, item.item_link, settings_data.effect) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% script %}
+    {% endscript %}
+{% endcomponent %}

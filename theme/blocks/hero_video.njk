@@ -1,0 +1,255 @@
+{% from 'blocks/hero' import HeroAffixLogo, heroAffixNavbar, heroCartWrapper, heroNavbar, barsWrapper %}
+
+{% component %}
+    {% asyncset results = menu.query(global.menu) %}
+    {% set header_image = settings_data.header_image or shop.theme.settings_data.header_image %}
+    {% if settings_data.__layout__ == "A" %}
+        {% set data_layout = {
+                layout_name: "A",
+                collapsed: false,
+                logo_left: true,
+                nav_position: "left",
+                pagination_style: "lines",
+                link_btn_outline: false,
+                link_btn_radius: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "B" %}
+        {% set data_layout = {
+                layout_name: "B",
+                collapsed: false,
+                logo_left: false,
+                nav_position: "left",
+                pagination_style: "lines",
+                link_btn_outline: true,
+                link_btn_radius: true
+            }
+        %}
+
+    {% else %}
+        {% set data_layout = {
+                layout_name: "C",
+                collapsed: true,
+                logo_left: false,
+                nav_position: "left",
+                pagination_style: "lines",
+                link_btn_outline: true,
+                link_btn_radius: false
+            }
+        %}
+    {% endif %}
+
+  <div class="theme-hero">
+
+    <div class="js-hero-swiper swiper-container">
+      <div class="swiper-wrapper">
+        {% if settings_data.video.src %}
+          <div class="swiper-slide">
+            <div class="swiper-video-wrapper">
+              <div class="video-wrapper small--hidden" style="width: 100vw;height: 100vh;overflow: hidden;position: relative;padding-bottom: 0;">
+                <video preload style="min-width: 100%;min-height: 100%;" loop>
+                      <source src="{{settings_data.video.src}}" type="video/mp4">
+                </video>
+              </div>
+
+              <div class="js-video-poster img small-up--hidden" data-bg-src="{{ settings_data.video_poster|image_url(1000) or (settings_data.video.src + '?vframe/jpg/offset/0/') }}" style="width: 100vw;height: 100vh;">
+                    {# <div class="play-pause">
+                      <i class="btn--play icon-music-player" aria-hidden="true"></i>
+                    </div> #}
+              </div>
+              <div class="carousel__caption caption-layout--{{data_layout.layout_name}} {{ 'has-border-top' if (settings_data.video_title or settings_data.video_description) }}" style="z-index: 1; color: {{settings_data.text_color or '#fff' }};">
+                {% if settings_data.video_title %}
+                  <h2 class="caption__title" style="color: {{settings_data.text_color or '#fff'}};">{{settings_data.video_title}}</h2>
+                {% endif %}
+
+                {% if settings_data.video_description %}
+                  <div class="caption__description small--hidden no-button" style="color: {{settings_data.text_color or '#fff'}};">{{settings_data.video_description|truncate(100, true)}}</div>
+                  <div class="caption__description small-up--hidden" style="color: {{settings_data.text_color or '#fff'}};">{{settings_data.video_description|truncate(50, true)}}</div>
+                {% endif %}
+              </div>
+              <div class="video-controls controls-layout--{{data_layout.layout_name}} {{ ' hidden' if not settings_data.enable_pause }}">
+                <div class="play-pause">
+                  <i class="btn--play icon-music-player" aria-hidden="true"></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {{ heroNavbar(data_layout, results, header_image, settings_data) }}
+  </div>
+  {% script %}
+
+    var $carousel = $el.find('.js-hero-swiper');
+    var allow_pause = {{settings_data.enable_pause or false}};
+
+    {# --------------------- toggle fixed navigation -------------------- #}
+
+    var toggleAffix = _.throttle(function() {
+        var $affix = $el.find('.js-affix');
+        var gap = $affix.offset().top;
+        var scrollTop = $(window).scrollTop();
+        var screen_width = $(window).width();
+
+        if(screen_width > 480) {
+            if (scrollTop >= gap) {
+                $affix.find('.navbar').addClass('navbar--fixed');
+                $affix.find('.navbar').css({
+                    "background-color": '{{settings_data.fixed_navbar_bg or '#000'}}'
+                });
+                $el.find('.js-affix-show.hidden').removeClass('hidden');
+                $el.find('.js-affix-hide').addClass('hidden');
+                $el.find('.js-affix-invisible').addClass('invisible');
+            } else {
+                $affix.find('.navbar').removeClass('navbar--fixed');
+                $affix.find('.navbar').css({
+                    "background-color": 'transparent'
+                });
+                $el.find('.js-affix-show').addClass('hidden');
+                $el.find('.js-affix-hide.hidden').removeClass('hidden');
+                $el.find('.js-affix-invisible').removeClass('invisible');
+            }
+        }else {
+            $affix.find('.navbar').addClass('navbar--fixed');
+            $affix.find('.navbar').css({
+                "background-color": '{{settings_data.fixed_navbar_bg or '#000'}}'
+            });
+            $el.find('.js-affix-show.hidden').removeClass('hidden');
+            $el.find('.js-affix-hide').addClass('hidden');
+            $el.find('.js-affix-invisible').addClass('invisible');
+        }
+    }, 50);
+    toggleAffix();
+    $(window).scroll(toggleAffix);
+
+
+    var video = $carousel.find('.swiper-video-wrapper video') && $carousel.find('.swiper-video-wrapper video')[0];
+
+    {# var heroSwiper = new Swiper($carousel, {
+      effect: 'fade',
+      simulateTouch: false,
+      onTransitionStart: function(swiper) {
+        video && video.pause();
+        $carousel.find('.play-pause').removeClass('playing');
+      },
+      breakpoints: {
+        480: {
+          simulateTouch: true
+        }
+      }
+    }); #}
+
+    {# ------------------------- video in home slide ------------------------ #}
+
+    if (Detectizr.device.type == 'desktop') {
+      if(video.paused) {
+        video.play();
+      }
+    } else if(!video.paused) {
+      video.pause()
+      {# $el.find(".video-wrapper").removeClass('small--hidden'); #}
+      {# $el.find(".js-video-poster").addClass('small--hidden'); #}
+    }else {
+
+    }
+
+    var autoPlayVideo = function() {
+      if(video.paused) {
+        if(Detectizr.device.type != 'desktop' && Detectizr.device.model != 'android') {
+            video.play();
+        }
+      }
+
+    }
+
+    {# $el.on('click', '.js-video-poster', autoPlayVideo); #}
+
+    video && video.addEventListener('ended', function() {
+      video.pause();
+      $carousel.find('.video-controls .play-pause').removeClass('playing');
+    }, false);
+
+    $carousel.on('click', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      if(video && allow_pause) {
+          if(video.paused) {
+            $carousel.find('.video-controls .play-pause').addClass('playing');
+            video.play();
+          }else {
+            video.pause();
+            {# heroSwiper.startAutoplay(); #}
+            $carousel.find('.video-controls .play-pause').removeClass('playing');
+          }
+      }
+
+    });
+
+    $el.on('click', '.js-hero__btn--readmore', function() {
+      $('body').animate({
+          scrollTop: $carousel.outerHeight()
+      }, 700);
+    });
+
+    function scaleHeroVideoSize(element){
+
+      var windowWidth = $(window).width(),
+      windowHeight = $(window).height() + 5,
+      videoWidth,
+      videoHeight;
+
+      $(element).each(function(){
+        $(this).width(windowWidth);
+
+        if(windowWidth < 1000){
+            videoHeight = windowHeight;
+            videoWidth = windowWidth;
+            $(this).css({'margin-top' : 0, 'margin-left' : 0});
+
+            $(this).width(videoWidth).height(videoHeight);
+        }
+
+      });
+    }
+
+    $(window).on('resize', function() {
+    });
+
+
+    {# ------------------------------- Navbar ------ ------------------------ #}
+
+    $el.on('click', '.js-open-drawer', function() {
+        Rush.drawerLeft.open();
+    });
+    $el.on('click', '.js-close-drawer', function() {
+        Rush.drawerLeft.close();
+    });
+
+    $el.on('click', '.js-open-ajaxCart', function(e) {
+        if ($('body').width() > 480) {
+            e.preventDefault && e.preventDefault();
+            Rush.ajaxCart.open($(this));
+        }else {
+            window.location.href = '/cart';
+        }
+    });
+
+    HeyShop.cart.on('change', function() {
+      $el.find('.js-cart-count').text(HeyShop.cart.count() || '0');
+    });
+
+    $el.find('.js-cart-count').text(HeyShop.cart.count() || '0');
+
+    function initActiveNav() {
+      var pathname = location.pathname;
+      _.each($el.find('.site-nav__link.level-1.has-underline'), function(nav) {
+        if($(nav).data('href') == pathname) {
+          $(nav).find('.site-nav__link--underline').addClass('active');
+        }
+      })
+    }
+    initActiveNav();
+
+  {% endscript %}
+{% endcomponent %}

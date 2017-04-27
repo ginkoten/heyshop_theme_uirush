@@ -1,0 +1,44 @@
+{% component %}
+{% set big_title = 0 %}
+{% if settings_data.section_title %}
+  {% set big_title = 1 %}
+{% endif %}
+{% set row_height = settings_data.row_height or 300 %}
+{% set columns = settings_data.columns or 1 %}
+{% set align = settings_data.align or 'left' %}
+
+{% if columns == 1 %}
+    {% set titlesize = 'medium' %}
+
+{% elif columns <= 3 %}
+    {% set titlesize = 'small' %}
+{% else %}
+    {% set titlesize = 'xsmall' %}
+{% endif %}
+<div class="container container--text-rows">
+
+    {% for paragraph_row in settings_data.paragraphs|batch(columns) %}
+        <div class="grid--full text__grid--{{align}}" style="height: {{row_height}}px;">
+        {% for paragraph in paragraph_row %}
+            <div class="grid__item small-up--col-1-{{columns}}">
+                
+                <div class="grid--full {% if align=="right" %} grid--rev {% endif %}">
+                
+                    <div class="grid__item small-up--col-1-2 text__title text__title--{{titlesize}} small-up--text-{{align}} small--text-center">
+                        {{paragraph.title or '&nbsp'|safe }}
+                    </div>
+                    <div class="grid__item small-up--col-1-2 text__content">
+                        {{paragraph.content}}
+                    </div>
+                
+                </div>
+                
+            </div>
+        {% endfor %}
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endcomponent %}

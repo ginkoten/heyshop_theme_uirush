@@ -1,0 +1,184 @@
+{
+    "settings_data": {
+      "components": [
+        {
+          "name": "blocks/header",
+          "settings_data": {
+            "__layout__": "D",
+            "header_image_height": 50
+          }
+        },
+        {
+          "name": "blocks/cta",
+          "settings_data": {
+            "style": {
+              "backgroundImage": "http://up.img.heidiancdn.com/o_1b3bsnfqdf6j1nbh13haou01r3s0banner1.jpg",
+              "backgroundPosition": "center",
+              "backgroundSize": "cover",
+              "backgroundRepeat": "no-repeat",
+              "backgroundAttachment": "fixed"
+            },
+            "btnstyle": "underline",
+            "link_text": "在线咨询",
+            "text_color": "rgba(255,255,255,1)",
+            "btn_bg_color": "rgba(255,255,255,0)",
+            "btn_text_color": "rgba(255,255,255,1)",
+            "__layout__": "D",
+            "onecolumn": true,
+            "bg_color": "rgba(255,255,255,0)",
+            "components": [],
+            "link": "/search",
+            "align": "left",
+            "color_style": "customize",
+            "btnicon": "none",
+            "help_text": "推荐商品",
+            "block_height": "500"
+          }
+        },
+        {
+          "name": "blocks/text_rows",
+          "settings_data": {
+            "components": [],
+            "paragraphs": [
+              {
+                "content": "番茄作为一种蔬菜，已被科学家证明含有多种维生素和营养成分，如番茄含有丰富的维生素C和A以及叶酸、钾这些主要的营养元素。特别是它所含的茄红素，对人体的健康更有益处，而一些水果如西瓜、柚、杏只含有少量的茄红素。西红柿在我国的引入是在晚清光绪年间，以食用名义，选择了较好的食用品种进入我国的。",
+                "title": "轻松每一天"
+              }
+            ],
+            "align": "left",
+            "columns": 1,
+            "row_height": "300",
+            "section_title": "板块标题"
+          }
+        },
+        {
+          "name": "blocks/featured_products",
+          "settings_data": {
+            "products": {
+              "page_size": "3"
+            },
+            "title": "",
+            "__layout__": "A"
+          }
+        },
+        {
+          "name": "blocks/text_rows",
+          "settings_data": {
+            "components": [],
+            "paragraphs": [
+              {
+                "content": " 目前，番茄作为一种蔬菜，已被科学家证明含有多种维生素和营养成分，如番茄含有丰富的维生素C和A以及叶酸、钾这些主要的营养元素。特别是它所含的茄红素，对人体的健康更有益处，而一些水果如西瓜、柚、杏只含有少量的茄红素。西红柿在我国的引入是在晚清光绪年间，以食用名义，选择了较好的食用品种进入我国的。在此之前，西红柿在中国，仍然只是当做一种观赏植物。",
+                "title": "养容美颜 健康饮品"
+              }
+            ],
+            "align": "left",
+            "columns": 1,
+            "section_title": "板块标题",
+            "row_height": 400
+          }
+        },
+        {
+          "name": "blocks/cta",
+          "settings_data": {
+            "style": {
+              "backgroundImage": "http://up.img.heidiancdn.com/o_1b3bsnfqdnj45127svk8mar50banner2.jpg",
+              "backgroundPosition": "center",
+              "backgroundSize": "cover",
+              "backgroundRepeat": "no-repeat",
+              "backgroundAttachment": "fixed"
+            },
+            "btnstyle": "underline",
+            "link_text": "开始购物",
+            "text_color": "rgba(255,255,255,1)",
+            "btn_bg_color": "rgba(255,255,255,0)",
+            "btn_text_color": "rgba(255,255,255,1)",
+            "__layout__": "E",
+            "onecolumn": true,
+            "bg_color": "rgba(255,255,255,0)",
+            "components": [],
+            "link": "/search",
+            "align": "right",
+            "color_style": "customize",
+            "btnicon": "none",
+            "help_text": "热销商品",
+            "block_height": "500"
+          }
+        },
+        {
+          "name": "blocks/text_simple",
+          "settings_data": {
+            "section_title": "“只愿给你最好的。”",
+            "components": [],
+            "block_height": "400",
+            "section_subtitle": "--JUICE SHOP"
+          }
+        },
+        {
+          "name": "blocks/cta",
+          "settings_data": {
+            "style": {
+              "backgroundImage": "http://up.img.heidiancdn.com/o_1b3bsnfqcc4r18nfvkk118f1m1k0banner0.jpeg",
+              "backgroundPosition": "center",
+              "backgroundSize": "cover",
+              "backgroundRepeat": "no-repeat",
+              "backgroundAttachment": "fixed"
+            },
+            "btnstyle": "underline",
+            "link_text": "开始购物",
+            "text_color": "rgba(255,255,255,1)",
+            "btn_bg_color": "rgba(255,255,255,0)",
+            "btn_text_color": "rgba(255,255,255,1)",
+            "__layout__": "D",
+            "onecolumn": true,
+            "bg_color": "rgba(255,255,255,0)",
+            "components": [],
+            "link": "/search",
+            "align": "left",
+            "color_style": "customize",
+            "btnicon": "none",
+            "help_text": "推荐商品",
+            "block_height": "500"
+          }
+        },
+        {
+          "name": "blocks/text_rows",
+          "settings_data": {
+            "components": [],
+            "paragraphs": [
+              {
+                "content": "泰国椰青喝上去很甜，但是糖度却很低。每颗椰青汁的卡路里只有20卡左右，相当于半个苹果的热量。在美味的椰汁和外壳之间有一层白色富含营养的椰肉，有效地补充人体的营养成分。开椰青是个技术活，如果没有开椰器，首先要做的就是把椰子表面的那些毛茬给拔掉，清理干净；接着就是利用一些工具的帮忙，最好选择一些有小尖头的工具；再找到椰子的正反两面，有三个小圆点的是上面，反面呢有个小尖；找到椰子的圆点，然后就用小尖头的工具轻轻一捅就能看到椰肉，再用吸管轻轻一戳即可。",
+                "title": "忽而一夏"
+              }
+            ],
+            "align": "left",
+            "columns": 1,
+            "section_title": "板块标题",
+            "row_height": 400
+          }
+        },
+        {
+          "name": "blocks/featured_products",
+          "settings_data": {
+            "products": {
+              "page_size": "2"
+            },
+            "title": "",
+            "__layout__": "B"
+          }
+        },
+        {
+          "name": "blocks/footer_simple",
+          "settings_data": {
+            "social": true,
+            "colorstyle": "light",
+            "components": [],
+            "left-right": false,
+            "container": "container",
+            "menu_simple": true,
+            "annotation": "中间布局",
+            "__layout__": "B"
+          }
+        }
+      ]
+    }
+}

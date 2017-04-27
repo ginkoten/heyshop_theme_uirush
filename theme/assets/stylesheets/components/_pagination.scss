@@ -1,0 +1,117 @@
+
+// .pagination {
+//   margin: $gutter auto;
+//   text-align: center;
+
+//   .page {
+//     display: inline-block;
+//     line-height: 1;
+//     margin: 4px 1px 0 0;
+//     border: 1px solid $color-text;
+//     font-family: $font-family-monospace;
+//     @include transition(all .25s ease-in-out);
+//     &:hover {
+//         background-color: #000;
+//         color: #fff;
+//     }
+//     a {
+//       color: inherit;
+//     }
+//   }
+
+//   .page.current {
+//     // border-bottom: 1px solid $color-text;
+//     background-color: #000;
+//     color: #fff;
+//     a {
+//       color: inherit;
+//     }
+//   }
+
+//   .page.next,
+//   .page.prev {
+//     border: 1px solid $color-text;
+//     a {
+//       height: 30px;
+//       width: 30px;
+
+//     }
+//   }
+
+//   a {
+//     display: block;
+//     padding: 8px 0;
+//     width: 30px;
+//   }
+//   .pagination__prev, .pagination__next {
+//     font-size: 8px;
+//     // margin-top: -4px;
+//     display: inline-block;
+//     vertical-align: middle;
+//     line-height: $font-size-base;
+//   }
+// }
+
+
+.pagination {
+  margin: $gutter auto;
+  text-align: center;
+  li {
+    display: inline-block;
+    margin: 4px 2px 0;
+  }
+  .page, a, .current {
+    display: block;
+    line-height: 1;
+    margin: 4px 1px 0 0;
+    border: 1px solid $color-text;
+    font-family: $font-family-monospace;
+    @include transition(all .25s ease-in-out);
+    &:hover {
+        background-color: #000;
+        color: #fff;
+    }
+    // a {
+    //   color: inherit;
+    // }
+  }
+  .ellipse {
+    display: block;
+    line-height: 1;
+    margin: 4px 1px 0 0;
+    border: 1px solid $color-text;
+    font-family: $font-family-monospace;
+  }
+
+  .page.current,
+  li:not(.disabled) .current {
+    // border-bottom: 1px solid $color-text;
+    background-color: #000;
+    color: #fff;
+    a {
+      color: inherit;
+    }
+  }
+
+  .next,
+  .prev {
+    border: 1px solid $color-text;
+    height: 30px;
+    width: 30px;
+
+  }
+
+  a, .current, .ellipse {
+    display: block;
+    padding: 7px 0;
+    width: 30px;
+    height: 30px;
+  }
+  .pagination__prev, .pagination__next {
+    font-size: 8px;
+    // margin-top: -4px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: $font-size-base;
+  }
+}

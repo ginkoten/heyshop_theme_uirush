@@ -1,0 +1,19 @@
+{
+    "settings_data": {
+        "components": [{
+            "name": "blocks/header",
+            "settings_data": {
+                "__layout__": "B",
+                "has_opacity": false
+            }
+        }, {
+            "name": "blocks/collection_list",
+            "settings_data": {
+                "__layout__": "A",
+                "inline": false
+            }
+        }, {
+            "name": "blocks/footer"
+        }]
+    }
+}

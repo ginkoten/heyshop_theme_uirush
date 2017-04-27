@@ -1,0 +1,25 @@
+{
+    "name": "blocks/product_list",
+    "title": "商品列表",
+    "permanent": true,
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A"
+            }, {
+                "__layout__": "B"
+            }, {
+                "__layout__": "C"
+            }, {
+                "__layout__": "D"
+            }]
+        }
+    ],
+    "settings_data": {
+        "__layout__": "C"
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

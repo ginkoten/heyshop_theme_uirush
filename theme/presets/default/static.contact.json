@@ -1,0 +1,28 @@
+{
+  "settings_data": {
+    "components": [{
+      "name": "blocks/header",
+      "settings_data": {
+        "__layout__": "B",
+        "has_opacity": false,
+        "header_image_height": 50
+      }
+    }, {
+      "name": "blocks/page_body",
+      "settings_data": {}
+    }, {
+      "name": "blocks/contact",
+      "settings_data": {
+        "custom_form": {
+          "list": [
+            { "type": "name", "title": "你的名字", "icon": "icon user" },
+            { "type": "email", "title": "你的邮箱", "icon": "icon mail" },
+            { "type": "comment", "title": "你的留言", "icon": "icon comment" }
+          ]
+        }
+      }
+    }, {
+      "name": "blocks/footer"
+    }]
+  }
+}

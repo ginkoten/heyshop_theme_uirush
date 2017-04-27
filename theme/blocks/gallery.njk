@@ -1,0 +1,198 @@
+{% macro image_single(type, image, lightroom=false) %}
+  <div class="image-wrapper image-wrapper--gallery {{"image-wrapper--lightroom" if lightroom}}">
+  {% if type=="div" %}
+      <div class="img" data-bg-src="{{image}}" data-lightbox="{{image}}">
+      </div>
+  {% endif %}
+  {% if type=="div-contain" %}
+      <div class="img img--contain" data-bg-src="{{image}}" data-lightbox="{{image}}">
+      </div>
+  {% endif %}
+  {% if type=="img" %}
+      <img data-src="{{image}}" data-lightbox="{{image}}"></img>
+  {% endif %}
+  {% if type=="two-wrapper" %}
+    <div class="inside-wrapper">
+        <div class="inside-wrapper-2">
+            <div class="img inside-img" data-bg-src="{{image}}" data-lightbox="{{image}}">
+            </div>
+        </div>
+    </div>
+  {% endif %}
+  </div>
+{% endmacro %}
+
+{% set customize = true if settings_data.colorSelection == 'customize' %}
+
+{# layout settings data #}
+{% set __layout__ = settings_data.__layout__ or 'A' %}
+{% if __layout__ == 'A' %}
+    {% set gallerycontent = "div" %}
+    {% set lightbox = true %}
+    {% set columns = 4 %}
+    {% set column_padding = "0" %}
+{% elif __layout__ == 'B' %}
+    {% set gallerycontent = "two-wrapper" %}
+    {% set lightbox = true %}
+    {% set columns = false %}
+    {% set column_padding = "25px" %}
+{% elif __layout__ == 'C' %}
+    {% set gallerycontent = "div" %}
+    {% set lightbox = true %}
+    {% set columns = false %}
+{% elif __layout__ == 'D' %}
+    {% set gallerycontent = "div" %}
+    {% set lightbox = true %}
+    {% set columns = false %}
+{% elif __layout__ == 'E' %}
+    {% set gallerycontent = "img" %}
+    {% set lightbox = true %}
+    {% set columns = false %}
+{% else %} {# layout F or others #}
+    {% set gallerycontent = "div" %}
+    {% set lightbox = true %}
+    {% set columns = 2 %}
+    {% set column_padding = "25px" %}
+{% endif %}
+{# end layout data set #}
+
+{% component dataEditable="gallery" %}
+<div class="gallery"  style="{{ 'background-color:' + settings_data.bgColor + ';' if customize }}">
+<div class="container--gallery container--gallery--{{__layout__}}">
+{# title and text #}
+  {% if settings_data.title %}
+    <h1 class="gallery__title text-center" style="{{ 'color:' + settings_data.titleColor + ';' if customize }}">{{settings_data.title}}</h1>
+  {% endif %}
+  {% if settings_data.text %}
+    <p class="gallery__text text-center" style="{{ 'color:' + settings_data.textColor + ';' if customize }}">{{settings_data.text}}</p>
+  {% endif %}
+
+
+  {% if columns %}
+  <div class="grid--full">
+    {% asyncAll item in settings_data.images %}
+    <div class="grid__item small-up--col-1-{{columns}}" style="padding: {{column_padding}};">
+      {{ image_single(gallerycontent or 'div', item.image, lightbox) }}
+    </div>
+    {% endall %}
+  </div>
+  {% endif %}
+{# layout switch #}
+  {% if __layout__ == 'B' %}
+    {# 1:1.618 #}
+
+    {% set cls = cycler("long", "high", "high", "long") %}
+    {% for batch in settings_data.images|batch(4) %}
+    <div class="grid--full">
+      {% for item in batch %}
+        <div class="grid__item col-1-2 image--{{cls.next()}}" style="padding: {{column_padding}};">
+          {{ image_single(gallerycontent or 'div', item.image, lightbox) }}
+        </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+  {% elif __layout__ == 'C' %}
+    {# layout C doesn't contain columns, using plugin justified gallery #}
+    <div class="gallery--justified">
+      {% asyncAll item in settings_data.images %}
+      <div class="image-wrapper image-wrapper--gallery">
+        <img src="{{item.image}}"></img>
+      </div>
+      {% endall %}
+    </div>
+  {% elif __layout__ == 'D' %}
+    {% for group in settings_data.images|batch(3) %}
+      <div class="grid--full grid{{ '--rev' if loop.index % 2 == 0 }}">
+        <div class="grid__item small-up--col-2-3">
+          <div class="image-wrapper image-wrapper--gallery image--gallery--big">
+            <div class="img" data-bg-src="{{ group[0].image if group.length > 0}}" data-lightbox="{{ group[0].image if group.length > 0}}">
+            </div>
+          </div>
+        </div>
+        <div class="grid__item small-up--col-1-3">
+          <div class="image-wrapper image-wrapper--gallery image--gallery--small">
+            <div class="img" data-bg-src="{{ group[1].image if group.length > 1}}" data-lightbox="{{ group[1].image if group.length > 1}}">
+            </div>
+          </div>
+          <div class="image-wrapper image-wrapper--gallery image--gallery--small">
+            <div class="img" data-bg-src="{{ group[2].image if group.length > 2}}" data-lightbox="{{ group[2].image if group.length > 2}}">
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+
+  {% elif __layout__ == 'E' %}
+    {# use masonry plugin #}
+    <div class="grid--full">
+      <div  class="grid-sizer">
+      </div>
+        {% for item in settings_data.images %}
+          {{image_single(gallerycontent or "div", item.image, lightbox)}}
+        {% endfor %}
+
+    </div>
+  {% endif %}
+
+  {% if lightbox %}
+  <div class="lightroom-gallery">
+    <div class="pull-right">
+      <a href="javascript:void(0)" class="js-close" data-target=".lightroom-gallery">&times</a>
+    </div>
+    <div class="image-wrapper--full">
+      <img src=""></img>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+</div>
+{% script %}
+  $el.find(".gallery--justified").justifiedGallery({
+      rowHeight : 300,
+      margins: 15,
+      cssAnimation: true,
+      randomize: false,
+      lastRow: '{{settings_data.lastRow or 'nojustify'}}'
+  });
+  {% if __layout__ == 'E' %}
+  var rainfall = function() {
+
+      if ($(window).width() > 480) {
+        $el.find(".grid--full").masonry({
+                itemSelector: '.image-wrapper',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+            });
+      }
+  };
+  var images = $el.find(".grid--full img");
+  images.on('load', _.debounce(rainfall, 100));
+  {% endif %}
+  {% if lightbox %}
+    $el.find(".image-wrapper--gallery").on("click", function() {
+      $("body").css("overflow", "hidden");
+      
+      
+      var matchurl = $(this).find(".img").attr("data-lightbox");
+      if (!matchurl) matchurl = $(this).find("img").attr("src");
+      $el.find(".lightroom-gallery .image-wrapper--full>img").attr("src", matchurl);
+      $el.find(".lightroom-gallery").show();
+    });
+
+    $el.find(".js-close").on("click", function() {
+      $($(this).attr("data-target")).hide();
+      $("body").css("overflow", "auto");
+    });
+
+    $el.find(".lightroom-gallery").on("click", function(e) {
+      if (e.target.tagName.toUpperCase() !== "IMG") {
+        $(this).hide();
+        $("body").css("overflow", "auto");
+      }
+    });
+  {% endif %}
+{% endscript %}
+{% endcomponent %}

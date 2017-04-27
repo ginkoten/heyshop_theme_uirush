@@ -1,0 +1,210 @@
+
+button {
+  overflow: visible;
+}
+
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+.btn,
+.rte .btn {
+  display: inline-block;
+  padding: 9px 12px;
+  width: auto;
+  margin: 0;
+  line-height: 20px;
+  // font-weight: $font-weight-bold;
+  font-weight: $font-weight-regular;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  @include user-select(none);
+  @include transition(all .2s ease-in-out);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: $btn-border-radius-base;
+
+  /*================ Set primary button colors - can override later ================*/
+  background-color: $color-btn-primary;
+  color: $color-btn-primary-text;
+
+  &:hover {
+    background-color: $color-btn-primary-hover;
+    color: $color-btn-primary-text;
+  }
+
+  &:active,
+  &:focus {
+   background-color: $color-btn-primary-active;
+   color: $color-btn-primary-text;
+  }
+
+  &[disabled],
+  &.disabled {
+    cursor: default;
+    background-color: $color-disabled-bg;
+    border-color: $color-disabled-border;
+    color: $color-disabled-text;
+  }
+}
+
+.btn--secondary,
+.rte .btn--secondary {
+  @extend .btn;
+  background-color: $color-btn-secondary;
+
+  &:hover {
+    background-color: $color-btn-secondary-hover;
+    color: $color-btn-secondary-text;
+  }
+
+  &:active,
+  &:focus {
+   background-color: $color-btn-secondary-active;
+   color: $color-btn-secondary-text;
+  }
+
+  &[disabled],
+  &.disabled {
+    cursor: default;
+    background-color: $color-disabled-bg;
+    border-color: $color-disabled-border;
+    color: $color-disabled-text;
+  }
+}
+
+.btn--outline,
+.rte .btn--outline {
+  @extend .btn;
+  background-color: transparent;
+  border-color: $color-btn-primary;
+  color: $color-btn-primary;
+
+  &:hover {
+    background-color: transparent;
+    border-color: $color-btn-primary-hover;
+    color: $color-btn-primary-hover;
+  }
+
+  &:active,
+  &:focus {
+    background-color: transparent;
+    border-color: $color-btn-primary-active;
+    color: $color-btn-primary-active;
+  }
+
+  &[disabled],
+  &.disabled {
+    background-color: $color-disabled-bg;
+    border-color: $color-disabled-border;
+    color: $color-disabled-text;
+  }
+}
+
+.btn--link {
+  @extend .btn;
+  // padding: 0.5em;
+  background-color: transparent;
+  border-color: transparent;
+  color: $color-link;
+  &:hover, &:active, &:focus {
+    background-color: transparent;
+    border-color: transparent;
+    color: $color-link-hover;
+  }
+}
+
+.btn--small {
+  padding: 6px 16px;
+  font-size: em(12px);
+  border-radius: $btn-border-radius-small;
+}
+
+.btn--large {
+  padding: 12px 20px;
+  font-size: em(16px);
+  border-radius: $btn-border-radius-large;
+}
+
+.btn--full {
+  width: 100%;
+}
+
+// cta buttons style
+$cta-btn-height: 52px;
+$btn-line-height: 20px;
+.btn--pill {
+  @extend .btn--outline;
+}
+
+.btn--underline {
+  @extend .btn--outline;
+}
+
+.btn--cta {
+  height: $cta-btn-height;
+  padding: ($cta-btn-height - $btn-line-height - 4) / 2 12px;
+
+  &.btn--outline {
+    border-radius: $btn-border-radius-base;
+    min-width: 168px;
+    border-width: 2px;
+  }
+  &.btn--pill {
+    border-radius: 100px;
+    min-width: 140px;
+    border-width: 1px;
+    padding: ($cta-btn-height - $btn-line-height - 2) / 2 12px;
+  }
+  &.btn--underline {
+    border-width: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    min-width: auto;
+    border-bottom: solid 1px;
+    font-size: 24px;
+    line-height: 1.4;
+    font-weight: 500;
+    letter-spacing: 2.6px;
+    background-color: transparent!important;
+  }
+}
+
+
+////////////////////////// For Rush /////////////////////////////
+
+.btn--border {
+  @extend .btn--outline;
+  border-width: 2px;
+  background-color: #fff;
+  &:hover {
+    background-color: $color-btn-primary;
+    border-color: $color-btn-primary;
+    color: #fff;
+  }
+
+  &:active,
+  &:focus {
+    background-color: $color-btn-primary;
+    border-color: $color-btn-primary;
+    color: #fff;
+  }
+
+  &[disabled],
+  &.disabled {
+    background-color: $color-disabled-bg;
+    border-color: $color-disabled-border;
+    color: $color-disabled-text;
+  }
+}
+
+.btn--height {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

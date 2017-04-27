@@ -1,0 +1,178 @@
+{% component %}
+
+{% if settings_data.customize == true %}
+    {% set textColor = settings_data.textColor or colors['color-text'] %}
+    {% set backgroundColor = settings_data.backgroundColor or colors['color-bg'] %}
+{% else %}
+    {% set textColor = colors['color-text'] %}
+    {% set backgroundColor = colors['color-bg'] %}
+{% endif %}
+{% set styleClass = settings_data.styleClass or 'thumbnail' %}
+
+<div style="color:{{textColor}};
+            background-color: {{ backgroundColor}};
+            padding-top: 30px;
+            padding-bottom: 30px;">
+{% if styleClass == 'hover' %}
+
+<div>
+  <div class="section-header">
+    <h1 class="text-center" style="color:{{textColor | darken(0.2)}}">{{settings_data.sectionTitle}}</h1>
+  </div>
+  <div class="container swiper-container invisible">
+    <div class="swiper-wrapper">
+      {% for person in settings_data.people %}
+        <div class="swiper-slide">
+          <div class="thumbnail--hover" style="background-color: {{ backgroundColor }}">
+            <div class="thumbnail__image">
+              <div class="img" data-bg-src="{{person.avatar|optimize(300)}}"></div>
+            </div>
+            <div class="thumbnail__text" style="color: {{ textColor }}">{{person.bio}}</div>
+            <h5 class="thumbnail__title">
+              <div style="color: {{ textColor | darken(0.2) }}">{{person.name}}</div>
+              <div style="color: {{ textColor }}">{{person.title}}</div>
+            </h5>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination" style="position: relative;"></div>
+  </div>
+</div>
+{% script %}
+  var swiper;
+  function initSwiper(size) {
+    if (swiper) swiper.destroy(true, true);
+    swiper = new Swiper($el.find('.swiper-container'), {
+      pagination: $el.find('.swiper-pagination'),
+      direction: 'horizontal',
+      // centeredSlides: true,
+      paginationClickable: true,
+      slidesPerView: size,
+      spaceBetween: 60
+    });
+    $el.find('.swiper-container').removeClass('invisible');
+  }
+  var onResize = _.debounce(function () {
+    if ($(window).width() > 900) {
+      initSwiper(3);
+    } else if ($(window).width() > 600) {
+      initSwiper(2);
+    } else {
+      initSwiper(1);
+    }
+  }, 300);
+  $(window).on('resize', onResize);
+  onResize();
+{% endscript %}
+
+{% elif styleClass == 'flow' %}
+
+<div class="container">
+  <div class="section-header">
+    <h1 class="text-center" style="color:{{textColor | darken(0.2)}}">{{settings_data.sectionTitle}}</h1>
+  </div>
+  <div class="swiper-container invisible">
+    <div class="swiper-wrapper">
+      {% for person in settings_data.people %}
+        <div class="swiper-slide" data-people='{{person|dump}}'>
+          <div class="thumbnail--circle">
+            <div class="thumbnail__image" style="margin: 0 auto; max-width: 200px;">
+              <div class="img" data-bg-src="{{person.avatar}}"></div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+  <div class="text-center" style="max-width: 230px; margin: 0 auto;">
+    <div class="thumbnail__text" style="color: {{textColor}}"></div>
+    <h5 class="thumbnail__title">
+      <div style="color: {{textColor | darken(0.2)}}"></div>
+      <div style="color: {{textColor}}"></div>
+    </h5>
+  </div>
+</div>
+{% script %}
+  function setText(index) {
+    var cur = $el.find('.swiper-slide')[index];
+    var people = JSON.parse($(cur).attr('data-people'));
+    $el.find('.thumbnail__text').text(people.bio||'');
+    $el.find('.thumbnail__title > div:first-child').text(people.name||'');
+    $el.find('.thumbnail__title > div:last-child').text(people.title||'');
+  }
+  var swiper;
+  function initSwiper(size) {
+    if (swiper) swiper.destroy(true, true);
+    swiper = new Swiper($el.find('.swiper-container'), {
+      pagination: $el.find('.swiper-pagination'),
+      nextButton: $el.find('.swiper-button-next'),
+      prevButton: $el.find('.swiper-button-prev'),
+      direction: 'horizontal',
+      effect: 'coverflow',
+      centeredSlides: true,
+      paginationClickable: true,
+      slidesPerView: size,
+      coverflow: {
+          rotate: 0,
+          stretch: -50,
+          depth: 500,
+          modifier: 2,
+          slideShadows : false
+      }
+    });
+    $el.find('.swiper-container').removeClass('invisible');
+    swiper.on('transitionEnd', function() {
+      setText(swiper.activeIndex);
+    });
+    setText(0);
+  }
+  var onResize = _.debounce(function () {
+    if ($(window).width() > 900) {
+      initSwiper(3);
+    } else {
+      initSwiper(1);
+    }
+  }, 300);
+  $(window).on('resize', onResize);
+  onResize();
+{% endscript %}
+
+{% else %}
+{% set col = settings_data.columns or 4 %}
+
+<div class="container" style="color:{{textColor}}">
+  <div class="section-header">
+    <h1 class="text-center" style="color:{{textColor | darken(0.2)}}">{{settings_data.sectionTitle}}</h1>
+  </div>
+  <div class="grid-uniform">
+    {% for person in settings_data.people %}
+      <div class="grid__item small-up--col-1-{{col or 4}} ">
+        <div class="{{'thumbnail' if styleClass == 'basic' else 'thumbnail--circle'}}">
+          <div class="thumbnail__image">
+            <div class="img" data-bg-src="{{person.avatar|optimize(300)}}"></div>
+          </div>
+          {% if styleClass == 'basic' %}
+            <h5 class="thumbnail__title">
+              <h5 style="color: {{textColor}}">{{person.name}} | {{person.title}}</h5>
+            </h5>
+            <div class="thumbnail__text">{{person.bio}}</div>
+          {% else %}
+            <div class="thumbnail__text">{{person.bio}}</div>
+            <h5 class="thumbnail__title">
+              <div style="color: {{textColor | darken(0.2)}}">{{person.name}}</div>
+              <div style="color: {{textColor}}">{{person.title}}</div>
+            </h5>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+</div>
+
+{% endcomponent %}

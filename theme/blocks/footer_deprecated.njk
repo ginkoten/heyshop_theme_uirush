@@ -1,0 +1,549 @@
+
+{% asyncset results = menu.query(global.footmenu) %}
+
+{% macro copyright(name='', align='left', styles={}) %}
+<div class="footer__copyright small-up--text-{{align}} small--text-center">
+  Copyright © 2017. By <span class="footer__shopname">{{shop.title}}</span> All Rights Reserved.
+</div>
+{% endmacro %}
+
+{% macro social(name='', align='left', styles={}) %}
+{% set text = "text" in name.split('_') or false %}
+
+<div class="footer__social{{'--text' if text}} small-up--text-{{align}} small--text-center">
+  {% if shop.theme.settings_data.wechat %}
+  <a href="javascript:void(0);" class="footer__social--link footer__wechat">
+    <i class="icon-wechat"></i> {{'&nbsp;微信'|safe if text}}
+    <div class="footer__wechat--qrcode img" data-bg-src="{{shop.theme.settings_data.wechat|optimize(250)}}"></div>
+  </a>
+  {% endif %}
+  {% if shop.theme.settings_data.weibo and shop.theme.settings_data.weibo!="" %}
+  <a href="{{shop.theme.settings_data.weibo}}" target="_blank" class="footer__social--link">
+    <i class="icon-weibo"></i> {{'&nbsp;微博'|safe if text}}
+  </a>
+  {% endif %}
+  {% if shop.theme.settings_data.douban and shop.theme.settings_data.douban!="" %}
+  <a href="{{shop.theme.settings_data.douban}}" target="_blank" class="footer__social--link">
+    <i class="icon-douban"></i> {{'&nbsp;豆瓣'|safe if text}}
+  </a>
+  {% endif %}
+</div>
+
+{% endmacro %}
+
+{% macro logo(name='', align='left', styles={}) %}
+<div class="footer__logo--area">
+  {% if shop.theme.settings_data.footer_image %}
+  <img class="footer__logo--img img small-up--img-{{align}} small--img-center" src="{{shop.theme.settings_data.footer_image|optimize(500)}}"
+        style="height: {{shop.theme.settings_data.footer_image_height}}px">
+  </img>
+  {% endif %}
+
+  {% if 'slogan' in name.split('_') %}
+    <div class="footer__slogan small-up--text-{{align}} small--text-center">
+      {{shop.slogan}}
+    </div>
+  {% endif %}
+
+  {% if 'social' in name.split('_') %}
+    {{ social('social', align, styles) }}
+  {% endif %}
+
+</div>
+
+{% endmacro %}
+
+{% macro menu(name='', align='left', styles={}, limit=3) %}
+  {% set complicated = 'complicated' in name.split('_') or false %}
+  {% if (complicated  or (not complicated and align=='left')) %}
+  <div class="footer__menu footer__menu--{{name.split('_')[1]}} footer__menu--multicol grid--full">
+      {% for item in results %}
+        {% if ((complicated and loop.index <= limit) or (not complicated)) %}
+          <div class="col-1-{{limit}} grid__item footer__menu--col small--text-center">
+              <a class="footer__menu--link footer__menu--main small--text-center" href="{{item.url}}" >{{item.title}}</a>
+
+              {% if complicated %}
+                {% for subitem in item.links %}
+                  <a class="footer__menu--link footer__menu--sub small--text-center" href="{{subitem.url}}">{{subitem.title}}</a>
+                {% endfor %}
+              {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+  </div>
+
+  {% else %}
+  {# it's simple and aligned in a row #}
+    <div class="footer__menu footer__menu--{{name.split('_')[1]}} footer__menu--singlecol small-up--text-{{align}} small--text-center">
+      <div>
+    {% for item in results %}
+            <a class="footer__menu--link footer__menu--main" href="{{item.url}}" >{{item.title}}</a>
+    {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+{% endmacro %}
+
+{% macro address(name='', align='left', styles={}) %}
+{% set withIcon = "icon" in name.split('_') or false %}
+<div class="footer__contact  small-up--text-{{align}} small--text-center">
+  <p class="footer__contact--email">{% if withIcon and shop.customer_email %}
+  <i class="fa fa-envelope"></i>
+    {% endif %}{{shop.customer_email}}</p>
+  <p class="footer__contact--phone">{% if withIcon and shop.customer_phone %}
+  <i class="fa fa-phone"></i>
+    {% endif %}{{shop.customer_phone}}</p>
+  <p class="footer__contact--address">{% if withIcon and shop.address %}
+  <i class="fa fa-map-marker"></i>
+    {% endif %}{{shop.address}}</p>
+</div>
+{% endmacro %}
+
+{% macro link(name='', align='left', styles={}) %}
+<div class="footer__link">
+  {% if settings_data.link %}
+  <a href="{{settings_data.link}}">{{settings_data.caption}}</a>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro tags(name='', align='left', styles={}) %}
+<div class="footer__tags">
+
+</div>
+{% endmacro %}
+
+
+{% if settings_data.__layout__ == 'A' %}
+{% set rows=[{
+                    "colCount": 2,
+                    "columns": [{
+                        "proportion": 1,
+                        "column": {
+                            "content": "copyright",
+                            "align": "left"
+                        }
+                    }, {
+                        "proportion": 1,
+                        "column": {
+                            "content": "social",
+                            "align": "right"
+                        }
+                    }]
+                }
+            ]
+%}
+{% elif settings_data.__layout__ == 'B' %}
+{% set rows=[{
+                    "colCount": 2,
+                    "columns": [{
+                        "proportion": 1,
+                        "column": {
+                            "content": "copyright",
+                            "align": "left"
+                        }
+                    }, {
+                        "proportion": 1,
+                        "column": {
+                            "content": "social",
+                            "align": "right"
+                        }
+                    }]
+                }
+            ]
+%}
+{% elif settings_data.__layout__ == 'C' %}
+{% set rows =  [
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+
+{% elif settings_data.__layout__ == 'D' %}
+{% set rows = [
+                        {
+                            "colCount": 7,
+                            "columns": [{
+                                "proportion": 2,
+                                "column": {
+                                    "content": "logo_social",
+                                    "align": "center"
+                                }
+                            }, {
+                                "proportion": 3,
+                                "column": {
+                                    "content": "menu_complicated",
+                                    "align": "left",
+                                    "limit": 3
+                                }
+                            }, {
+                                "proportion": 2,
+                                "column": {
+                                    "content": "link",
+                                    "align": "left"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'E' %}
+{% set rows = [
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "social",
+                                    "align": "center"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "menu_simple",
+                                    "align": "center"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'F' %}
+{% set rows = [
+                        {
+                            "colCount": 7,
+                            "columns": [{
+                                "proportion": 4,
+                                "column": {
+                                    "content": "logo_social",
+                                    "align": "left"
+                                }
+                            }, {
+                                "proportion": 3,
+                                "column": {
+                                    "content": "menu_complicated",
+                                    "align": "left",
+                                    "limit": 3
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'G' %}
+{% set rows = [
+                        {
+                            "colCount": 10,
+                            "columns": [{
+                                "proportion": 3,
+                                "column": {
+                                    "content": "logo_slogan_social",
+                                    "align": "center"
+                                }
+                            }, {
+                                "proportion": 2,
+                                "column": {
+                                    "title": "商品标签",
+                                    "content": "tags",
+                                    "align": "left"
+                                }
+                            }, {
+                                "proportion": 2,
+                                "column": {
+                                    "title": "我们的服务",
+                                    "content": "menu_simple",
+                                    "align": "left",
+                                    "limit": 1
+                                }
+                            }, {
+                                "proportion": 3,
+                                "column": {
+                                    "title": "我们的地址",
+                                    "content": "address_icon",
+                                    "align": "left"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'H' %}
+{% set rows = [
+                        {
+                            "colCount": 2,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "menu_complicated",
+                                    "align": "left",
+                                    "limit": 3
+                                }
+                            }, {
+                                "proportion": 1,
+                                "column": {
+                                    "content": "logo_social",
+                                    "align": "right"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "left"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'I' %}
+{% set rows = [
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "menu_simple",
+                                    "align": "center"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'J' %}
+{% set rows = [
+                        {
+                            "colCount": 6,
+                            "columns": [{
+                                "proportion": 2,
+                                "column": {
+                                    "content": "logo_slogan",
+                                    "align": "center"
+                                }
+                            }, {
+                                "proportion": 2,
+                                "column": {
+                                    "title": "OUR SOCIETY",
+                                    "content": "menu_simple",
+                                    "align": "left",
+                                    "limit": 2
+                                }
+                            }, {
+                                "proportion": 1,
+                                "column": {
+                                    "title": "CONTACT US",
+                                    "content": "address",
+                                    "align": "center"
+                                }
+                            }, {
+                                "proportion": 1,
+                                "column": {
+                                    "title": "FOLLOW US",
+                                    "content": "social_text",
+                                    "align": "center"
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% elif settings_data.__layout__ == 'K' %}
+{% set rows = [
+                        {
+                            "colCount": 7,
+                            "columns": [{
+                                "proportion": 4,
+                                "column": {
+                                    "content": "logo_social",
+                                    "align": "left"
+                                }
+                            }, {
+                                "proportion": 3,
+                                "column": {
+                                    "content": "menu_complicated",
+                                    "align": "left",
+                                    "limit": 3
+                                }
+                            }]
+                        },
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+{% else %}
+{% set rows =  [
+                        {
+                            "colCount": 1,
+                            "columns": [{
+                                "proportion": 1,
+                                "column": {
+                                    "content": "copyright",
+                                    "align": "center"
+                                }
+                            }]
+                        }
+                    ]
+%}
+
+{% endif %}
+
+
+
+
+{% component dataEditable="footer"%}
+
+{# <div class="footer--{{settings_data.colorstyle}}" style="opacity: {{settings_data.opacity or 1}}"> #}
+{% if settings_data.colorstyle == 'dark' %}
+<div class="footer--{{settings_data.colorstyle}}" style="background-color: rgba(0,0,0,{{settings_data.opacity or 1}});">
+{% else %}
+<div class="footer--{{settings_data.colorstyle}}" style="background-color: rgba(255,255,255,{{settings_data.opacity or 1}});">
+{% endif %}
+
+    <div class="{{settings_data.container}} container--footer container--footer--{{settings_data.__layout__}} footer-test">
+        {% for row in rows %}
+          <div class="grid footer__row">
+            {% for column_setting in row.columns %}
+            <div class="grid__item small-up--col-{{column_setting.proportion}}-{{row.colCount}}">
+              {% set column = column_setting.column %}
+              {% if column.title %}
+                <div class="footer__title small-up--text-{{column.align}} small--text-center">
+                  {{column.title}}
+                </div>
+              {% endif %}
+
+              {% if column.content == 'copyright' %}
+                      {{ copyright(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'social' %}
+                      {{ social(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'social_text' %}
+                      {{ social(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'logo' %}
+                      {{ logo(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'logo_social' %}
+                      {{ logo(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'logo_slogan' %}
+                      {{ logo(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'logo_slogan_social' %}
+                      {{ logo(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'menu_simple' %}
+                      {{ menu(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {},
+                                         column.limit or 1) }}
+              {% elif column.content == 'menu_complicated' %}
+                      {{ menu(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {},
+                                         column.limit or 1) }}
+              {% elif column.content == 'address' %}
+                      {{ address(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'address_icon' %}
+                      {{ address(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'link' %}
+                      {{ link(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% elif column.content == 'tags' %}
+                      {{ tags(column.content or '',
+                                         column.align or 'left',
+                                         column.styles or {}) }}
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+    </div>
+</div>
+    {% script %}
+      {# send xhr to get tags #}
+      if ($el.find('.footer__tags').length > 0) {
+
+      }
+    {% endscript %}
+{% endcomponent %}

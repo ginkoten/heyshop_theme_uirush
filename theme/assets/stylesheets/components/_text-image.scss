@@ -1,0 +1,292 @@
+// text_image styles
+.caption-wrapper {
+    display: table;
+    height: 100%;
+    width: 100%;
+    .caption-center {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.text-image {
+    width: 100%;
+}
+
+.text-image__title {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 35px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    padding-left: 5%;
+    padding-right: 5%;
+    .text-image--half & {
+        padding: 0;
+    }
+}
+
+.text-image__paragraph {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin: 0;
+    line-height: 2;
+}
+
+.text-image--full {
+    position: relative;
+    line-height: 0;
+    >img {
+        width: 100%;
+    }
+    .text-image__caption {
+        position: absolute;
+        bottom: 0;
+        width: 38%;
+        margin-left: -19%;
+        left: 50%;
+        @include grid-media-query("medium") {
+            width: 68%;
+            margin-left: -34%;
+        }
+    }
+    &.text-position--up {
+        .text-image__caption {
+            top: 12.5%;
+        }
+    }
+    &.text-position--down {
+        .text-image__caption {
+            bottom: 12.5%;
+        }
+    }
+}
+
+.text-image--half {
+    height: 100%;
+    width: 50%;
+    float: left;
+    position: relative;
+    .text-image--smallpart.text-position--up &,
+    .text-image--smallpart.text-position--down & {
+        width: 100%;
+        height: 65%;
+        &.caption--half {
+            height: 35%;
+        }
+    }
+    .text-image__caption {
+        width: 65%;
+        margin: 0 auto;
+    }
+    @include grid-media-query("small") {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.text-image--smallpart .text-image__caption {
+    width: 100%;
+}
+
+.text-position--up,
+.text-position--down {
+    .image-wrapper--originalsize {
+        padding-left: 20%;
+        padding-right: 20%;
+        @include grid-media-query('small') {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    .caption--half {
+        text-align: center;
+    }
+}
+
+@include grid-media-query("medium-up") {
+    .text-image--smallpart {
+        &.text-position--left,
+        &.text-position--right {
+            .image-wrapper--originalsize,
+            .caption--half {
+                padding: 10%;
+            }
+            &.text-position--right .image-wrapper--originalsize,
+            &.text-position--left .caption--half {
+                padding-right: 3%;
+            }
+            &.text-position--left .image-wrapper--originalsize,
+            &.text-position--right .caption--half {
+                padding-left: 3%;
+            }
+        }
+        &.text-position--up,
+        &.text-position--down {
+            .caption--half {
+                padding-left: 25%;
+                padding-right: 25%;
+                text-align: center;
+            }
+            &.text-position--up .image-wrapper--originalsize {
+                padding-bottom: 80px;
+            }
+            &.text-position--down .image-wrapper--originalsize {
+                padding-top: 80px;
+            }
+        }
+    }
+}
+
+@include grid-media-query("small-up") {
+    .text-position--right {
+        .text-image--half:first-child {
+            left: 50%;
+        }
+        .text-image--half:last-child {
+            right: 50%;
+        }
+    }
+    .text-position--down {
+        .text-image--half:first-child {
+            top: 65%;
+        }
+        .text-image--half:last-child {
+            bottom: 35%;
+        }
+    }
+}
+
+@include grid-media-query("small") {
+    .caption--half {
+        height: auto;
+    }
+    .text-image--smallpart {
+        height: auto!important;
+        overflow: hidden;
+    }
+    .text-image--full,
+    .text-image--half {
+        .text-image__caption {
+            width: 100%;
+            margin-left: 0;
+            left: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+}
+
+// text styles
+@mixin text__title($size) {
+    line-height: 1.3;
+    font-weight: 500;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    @if $size=='large' {
+        font-size: 60px;
+        letter-spacing: 3px;
+        text-align: center;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    @elseif $size=='medium' {
+        font-size: 40px;
+        letter-spacing: 1px;
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    @elseif $size=='small' {
+        font-size: 32px;
+    }
+    @else {
+        font-size: 16px;
+    }
+    @include grid-media-query('small') {
+        font-size: 32px;
+        letter-spacing: 1px;
+    }
+}
+
+.container--text,
+.container--text-columns {
+    @include grid-media-query('small-up') {
+        padding: 80px 60px;
+    }
+    @include grid-media-query('small') {
+        padding: 50px 15px;
+    }
+}
+
+.container--text-simple,
+.container--text-rows>.grid--full {
+    @include grid-media-query('small') {
+        height: auto!important;
+        padding: 50px 15px;
+    }
+}
+
+.container--text-rows>.grid--full>.grid__item {
+    &,
+    &>.grid--full {
+        height: 100%;
+    }
+}
+
+.text_simple--wrapper,
+.container--text-rows .text__title,
+.container--text-rows .text__content {
+    @include grid-media-query('small-up') {
+        position: relative;
+        top: 50%;
+        @include transform(translateY(-50%));
+    }
+}
+
+.text__title--large {
+    @include text__title('large');
+}
+
+.text__title--medium {
+    @include text__title('medium');
+}
+
+.text__title--small {
+    @include text__title('small');
+}
+
+.text__title--xsmall {
+    @include text__title('xsmall');
+}
+
+@include grid-media-query('small-up') {
+    .title-text-narrow.grid__item {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+    .title-text-samecol {
+        &.small-up--col-1-1,
+        &.small-up--col-1-2,
+        &.small-up--col-1-3 {
+            padding-left: 3%;
+            padding-right: 3%;
+        }
+        &.small-up--col-1-4 {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+    }
+}
+
+@include grid-media-query('small') {
+    .title-text-samecol.grid__item {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+// .text__content {
+//   padding-bottom: 30px;
+// }

@@ -1,0 +1,114 @@
+{
+    "name": "blocks/team",
+    "title": "团队介绍",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s19lsn1be616t64f38ct010-team.jpg",
+    "settings_schema": [
+        {
+            "title": "展现方式",
+            "id":"styleClass",
+            "type": "Selection",
+            "options": [
+                { "text": "正式", "value": "basic" },
+                { "text": "现代", "value": "modern" },
+                { "text": "悬浮", "value": "hover" },
+                { "text": "浮夸", "value": "flow" }
+            ]
+        },
+        {
+            "type": "Mask",
+            "condition": "styleClass == 'basic' || styleClass == 'modern' ",
+            "children": [
+                {
+                    "id": "columns",
+                    "type":"Range",
+                    "title": "列数",
+                    "max": 5,
+                    "min": 2,
+                    "step": 1
+                }
+            ]
+        },
+        {
+            "type": "Text",
+            "id":"sectionTitle",
+            "title": "标题"
+        },
+        {
+            "title": "人物",
+            "id":"people",
+            "type": "Array",
+            "children": [
+                {
+                    "title": "头像",
+                    "id":"avatar",
+                    "type": "Image"
+                },
+                {
+                    "title": "姓名",
+                    "id":"name",
+                    "type": "Text"
+                },
+                {
+                    "title": "职位",
+                    "id":"title",
+                    "type": "Text"
+                },
+                {
+                    "title": "简介",
+                    "id":"bio",
+                    "type": "Text"
+                }
+            ],
+            "limit": 10
+        },
+        {
+            "id": "customize",
+            "type": "Boolean",
+            "title": "是否使用自定义配色"
+        },
+        {
+            "type": "Mask",
+            "condition": "customize == true",
+            "children": [
+                {
+                    "type": "Color",
+                    "id":"textColor",
+                    "title": "文字颜色"
+                },
+                {
+                    "type": "Color",
+                    "id": "backgroundColor",
+                    "title": "背景颜色"
+                }
+            ]
+        }
+    ],
+    "settings_data": {
+        "styleClass": "basic",
+        "textColor": "rgba(0,0,0,1)",
+        "people": [{
+            "bio": "",
+            "name": "小李",
+            "title": "首席执行官",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png"
+        }, {
+            "name": "小丁",
+            "title": "首席技术官",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png"
+        }, {
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png",
+            "title": "首席用户体验师",
+            "name": "肖约"
+        }, {
+            "name": "小芳",
+            "title": "首席运营官",
+            "avatar": "http://up.img.heidiancdn.com/o_1b51o9shq1pbh108jjsf1ae218pu0%E5%A4%B4%E5%83%8F.png"
+        }],
+        "__layout__": "B",
+        "sectionTitle": "我们的团队",
+        "slide": true
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

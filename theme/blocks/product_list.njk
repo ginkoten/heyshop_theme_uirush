@@ -1,0 +1,337 @@
+
+{% set filterLevels %}
+<div class="categories small-up--hidden">
+  {# <button class="categories__toggle">
+    <i class="fa fa-th-large fa-lg"></i>
+  </button> #}
+  {# <div class="drawer--category drawer--right--category" tabindex="-1">
+    <div class="drawer--category__body">
+      <div class="drawer--category__header">
+        <div class="drawer__title">分类</div>
+        <div class="drawer__close">
+            <button class="categories__toggle--hide" type="button">&times;</button>
+        </div>
+      </div>
+      <ul class="mobile-nav">
+        {% for category in categories %}
+          {% if category.children %}
+            <li class="mobile-nav__item">
+              <div class="mobile-nav__has-sublist">
+                <a class="mobile-nav__link" href="?category={{category.id}}">{{category.title}}</a>
+                <div class="mobile-nav__toggle">
+                  <button type="button" class="mobile-nav__toggle-open"><i class="icon-add" style="font-size: 12px;line-height: 24px;"></i></button>
+                  <button type="button" class="mobile-nav__toggle-close"><i class="icon-minus" style="font-size: 12px;line-height: 24px;"></i></button>
+                </div>
+              </div>
+              <ul class="mobile-nav__sublist">
+                {% for child_category in category.children %}
+                  <li class="mobile-nav__item">
+                    <a class="mobile-nav__link" href="?category={{child_category.id}}">
+                      {{child_category.title}}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% else %}
+            <li class="mobile-nav__item">
+              <a class="mobile-nav__link" href="{{item.url}}">{{item.title}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div> #}
+</div>
+{% endset %}
+
+
+{% set filterDropdown %}
+    <div class="categories--selector pull-right small--hidden">
+      <div class="product-filter--dropdown">
+        <span>全部商品</span>
+        <i class="icon-arrow-down small filter__triangle "></i>
+        <ul class="dropdown__wrapper">
+          <li><a href="?all" class="btn--link btn--full filter__nav-item">全部商品</a></li>
+          {% for category in categories %}
+            {% if category.children and category.children.length %}
+              {% for child_category in category.children %}
+                <li><a href="?category={{child_category.id}}" class="btn--link btn--full filter__nav-item">{{child_category.title}}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="?category={{category.id}}" class="btn--link btn--full filter__nav-item">{{category.title}}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+{% endset %}
+
+{% set filterSidebar %}
+  <div class="grid__item products-filter levels medium-down-1-2 large--col-1-4 large-up--col-1-4 small--hidden">
+    <div class="h4 products__categories-title">所有分类</div>
+    <div class="filter-row">
+      <ul class="mobile-nav products__filter-wrapper">
+        {% for category in categories %}
+            {% set level_loop = loop %}
+            {% if category.children and category.children.length %}
+                <li class="mobile-nav__item">
+                    <div class="mobile-nav__has-sublist {{'mobile-nav--expanded' if level_loop.index == 1 }}">
+                        <a href="?category={{category.id}}" class="mobile-nav__link mobile-nav__toggle" data-category="{{category.id}}">{{category.title}}</a>
+                        <div class="mobile-nav__toggle">
+                            <button type="button" class="mobile-nav__toggle-open">
+                                <i class="icon-add" style="font-size: 12px;line-height: 24px;"></i>
+                            </button>
+                            <button type="button" class="mobile-nav__toggle-close">
+                                <i class="icon-minus" style="font-size: 12px;line-height: 24px;"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <ul class="mobile-nav__sublist">
+                        {# <li class="mobile-nav__item">
+                            <a class="mobile-nav__link" href="?category={{category.id}}" data-category='{{child_category.id}}'>全部{{category.title}}</a>
+                        </li> #}
+                        {% for child_category in category.children %}
+                            <li class="mobile-nav__item">
+                                <a class="mobile-nav__link" href="?category={{child_category.id}}" data-category='{{child_category.id}}'>{{child_category.title}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="mobile-nav__item">
+                    <a class="mobile-nav__link" href="?category={{category.id}}" data-category='{{category.id}}'>{{category.title}}</a>
+                </li>
+            {% endif %}
+            {% set level_loop = null %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endset %}
+
+{% component dataEditable="products-list" %}
+    {% if settings_data.__layout__ == "A" %}
+        {% set data_layout = {
+                sidebar: true,
+                badge: false,
+                button: "both",
+                column_count: 3
+            }
+        %}
+    {% elif settings_data.__layout__ == "B" %}
+        {% set data_layout = {
+                sidebar: true,
+                badge: true,
+                button: "add_to_cart",
+                column_count: 2
+            }
+        %}
+    {% elif settings_data.__layout__ == "C" %}
+        {% set data_layout = {
+                sidebar: true,
+                badge: true,
+                button: "quick_view",
+                column_count: 3
+            }
+        %}
+    {% else %}
+        {% set data_layout = {
+                sidebar: true,
+                badge: true,
+                button: "quick_view",
+                column_count: 3
+            }
+        %}
+    {% endif %}
+
+    <div class="container products-container">
+      {% if not data_layout.sidebar %}
+        <div class="products__head small--hidden clearfix">
+            <div class="pull-left" style="padding: 9px 12px;">
+                <div>共有<span class="js-products-count">0</span>个商品</div>
+            </div>
+            {{ filterDropdown|safe }}
+        </div>
+      {% endif %}
+        <div class="{{'grid products__body' if data_layout.sidebar else 'products__body' }}">
+          {% if data_layout.sidebar %}
+            {{ filterSidebar|safe }}
+            <div class="grid__item large--col-3-4 large-up--col-3-4">
+          {% else %}
+            <div>
+          {% endif %}
+            {# {{ filterLevels|safe }} #}
+              <div class="grid-uniform">
+                {% if products.length == 0 %}
+                    <h3 class="text-center">未找到相应商品</h3>
+                {% endif %}
+                {% for product in products %}
+                    <div class="grid__item products__item medium-down--col-1-1 large--col-1-{{ (data_layout.column_count - 1) or 2 }} large-up--col-1-{{ data_layout.column_count or 3 }}" data-item="{{product| dump}}">
+                      <a class="image-wrapper needsclick products__item__image" href="/products/{{product.name}}/">
+                        <div class="img" data-bg-src="{{product.image|optimize(600)}}"></div>
+                        <div class="products__item__mask {{ 'color_bg' if data_layout.button == 'both' else ''}}">
+                          {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                            <div class="discount-badge {{ 'hidden' if not data_layout.badge }}">打折</div>
+                          {% endif %}
+                          {% if data_layout.badge %}
+                            <div class="new-sale-badge hidden">新品</div>
+                          {% endif %}
+
+                          {% if data_layout.button == 'both' %}
+                            <div class="middle-btn text-center clearfix {{data_layout.button}}">
+                              <div class="btn--circle js-open-quickview"><span class="icon-eye-quick-view"></span></div>
+                              <div class="btn--circle js-add-to-cart"><span class="icon-cart-quick-view"></span></div>
+                            </div>
+                          {% elif data_layout.button == 'add_to_cart' %}
+                            <div class="bottom-btn clearfix {{data_layout.button}}">
+                              <div class="btn--border btn--full btn--height js-add-to-cart">加入购物车</div>
+                            </div>
+                          {% else %}
+                            <div class="middle-btn clearfix {{data_layout.button}}">
+                              <div class="btn js-open-quickview">快速查看 <i class="icon-add-qucik-view small"></i></div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      </a>
+
+                      <div class="products__item__caption">
+                        <div class="caption">
+                          <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                          <div class="price-wrapper">
+                            {% if product.inventory_quantity > 0 %}
+                              <span class="price">¥{{+product.price}}</span>
+                              {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                                <small class="compare_at_price">￥{{+product.compare_at_price}}</small>
+                              {% endif %}
+                            {% else %}
+                              <div class="price">售罄</div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+              </div>
+              {% if paginate.pages > 1 %}
+                <div class="pagination">
+                {% if paginate.prev %}
+                  <span class="page prev">
+                    <a href="{{paginate.prev.url}}"><i class="pagination__prev icon-arrow-left5"></i></a>
+                  </span>
+                {% endif %}
+                {% for item in paginate.items %}
+                  <span class="page {{'current' if item.page == paginate.current_page}}" data-pagenate="{{item|dump}}">
+                    <a href="{{item.url}}">{{item.page}}</a>
+                  </span>
+                {% endfor %}
+                {% if paginate.next %}
+                  <span class="page next">
+                    <a href="{{paginate.next.url}}"><i class="pagination__next icon-arrow-right5"></i></a>
+                  </span>
+                {% endif %}
+              </div>
+            {% endif %}
+            </div>
+        </div>
+
+    </div>
+  {% script %}
+    $el.on('click', '.js-toggle', function() {
+      $(this).siblings('.js-collapse').toggleClass('collapsed');
+      $(this).find('>span').toggleClass('hidden');
+    });
+   {#  $el.on('click', '.categories__toggle', function() {
+      $('body').toggleClass('js-drawer-category-open  js-drawer-open-right');
+    });
+    $el.on('click', '.categories__toggle--hide', function() {
+      $('body').removeClass('js-drawer-category-open  js-drawer-open-right');
+    }); #}
+
+    $el.on('click', '.js-open-quickview', function(e) {
+      if ($(window).width() <= 480) return;
+      e.preventDefault() && e.stopPropagation();
+      {# var products = {{ products|dump|safe }}; #}
+
+      var product = $(e.target).closest('.products__item').data('item');
+      Rush.productQuickview.open(product, {{ products|dump|safe }});
+    });
+
+    $el.on('click', '.js-add-to-cart', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      var product = $(e.target).closest('.products__item').data('item');
+      if(product.inventory_quantity && product.variants && product.variants.length) {
+        var variant_valid = _.findWhere(product.variants, function(variant) { return variant.inventory_quantity >= 1 });
+        variant_id = variant_valid.id;
+        HeyShop.cart.add(variant_id, 1, function(err) {
+          if (err) {
+            HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+          } else {
+            HeyShop.toast.popupToast('商品添加成功！', 1500);
+          }
+        });
+      }else {
+        HeyShop.toast.popupToast('出错了，商品信息有误或库存不足', 1500);
+      }
+    });
+
+    _.each($el.find('.products__item'), function(product) {
+      if($(product).data('item') && (moment().diff(moment($(product).data('item').published_at), 'days') <= 7)) {
+        $(product).find('.new-sale-badge.hidden').removeClass('hidden');
+      }
+    });
+
+    var product_count = HEYSHOP_DATA.paginate.count;
+    if(product_count || product_count == 0) {
+      $el.find('.js-products-count').html(product_count);
+    }
+
+    {########################### Init Paginations ################################}
+    var totalPages = {{paginate.pages}};
+    var searchurl = '/search?';
+    if (location.query['q']) {
+        searchurl += 'q=' + location.query['q'] + '&';
+    }
+    if (location.query['category']) {
+        searchurl += 'category=' + location.query['category'] + '&';
+    }
+    $el.find('.pagination').pagination({
+        pages: totalPages,
+        hrefTextPrefix: searchurl + 'page=',
+        itemsOnPage: 10,
+        selectOnClick: false,
+        ellipsePageSet: false,
+        {% if paginate.prev %}
+        prevText: '<i class="pagination__prev icon-arrow-left5"></i>',
+        {% else %}
+        prevText: '',
+        {% endif %}
+        {% if paginate.next %}
+        nextText: '<i class="pagination__next icon-arrow-right5"></i>',
+        {% else %}
+        nextText: '',
+        {% endif %}
+        currentPage: {{paginate.current_page}}
+    });
+
+    {# highlight category item of current page #}
+    var highlight_category = function() {
+      var current_category_id = +location.query.category || null;
+      if(+current_category_id) {
+        _.forEach($el.find('.mobile-nav__link'), function(item) {
+          var item_id = $(item).data('category');
+          if(+item_id === current_category_id) {
+            $(item).addClass('active');
+            if($(item).closest('ul.mobile-nav__sublist').length) {
+              $(item).closest('.mobile-nav__sublist').siblings('.mobile-nav__has-sublist:not(.mobile-nav--expanded)').addClass('mobile-nav--expanded');
+            }
+            return;
+          }
+        })
+      }
+    };
+
+    highlight_category();
+
+  {% endscript %}
+{% endcomponent %}

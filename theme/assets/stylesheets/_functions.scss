@@ -1,0 +1,47 @@
+
+/*==================================================
+  Usage:
+    color-bg('light|dark|colored')
+    color-title('light|dark|colored')
+    color-text('light|dark|colored')
+==================================================*/
+
+@function color-bg($colorstyle){
+  @if $colorstyle == 'light' {
+    @return #{'#FFFFFF'};
+  } @else if $colorstyle == 'dark' {
+    @return #{'#000000'};
+  } @else if $colorstyle == 'colored' {
+    @return $color-primary;
+  }
+}
+
+@function color-title($colorstyle){
+  @if $colorstyle == 'light' {
+    @return #{'#000000'};
+  } @else if $colorstyle == 'dark' {
+    @return #{'#FFFFFF'};
+  } @else if $colorstyle == 'colored' {
+    @return #{'#FFFFFF'};
+  }
+}
+
+@function color-text($colorstyle) {
+  @if $colorstyle == 'light' {
+    @return #{'#666666'};
+  } @else if $colorstyle == 'dark' {
+    @return #{'#d4d4d4'};
+  } @else if $colorstyle == 'colored' {
+    @return #{'#d4d4d4'};
+  }
+}
+
+@function color-light($colorstyle) {
+  @if $colorstyle == 'light' {
+    @return #{'#989898'};
+  } @else if $colorstyle == 'dark' {
+    @return #{'#444444'};
+  } @else if $colorstyle == 'colored' {
+    @return #{'#d4d4d4'};
+  }
+}

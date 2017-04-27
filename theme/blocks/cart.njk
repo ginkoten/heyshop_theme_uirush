@@ -1,0 +1,133 @@
+{% set cartTable %}
+    {% raw %}
+    {% set all_select = cart.items.length!=0 %}
+    {% for item in cart.items %}
+    {% set all_select = all_select and item.checked %}
+    {% endfor %}
+        <table class="cart-table">
+            <thead class="small--hidden">
+                <tr>
+                    <th><div class="click-area--all {% if all_select %} checked-row {% else %} unchecked-row {% endif %}pull-left" onclick="{% if all_select %}HeyShop.cart.uncheckAll();{% else %}
+              HeyShop.cart.checkAll();{% endif %}">
+                          <span class="checked-circle"><i class="icon-check" style="vertical-align:middle;"></i><span class="all-select text-bolder"></span></span>
+                          <span class="unchecked-circle"><span class="all-select text-bolder"></span></span>
+
+                        </div>
+                        </th>
+                    <th>商品</th>
+                    <th></th>
+                    <th class="small--hidden">单价</th>
+                    <th>数量</th>
+                    <th class="medium-down--hidden">价格</th>
+                    <th class="medium-down--hidden">移除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items %}
+
+                    <tr class="cart__row">
+                          <td class="cart__select">
+                              <div class="click-area {% if item.checked %} checked-row {% else %} unchecked-row {% endif %}" onclick="
+                              {% if item.checked %}
+                              HeyShop.cart.uncheckItem({{item.id}});
+                              {% else %}
+                              HeyShop.cart.checkItem({{item.id}});
+                              {% endif %}">
+                                <span class="checked-circle"><i class="icon-check" style="vertical-align:middle;"></i><span class="all-select text-bolder"></span></span>
+                                <span class="unchecked-circle"><span class="all-select text-bolder"></span></span>
+                              </div>
+                          </td>
+                        <td class="cart__image">
+                            <a href="/products/{{item.product.name}}">
+                            <div class="img" style="background-image:url('{{item.variant.image|optimize(320)}}')"></div>
+                            </a>
+                        </td>
+                        <td>
+                            <p class="cart__title">{{item.product.title}}</p>
+                            <p class="cart__title">
+                                <small>{{item.variant.options|join(' - ', 'value')}}</small>
+                            </p>
+                            <div class="small-up--hidden cart__price">
+                                <span>¥ </span>
+                                <span class=" text-number">{{item.variant.price}}</span>
+                            </div>
+                        </td>
+                        <td class="small--hidden">
+                            <span>¥ </span>
+                            <span>{{item.variant.price}}</span></div>
+                        </td>
+                        <td>
+                            <div class="cart__control">
+
+                                <div class="js-input-qty">
+                                    <button class="js-input-qty__adjust js-input-qty__adjust--minus" type="button" onclick="if (this.nextSibling.nextSibling.value == 1 && confirm('确认删除？')) {HeyShop.cart.delete({{item.id}}); return false;}"><span class="icon-minus"></span></button>
+                                    <input type="text" name="quantity" value="{{item.quantity}}" autocomplete="off"
+                                        onchange="HeyShop.cart.setQuantity(
+                                            {{item.variant.id}},
+                                            this.value,
+                                            function(err) { err && alert(err.detail || '出错了，商品信息有误或库存不足'); }
+                                        );
+                                    ">
+                                    <button class="js-input-qty__adjust js-input-qty__adjust--plus" type="button"><span class="icon-add"></span></button>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="medium-down--hidden">
+                            <div style="width: 100px; margin: 0 auto;">¥ {{item.total_price}}</div>
+                        </td>
+                        <td class="medium-down--hidden">
+                            <button class="btn--link cart__delete" onclick="HeyShop.cart.delete({{item.id}})"><i class="icon-close1"></i></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart__end">
+            <a class="pull-left small--hidden" href="javascript:history.back();">
+                <span class="icon-arrow-left1"> </span>&nbsp;&nbsp;<span>继续购物</span>
+            </a>
+
+            <div class="checkout-box pull-right small--hidden">
+              <h4 class="cart__subtotal text-right small--hidden">
+                <span>合计：</span>
+                <span class="larger">¥</span>
+                <span class="larger">{{cart.total_price}}</span>
+              </h4>
+              <button class="btn btn--fix140 js-checkout" style=""
+                    onclick="HeyShop.cart.checkout(function(err){if (err && err.data && err.data.detail) {HeyShop.toast.popupToast(err.data.detail);} else {HeyShop.toast.popupToast('结算失败');}});">
+                    <span class="small--hidden">去</span>结算 <span class="small-up--hidden">¥&nbsp;{{cart.total_price}}</span></button>
+                <div class="small-up--hidden pull-left click-area--all {% if all_select %} checked-row {% else %} unchecked-row {% endif %}pull-left" onclick="{% if all_select %}HeyShop.cart.uncheckAll();{% else %}
+              HeyShop.cart.checkAll();{% endif %}">
+                        <span class="checked-circle"><i class="icon-check" style="vertical-align:middle;"></i></span>
+                        <span class="unchecked-circle"></span>
+                        <span class="allselect-caption">&nbsp;&nbsp;全选</span>
+                </div>
+
+            </div>
+        </div>
+    {% endraw %}
+{% endset %}
+
+{% component dataEditable="cart" %}
+    <div class="container">
+        <div class="table-wrapper"></div>
+
+    </div>
+    {% script %}
+        {# window.mobileChangeHeader();
+        window.mobileHideFooter();
+        window.mobileTopRightBlank(); #}
+        if ($(window).width() < 480) $("footer").hide();
+        var cart_template = "{{cartTable|js_safe}}";
+        function renderCart() {
+            var cart_html = HeyShop.njkenv.renderString(cart_template, {
+                cart: HeyShop.cart.data
+            });
+            $el.find('.table-wrapper').html(cart_html);
+            $el.find('.btn-checkout').prop('disabled', HeyShop.cart.count() <= 0);
+        }
+        HeyShop.cart.on('change', renderCart);
+        renderCart();
+    {% endscript %}
+{% endcomponent %}

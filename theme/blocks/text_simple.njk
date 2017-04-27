@@ -1,0 +1,24 @@
+{% component %}
+{% set block_height = settings_data.block_height or 400 %}
+<div class="container container--text-simple" style="height: {{block_height}}px;">
+  <div class="text_simple--wrapper">
+  {% if settings_data.section_title %}
+    <div class="text-section__title text-center
+    {% if settings_data.paragraphs %}
+      {% if settings_data.paragraphs.length == 1 or settings_data.columns == 1 %} text__title--large
+      {% elif settings_data.columns == 2 %} text__title--medium
+      {% else %} text__title--small
+      {% endif %}
+    {% else %}
+      text__title--large
+    {% endif %}" >
+      {{settings_data.section_title}}
+    </div>
+    <div class="text-section__subtitle text-center
+    text__content--xsmall" >
+      {{settings_data.section_subtitle}}
+    </div>
+  {% endif %}
+  </div>
+</div>
+{% endcomponent %}

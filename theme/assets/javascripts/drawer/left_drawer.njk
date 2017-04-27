@@ -1,0 +1,61 @@
+<canvas id="drawer__canvas" style="z-index: -1;"></canvas>
+<div class="drawer__body">
+    <div class="drawer__header container">
+        <div class="drawer__title h3">
+            <a href="/">
+                {% if shop.logo %}
+                <img src="{{shop.logo|optimize(320)}}" />
+                {% else %}
+                {{shop.title}}
+                {% endif %}
+            </a>
+        </div>
+        <div class="drawer__close">
+            <button class="js-close-drawer" type="button"><i class="icon-close2"></i></button>
+        </div>
+        <div class="translate-btns has-dropdown">
+            <div class="dropdown-btn js-toggle-dropdown"><span class="js-current-lang">中文</span></div>
+            <ul class="dropdown-list">
+                <li><a href="javascript:void(0);" class="dropdown__btn-link js-goto-chinese-site">中文</a></li>
+                <li><a href="javascript:void(0);" class="dropdown__btn-link js-goto-english-site">English</a></li>
+            </ul>
+        </div>
+    </div>
+    <ul class="mobile-nav">
+        <a class="account-center" href="/account">
+            <i class="icon-profile"></i>
+        </a>
+
+
+        <form method="get" action="/search/" class="search-box">
+            <input type="text" placeholder="搜索商品" name="q">
+            <button class="btn--link"><i class="icon-search"></i></button>
+        </form>
+
+        {% asyncset results = menu.query(global.menu) %}
+        {% for item in results %}
+            {% if item.links and item.links.length %}
+                <li class="mobile-nav__item">
+                    <div class="mobile-nav__has-sublist">
+                        <a class="mobile-nav__link" href="javascript:void(0);">{{item.title}}</a>
+                        {# <div class="mobile-nav__toggle">
+                            <button type="button" class="mobile-nav__toggle-open">&plus;</button>
+                            <button type="button" class="mobile-nav__toggle-close">&minus;</button>
+                        </div> #}
+                    </div>
+                    <ul class="mobile-nav__sublist" style="display: none;">
+                        {% for subitem in item.links %}
+                            <li class="mobile-nav__item">
+                                <a class="mobile-nav__link" href="{{subitem.url}}">{{subitem.title}}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="mobile-nav__item">
+                    <a class="mobile-nav__link" href="{{item.url}}">{{item.title}}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

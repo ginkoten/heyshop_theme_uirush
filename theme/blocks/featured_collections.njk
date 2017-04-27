@@ -1,0 +1,85 @@
+{% component dataEditable="featured_collections" %}
+{% asyncset results = collections.query(settings_data.collections) %}
+
+{% if settings_data.__layout__ == 'A' %}
+<div class="fcollections">
+  <div class="grid--full">
+    {% for collection in results %}
+    {% if loop.index <= 4 %}
+    <div class="grid__item small-up--col-1-4 fcollections__item">
+      <div class="image-wrapper">
+        <div class="img" data-bg-src="{{collection.image|optimize(600)}}"></div>
+      </div>
+      <a href="/collections/{{collection.name}}">
+      <div class="fcollections__mask">
+        <div class="fcollections__link">查看详情</div>
+        <div class="fcollections__title">{{collection.title}}</div>
+      </div>
+      </a>
+
+
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% elif settings_data.__layout__ == 'B' %}
+<div class="container__fcollections">
+  <div class="swiper-container--fcollections">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+          <!-- Slides -->
+          {% for collection in results %}
+          <div class="swiper-slide" style="width: 50%;">
+            <div class="image-wrapper--wide">
+              <div class="img {% if loop.index > 2 %}swiper-lazy{% endif %}" {% if loop.index <= 2 %}
+                  style="background-image:url('{{collection.image|optimize(600)}}');"
+                  {% else %}
+                  data-background="{{collection.image|optimize(600)}}"
+              {% endif %}>
+            </div>
+              <div class="img-mask" onclick="location.href='/collections/{{collection.name}}';">
+                <div class="fcollections__title"><a href="/collections/{{collection.name}}">{{collection.title}}</a></div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+      </div>
+
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev">
+        <i class="icon-arrow-left4"></i>
+      </div>
+      <div class="swiper-button-next">
+        <i class="icon-arrow-right4"></i>
+      </div>
+      <div class="background-middle">
+      </div>
+
+
+  </div>
+</div>
+{% endif %}
+{% script %}
+var startSwiper = function(){
+    var mySwiper = new Swiper('.swiper-container--fcollections', {
+      speed: 400,
+      spaceBetween: 30,
+      slidesPerView: 2,
+      paginationClickable: true,
+      loop: true,
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      watchSlidesProgress : true,watchSlidesVisibility : true,
+      lazyLoading: true
+  });
+};
+startSwiper();
+{# HeyShop.on("ImagesLoaded", startSwiper);
+if (HeyShop.imagesLoaded) startSwiper(); #}
+
+
+{% endscript %}
+{% endcomponent %}

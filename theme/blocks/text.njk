@@ -1,0 +1,70 @@
+{% component %}
+{% set big_title = 0 %}
+{% if settings_data.section_title %}
+  {% set big_title = 1 %}
+{% endif %}
+<div class="container container--text">
+  {% if settings_data.section_title %}
+    <div class="text-section__title text-center
+    {% if settings_data.paragraphs %}
+      {% if settings_data.paragraphs.length == 1 or settings_data.columns == 1 %} text__title--large
+      {% elif settings_data.columns == 2 %} text__title--medium
+      {% else %} text__title--small
+      {% endif %}
+    {% else %}
+      text__title--large
+    {% endif %}" >
+      {{settings_data.section_title}}
+    </div>
+  {% endif %}
+  <div class="grid--full text__grid--{{settings_data.align}}">
+    {% set with_title = false %}
+    {% if  settings_data.paragraphs|selectattr("title")|length > 0 %}
+      {% set with_title = true %}
+    {% endif %}
+    {% for paragraph in settings_data.paragraphs %}
+      {% set title_size = settings_data.columns + big_title %}
+      {% if settings_data.columns > 1 or (not (paragraph.content and paragraph.title)) or settings_data.align == "center" %}
+        <div class="grid__item
+        {% if settings_data.paragraph and settings_data.paragraphs.length == 1 and settings_data.columns == 1 and paragraph.title %} title-text-narrow
+        {% else %}title-text-samecol
+        {% endif %}
+         small-up--col-1-{{settings_data.columns or 3}}
+         {{ "small--col-1-2" if settings_data.columns == 4}}">
+          {% if with_title %}
+            <div class="text__title
+
+            {% if title_size >= 4 %}
+              text__title--xsmall
+            {% elif title_size >= 2 %}
+              text__title--small
+            {% else %}
+              text__title--medium
+            {% endif %}">{{paragraph.title or '&nbsp'|safe }}</div>
+          {% endif %}
+
+
+          {% if paragraph.content %}
+            <div class="text__content text-{{settings_data.align}}">{{paragraph.content}}</div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="grid__item small-up--col-1-2">
+          <div class="text__title {% if title_size >= 4 %}
+              text__title--xsmall
+            {% elif title_size >= 2 %}
+              text__title--small
+            {% else %}
+              text__title--medium
+            {% endif %}
+            small-up--text-{{settings_data.align}}">{{paragraph.title}}</div>
+        </div>
+        <div class="grid__item small-up--col-1-2">
+          <div class="text__content small-up--text-{{settings_data.align}}">{{paragraph.content}}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% endcomponent %}

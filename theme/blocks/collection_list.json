@@ -1,0 +1,29 @@
+{
+    "name": "blocks/collection_list",
+    "title": "专题列表",
+    "permanent": true,
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "inline": false
+            }, {
+                "__layout__": "B",
+                "inline": true
+            }]
+        },
+        {
+            "type": "Color",
+            "id":"color_bg",
+            "title": "背景色"
+        }
+    ],
+    "settings_data": {
+        "__layout__": "B",
+        "inline": false
+    },
+    "metafield": {
+        "category": "product"
+    }
+}

@@ -1,0 +1,423 @@
+{% macro featured_products_AB(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-AB">
+    <div class="grid-uniform">
+      {% for product in products %}
+        <div class="grid__item featured-product-item featured-product-item--layout-AB must-hover
+            medium-down--col-1-1 large--col-1-2 large-up--col-1-{{settings.column_count}}">
+          <a href="/products/{{product.name}}/" class="image-wrapper featured-products__item__image needsclick">
+            <div class="img" style="background-image: url({{product.image|optimize(800)}});"></div>
+            <div class="featured-products__item__caption">
+              <div class="caption">
+                <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                <div class="price-wrapper">
+                  {% if product.inventory_quantity > 0 %}
+                    <span class="price">¥{{+product.price}}</span>
+                    {% if +product.compare_at_price and +product.compare_at_price > +product.price %}
+                      <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                  {% else %}
+                    <div class="price">售罄</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro featured_products_quickview_addtocart(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-C">
+    <div class="grid-uniform">
+      {% for product in products %}
+          <div class="grid__item products__item medium-down--col-1-1 large--col-1-{{ settings.column_count - 1 }} large-up--col-1-{{ settings.column_count }}" data-item="{{product| dump}}">
+            <a class="image-wrapper products__item__image needsclick" href="/products/{{product.name}}/">
+              <div class="img" data-bg-src="{{product.image|optimize(600)}}"></div>
+              <div class="products__item__mask {{ 'color_bg' if settings_data.button == 'both' else ''}}">
+                {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                  <div class="discount-badge {{ 'hidden' if not settings_data.badge }}">打折</div>
+                {% endif %}
+                {% if settings_data.badge %}
+                  <div class="new-sale-badge hidden">新品</div>
+                {% endif %}
+
+                {% if settings_data.button == 'both' %}
+                  <div class="middle-btn text-center clearfix {{settings_data.button}}">
+                    <div class="btn--circle js-open-quickview"><span class="icon-eye-quick-view"></span></div>
+                    <div class="btn--circle js-add-to-cart"><span class="icon-cart-quick-view"></span></div>
+                  </div>
+                {% elif settings_data.button == 'add_to_cart' %}
+                  <div class="bottom-btn clearfix {{settings_data.button}}">
+                    <div class="btn--border btn--full btn--height js-add-to-cart">加入购物车</div>
+                  </div>
+                {% else %}
+                  <div class="middle-btn clearfix {{settings_data.button}}">
+                    <div class="btn js-open-quickview">快速查看 +</div>
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+
+            <div class="products__item__caption">
+              <div class="caption">
+                <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                <div class="price-wrapper">
+                  {% if product.inventory_quantity > 0 %}
+                    <span class="price">¥{{+product.price}}</span>
+                    {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                      <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                  {% else %}
+                    <div class="price">售罄</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro featured_products_carousel(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-carousel">
+    <div class="text-center block-title">{{ settings_data.title|upper }}</div>
+    <div class="swiper-container js-featured-products--swiper">
+      <div class="swiper-wrapper">
+          {% for product in products %}
+            <div class="swiper-slide featured-product-item" data-item='{{product|dump}}'>
+              <a href="/products/{{product.name}}/" class="image-wrapper featured-products__item__image needsclick">
+                <div class="img" style="background-image: url({{product.image|optimize(800)}});"></div>
+                <div class="featured-products__item__caption">
+                  <div class="caption">
+                    <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                    <div class="price-wrapper">
+                      {% if product.inventory_quantity > 0 %}
+                        <span class="price">¥{{+product.price}}</span>
+                        {% if +product.compare_at_price and +product.compare_at_price > +product.price %}
+                          <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                        {% endif %}
+                      {% else %}
+                        <div class="price">售罄</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="swiper-pagination medium-up--hidden"></div>
+    </div>
+    <!-- 如果需要导航按钮 -->
+    <div class="js-featured-products-prev medium-down--hidden">
+      <i class="control-icon control-icon--prev fa fa-long-arrow-left"></i>&nbsp;<span>Prev</span>
+    </div>
+    <div class="js-featured-products-next medium-down--hidden">
+      <span>Next</span>&nbsp;<i class="control-icon control-icon--next fa fa-long-arrow-right"></i>
+    </div>
+    <div class="btn--outline js-add-to-cart__carousel">加入购物车</div>
+</div>
+{% endmacro %}
+
+
+{% macro featured_products_with_multi_images(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-multi-images">
+    <div class="text-center">
+      <div class="block-title">{{ settings_data.title }}</div>
+    </div>
+    <div class="grid-uniform">
+      {% for product in products %}
+          <div class="grid__item products__item medium-down--col-1-1 large--col-1-{{ settings.column_count - 1 }} large-up--col-1-{{ settings.column_count }}" data-item="{{product| dump}}">
+            <a class="image-wrapper products__item__image needsclick" href="/products/{{product.name}}/">
+              <div class="img js-will-change-image" data-bg-src="{{product.image|optimize(600)}}"></div>
+              <div class="products__item__mask dark_mask">
+                <div class="product__images text-center">
+                  {% for image in product.images %}
+                    {% if loop.index <= 3 %}
+                      <div class="product__image-thumbnail js-change-product-image" data-imageUrl="{{image.src}}" data-bg-src="{{image.src|optimize(600)}}"></div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </a>
+
+            <div class="products__item__caption">
+              <div class="caption text-left">
+                <div class="price-wrapper">
+                  {% if product.inventory_quantity > 0 %}
+                    <span>¥</span><span class="price">{{+product.price}}</span>
+                    {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                      <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                  {% else %}
+                    <div class="price">售罄</div>
+                  {% endif %}
+                </div>
+                <div class="item__title">{{product.title|truncate(50, true)}}</div>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro featured_products_two_badges(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-two-badges">
+    <div class="grid-uniform">
+      {% for product in products %}
+          <div class="grid__item products__item medium-down--col-1-1 large--col-1-2 large-up--col-1-{{ settings.column_count }}" data-item="{{product| dump}}">
+            <a class="image-wrapper products__item__image needsclick" href="/products/{{product.name}}/">
+              <div class="img" data-bg-src="{{product.image|optimize(600)}}"></div>
+              <div class="products__item__mask {{ 'color_bg' if settings_data.button == 'both' else ''}}">
+                {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                  <div class="discount-badge">打折</div>
+                {% endif %}
+                <div class="new-sale-badge hidden">新品</div>
+                <div class="bottom-btn clearfix {{settings_data.button}}">
+                  <div class="btn--border btn--full js-add-to-cart {{ 'btn--large' if settings.column_count == 2 }}">加入购物车</div>
+                </div>
+              </div>
+            </a>
+
+            <div class="products__item__caption {{ 'larger-size' if settings.column_count == 2 }}">
+              <div class="caption">
+                <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                <div class="price-wrapper">
+                  {% if product.inventory_quantity > 0 %}
+                    <span class="price">¥{{+product.price}}</span>
+                    {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                      <small class="compare_at_price">￥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                  {% else %}
+                    <div class="price">售罄</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro featured_products_alternate(products, settings) %}
+  <div class="featured-products-alternate">
+    {% set cls = cycler("odd", "even") %}
+    {% for product in products %}
+
+      <div class="products__item clearfix products__item--{{cls.next()}}" {% if loop.index != 1%}{# heyshop-animation="heyshop-animation-fadeInUp" style="opacity: 0;"  #}{% endif %}>
+        <div class="products__item__image">
+          <div class="img" data-bg-src="{{product.image|optimize(1200)}}"></div>
+        </div>
+        <div class="products__item__caption">
+          <div class="caption">
+            <div class="item__title">{{product.title|truncate(50, true)}}</div>
+            <div class="price-wrapper">
+              {% if product.inventory_quantity > 0 %}
+                <span>¥</span><span class="price">{{+product.price}}</span>
+                {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                  <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                {% endif %}
+              {% else %}
+                <div class="price">售罄</div>
+              {% endif %}
+            </div>
+            <div class="item__description medium-down--hidden">{{product.description|truncate(100, true)}}</div>
+            <div class="item__description medium-up--hidden">{{product.description|truncate(140, true)}}</div>
+            <a class="btn btn--wide" href="/products/{{product.name}}">查看详情</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+
+{% macro featured_products_toggle_second(products, settings) %}
+  <div class="{{ settings.container_name or 'container'}} featured-products-toggle-second">
+    <div class="grid-uniform">
+      {% for product in products %}
+          <div class="grid__item products__item medium-up--col-1-{{settings_data.columns or 4}} medium--col-1-2">
+            <a class="image-wrapper products__item__image needsclick" href="/products/{{product.name}}/">
+              <div class="img" data-bg-src="{{product.image|optimize(600)}}"></div>
+              {% if product.images and product.images.length > 1 and product.images[1].src %}
+                  <div class="img js-toggle-second-image-show" data-bg-src="{{product.images[1].src|optimize(600)}}"></div>
+              {% endif %}
+            </a>
+            <div class="products__item__caption">
+              <div class="caption text-center">
+                <div class="item__title">{{product.title|truncate(50, true)}}</div>
+                <div class="price-wrapper">
+                  {% if product.inventory_quantity > 0 %}
+                    <span>¥</span><span class="price">{{+product.price}}</span>
+                    {% if +product.compare_at_price  and +product.compare_at_price > +product.price %}
+                      <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                  {% else %}
+                    <div class="price">售罄</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% component %}
+  {% set productsCopy = settings_data.products %}
+
+  {% asyncset results = products.keys(['id', 'title', 'options', 'images', 'name', 'image', 'price', 'inventory_quantity', 'compare_at_price']).query(productsCopy) %}
+
+  {% if settings_data.__layout__ == "A" %}
+        {% set data_layout = {
+                layout_name: "A",
+                container_name: "container",
+                column_count: 3
+            }
+        %}
+    {% elif settings_data.__layout__ == "B" %}
+        {% set data_layout = {
+                layout_name: "B",
+                container_name: "container",
+                column_count: 2
+            }
+        %}
+    {% elif settings_data.__layout__ == "C" %}
+        {% set data_layout = {
+                layout_name: "C",
+                container_name: "container",
+                column_count: 3
+            }
+        %}
+    {% elif settings_data.__layout__ == "D" %}
+        {% set data_layout = {
+                layout_name: "carousel",
+                container_name: "container",
+                column_count: 1
+            }
+        %}
+    {% elif settings_data.__layout__ == "E" %}
+        {% set data_layout = {
+                layout_name: "multi_images",
+                container_name: "container",
+                column_count: 3
+            }
+        %}
+    {% elif settings_data.__layout__ == "F" %}
+        {% set data_layout = {
+                layout_name: "two_badge",
+                container_name: "container",
+                column_count: 2
+            }
+        %}
+    {% elif settings_data.__layout__ == "G" %}
+        {% set data_layout = {
+                layout_name: "two_badge",
+                container_name: "container",
+                column_count: 4
+            }
+        %}
+    {% elif settings_data.__layout__ == "H" %}
+        {% set data_layout = {
+                layout_name: "alternate",
+                container_name: "container--full",
+                column_count: 1
+            }
+        %}
+    {% else %}
+        {% set data_layout = {
+                layout_name: "toggle_second",
+                container_name: "container--full",
+                column_count: 4
+            }
+        %}
+    {% endif %}
+
+
+  {% if data_layout.layout_name == 'A' or data_layout.layout_name == 'B' %}
+    {{ featured_products_AB(results, data_layout) }}
+  {% elif data_layout.layout_name == 'C' %}
+    {{ featured_products_quickview_addtocart(results, data_layout) }}
+  {% elif data_layout.layout_name == 'carousel' %}
+    {{ featured_products_carousel(results, data_layout) }}
+  {% elif data_layout.layout_name == 'multi_images' %}
+    {{ featured_products_with_multi_images(results, data_layout) }}
+  {% elif data_layout.layout_name == 'two_badge' %}
+    {{ featured_products_two_badges(results, data_layout) }}
+  {% elif data_layout.layout_name == 'alternate' %}
+    {{ featured_products_alternate(results, data_layout) }}
+  {% else %}
+    {{ featured_products_toggle_second(results, data_layout) }}
+  {% endif %}
+  
+  {% script %}
+    $el.on('click', '.js-open-quickview', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      {# var products = {{ products|dump|safe }}; #}
+
+      var product = $(e.target).closest('.products__item').data('item');
+
+      Rush.productQuickview.open(product, {{ results|dump|safe }}); 
+    });
+
+    function addProductToCart(product) {
+      if(product.inventory_quantity && product.variants && product.variants.length) {
+        var variant_valid = _.findWhere(product.variants, function(variant) { return variant.inventory_quantity >= 1 });
+        variant_id = variant_valid.id;
+        HeyShop.cart.add(variant_id, 1, function(err) {
+          if (err) {
+            alert(err.detail || '出错了，商品信息有误或库存不足');
+          } else {
+            alert('商品添加成功！');
+          }
+        });
+      }else {
+        alert('出错了，商品信息有误或库存不足');
+      }
+    }
+
+    $el.on('click', '.js-add-to-cart', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      var product = $(e.target).closest('.products__item').data('item');
+      addProductToCart(product);
+    });
+
+    _.each($el.find('.products__item'), function(product) {
+      if($(product).data('item') && (moment().diff(moment($(product).data('item').published_at), 'days') <= 7)) {
+        $(product).find('.new-sale-badge.hidden').removeClass('hidden');
+      }
+    });
+
+    if($el.find('.js-featured-products--swiper')) {
+      var featured_product_swiper = new Swiper($el.find('.js-featured-products--swiper'),{
+        prevButton: $el.find('.js-featured-products-prev'),
+        nextButton: $el.find('.js-featured-products-next'),
+        effect : 'fade',
+        loop: true,
+        breakpoints: {
+          768: {
+            pagination : $el.find('.swiper-pagination')
+          }
+        }
+      })
+    }
+
+    $el.on('click','.js-add-to-cart__carousel', function() {
+      addProductToCart($el.find('.swiper-slide-active').data('item'));
+    });
+
+    $el.on('click', '.js-change-product-image', function(e) {
+      e.preventDefault() && e.stopPropagation();
+      var $currentProduct = $(e.target).closest('.products__item');
+      var thumbImage = $(e.target).attr('data-imageUrl');
+      $currentProduct.find('.js-will-change-image').css('background-image', 'url(' + thumbImage + ')');
+    });
+
+  {% endscript %}
+{% endcomponent %}

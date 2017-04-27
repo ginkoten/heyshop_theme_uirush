@@ -1,0 +1,17 @@
+{
+    "settings_data": {
+        "components": [{
+            "name": "blocks/header",
+            "settings_data": {
+                "__layout__": "B",
+                "has_opacity": false,
+                "header_image_height": 50
+            }
+        }, {
+            "name": "blocks/article_single",
+            "settings_data": {}
+        }, {
+            "name": "blocks/footer"
+        }]
+    }
+}

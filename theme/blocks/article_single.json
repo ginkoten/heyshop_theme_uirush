@@ -1,0 +1,8 @@
+{
+    "name": "blocks/article_single",
+    "title": "文章详情",
+    "permanent": true,
+    "metafield": {
+        "category": "text-image"
+    }
+}

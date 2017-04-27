@@ -1,0 +1,232 @@
+{% asyncset results = menu.query(global.footmenu) %}
+
+{# layout settings #}
+{% set layout = settings_data.__layout__ or 'A' %}
+{% if layout == 'A' %}
+    {% set displayStyle = "grids" %}
+    {% set columnCount = 7 %}
+    {% set contentSequence = [
+        {"name": "logo",
+        "share": 2,
+        "align": "center"},
+        {"name": "menu",
+        "share": 3},
+        {"name": "address",
+        "share": 2}
+    ] %}
+{% elif layout == 'B' %}
+    {% set displayStyle = "grids" %}
+    {% set columnCount = 8 %}
+    {% set contentSequence = [
+        {"name": "logo",
+        "share": 2},
+        {"name": "address",
+        "share": 2},
+        {"name": "menu",
+        "share": 4}
+    ] %}
+{% elif layout == 'C' %}
+    {% set displayStyle = "grids" %}
+    {% set columnCount = 8 %}
+    {% set contentSequence = [
+        {"name": "menu",
+        "share": 4},
+        {"name": "address",
+        "share": 2},
+        {"name": "logo",
+        "share": 2,
+        "align": "right"}
+    ] %}
+{% elif layout == 'D' %}
+    {% set displayStyle = "table" %}
+    {% set columnCount = 6 %}
+    {% set contentSequence = [
+        {
+            "name": "logo",
+            "share": 2,
+            "align": "center"
+        },
+        {
+            "name": "menu",
+            "share": 2
+        },
+        {
+            "name": "address",
+            "share": 1,
+            "align": "center"
+        },
+        {
+            "name": "social_text",
+            "share": 1,
+            "align": "center"
+        }
+    ] %}
+{% endif %}
+{% set logoType = 'logo' %}
+{% if settings_data.logo_slogan %}
+    {% set logoType = logoType + '_slogan' %}
+{% endif %}
+{% if settings_data.logo_social %}
+    {% set logoType = logoType + '_social' %}
+{% endif %}
+
+
+
+{# content macros #}
+{% macro copyright(name='', align='left', styles={}) %}
+<div class="footer__copyright small-up--text-{{align}} small--text-center">
+  Copyright © 2017. By <span class="footer__shopname">{{shop.title}}</span> All Rights Reserved.
+  <a href="http://www.miitbeian.gov.cn/">{{shop.beian_number|safe}}</a>
+</div>
+{% endmacro %}
+
+{% macro social(name='', align='left', styles={}) %}
+{% set text = "text" in name.split('_') or false %}
+{% if displayStyle and displayStyle == "table" and text %}
+  <div class="footer__title small-up--text-{{column.align}} small--text-center">
+  FOLLOW US
+  </div>
+{% endif %}
+<div class="footer__social{{'--text' if text}} small-up--text-{{align}} small--text-center">
+  {% if shop.weixin_qr %}
+  <a href="javascript:void(0);" class="footer__social--link footer__wechat">
+    <i class="icon-wechat"></i> {{'&nbsp;微信'|safe if text}}
+    <div class="footer__wechat--qrcode img" data-bg-src="{{shop.weixin_qr|optimize(250)}}"></div>
+  </a>
+  {% endif %}
+  {% if shop.weibo_id %}
+  <a href="{{shop.weibo_id}}" class="footer__social--link">
+    <i class="icon-weibo"></i> {{'&nbsp;微博'|safe if text}}
+  </a>
+  {% endif %}
+</div>
+
+{% endmacro %}
+
+{% macro logo(name='', align='left', styles={}) %}
+<div class="footer__logo--area">
+  {% if shop.theme.settings_data.footer_image %}
+  <img class="footer__logo--img img small-up--img-{{align}} small--img-center" src="{{shop.theme.settings_data.footer_image|optimize(500)}}"
+        style="height: {{shop.theme.settings_data.footer_image_height}}px">
+  </img>
+  {% endif %}
+
+  {% if 'slogan' in name.split('_') %}
+    <div class="footer__slogan small-up--text-{{align}} small--text-center">
+      {{shop.slogan}}
+    </div>
+  {% endif %}
+
+  {% if 'social' in name.split('_') %}
+    {{ social('social', align, styles) }}
+  {% endif %}
+
+</div>
+
+{% endmacro %}
+
+{% macro menu(name='', align='left', styles={}, limit=3) %}
+{% if displayStyle == "table" %}
+  <div class="footer__title small-up--text-{{column.align}} small--text-center">
+  OUR SOCIETY
+  </div>
+{% endif %}
+
+  {% set complicated = 'complicated' in name.split('_') or false %}
+
+  {% if (complicated  or (not complicated and align=='left')) %}
+  <div class="footer__menu footer__menu--{{name.split('_')[1]}} footer__menu--multicol grid--full">
+      {% for item in results %}
+          <div class="col-1-{{limit}} grid__item footer__menu--col small--text-center">
+              <a class="footer__menu--link footer__menu--main small--text-center" href="{{item.url}}" >{{item.title}}</a>
+
+              {% if complicated %}
+                {% for subitem in item.links %}
+                  <a class="footer__menu--link footer__menu--sub small--text-center" href="{{subitem.url}}">{{subitem.title}}</a>
+                {% endfor %}
+              {% endif %}
+          </div>
+      {% endfor %}
+  </div>
+
+  {% else %}
+  {# it's simple and aligned in a row #}
+    <div class="footer__menu footer__menu--{{name.split('_')[1]}} footer__menu--singlecol small-up--text-{{align}} small--text-center">
+      <div>
+    {% for item in results %}
+            <a class="footer__menu--link footer__menu--main" href="{{item.url}}" >{{item.title}}</a>
+    {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+{% endmacro %}
+
+{% macro address(name='', align='left', styles={}) %}
+{% if displayStyle == "table" %}
+  <div class="footer__title small-up--text-{{column.align}} small--text-center">
+  CONTACT US
+  </div>
+{% endif %}
+
+{% set withIcon = "icon" in name.split('_') or false %}
+<div class="footer__contact  small-up--text-{{align}} small--text-center">
+  <p class="footer__contact--email">{% if withIcon and shop.customer_email %}
+  <i class="fa fa-envelope"></i>
+    {% endif %}{{shop.customer_email}}</p>
+  <p class="footer__contact--phone">{% if withIcon and shop.customer_phone %}
+  <i class="fa fa-phone"></i>
+    {% endif %}{{shop.customer_phone}}</p>
+  <p class="footer__contact--address">{% if withIcon and shop.address %}
+  <i class="fa fa-map-marker"></i>
+    {% endif %}{{shop.address}}</p>
+</div>
+{% endmacro %}
+
+{% component dataEditable="footer"%}
+    {% if settings_data.colorstyle == 'dark' %}
+    <div class="footer--{{settings_data.colorstyle}} footer--complicated" style="background-color: rgba(0,0,0,{% if settings_data.opacity or settings_data.opacity == 0 %} {{settings_data.opacity}} {% else %} 1 {% endif %});">
+    {% else %}
+    <div class="footer--{{settings_data.colorstyle}} footer--complicated" style="background-color: rgba(255,255,255, {% if settings_data.opacity or settings_data.opacity == 0 %} {{settings_data.opacity}} {% else %} 1 {% endif %});">
+    {% endif %}
+
+    <div class="{{settings_data.container or 'container'}} container--footer">
+     {% if contentSequence and contentSequence.length > 0 %}
+      <div class="grid footer__row {% if displayStyle == "table" %} grid--full footer__row--table {% endif %}">
+        {% for column in contentSequence %}
+          <div class="grid__item small-up--col-{{column.share}}-{{columnCount}} {% if column.name == "logo" %} grid__item--middle {% endif %}">
+          {% if column.name == "logo" %}
+            {{ logo(logoType, column.align or 'left', {}) }}
+
+          {% elif column.name == "menu" %}
+            {% set menuShow = settings_data.menuShow or 'menu_complicated' %}
+            {% set limit = column.share %}
+            {% if column.share > 3 %}
+                {% set limit = 3 %}
+            {% endif %}
+            {{ menu(menuShow , column.align or 'left', {}, limit) }}
+
+          {% elif column.name == "other" or column.name == "address" %}
+            {% if settings_data.address %}
+                {{ address("address_icon", column.align or 'left', {}) }}
+            {% endif %}
+
+          {% elif column.name == "social_text" %}
+            {{ social("social_text", column.align or 'left', {}) }}
+
+          {% endif %}
+          </div>
+        {% endfor %}
+
+      </div>
+      {% endif %}
+
+      <div class="grid footer__row">
+        <div class="grid__item small-up--col-1-1">
+          {{ copyright("copyright", 'center' , {}) }}
+        </div>
+      </div>
+
+    </div>
+</div>
+{% endcomponent %}

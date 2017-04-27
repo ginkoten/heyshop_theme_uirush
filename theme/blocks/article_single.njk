@@ -1,0 +1,27 @@
+{% component dataEditable="article_single" %}
+     <div class="container container--article">
+        <div class="image-wrapper--wide image-wrapper--article">
+            <div class="img" style="background-image: url({{article.image|optimize(1600)}});"></div>
+            <div class="article__date--single">
+              <span class="article__date--month">{{article.published_at|date('MMM', 'en-us')|upper}}</span>
+              <span class="article__date--date">{{article.published_at|date('DD')}}</span>
+              <span class="article__date--year">{{article.published_at|date('YYYY')}}年</span>
+            </div>
+        </div>
+        <h2 class="article__title--single text-center">{{article.title}}</h2>
+
+
+        <article class="article__body--single rte">{{article.body_html|sanitize|safe}}</article>
+        <div class="grid--full">
+        <div class="article__tags--single pull-left">
+          {% for tag in article.tags %}
+          <a class="btn btn--tag" href="/blog?tag={{tag}}">
+            {{tag}}
+          </a>
+          {% endfor %}
+        </div>
+        <div class="article__share--single pull-right">
+          <a class="btn--link pull-right" data-toggle="share" data-target="wechat-mobile"><i class="icon-share"></i> 分享文章</a>
+        </div>
+    </div>
+{% endcomponent %}

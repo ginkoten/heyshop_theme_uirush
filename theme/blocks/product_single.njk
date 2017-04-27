@@ -1,0 +1,488 @@
+{# {% macro product_single_images(products) %}
+
+{% endmacro %} #}
+
+{% set share_dropdown %}
+    <div class="share-wrapper small--hidden">
+        <div class="btn btn--link btn--share-tips" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <i class="icon-share"></i> <span>分享商品</span>
+        </div>
+        <ul class="share__items" aria-labelledby="product-detail-share">
+            <li class="btn btn--link btn-share-item small--hidden" data-toggle="share" data-target="wechat-desktop">
+                <div class="text-left"><i class="icon-wechat"></i> 分享到微信</div>
+            </li>
+            <li class="btn btn--link btn-share-item small-up--hidden" data-toggle="share" data-target="wechat-mobile">
+                <div class="text-left"><i class="icon-wechat"></i> 分享到微信</div>
+            </li>
+            <li class="btn btn--link btn-share-item" data-toggle="share" data-target="weibo">
+                <div class="text-left"><i class="icon-weibo"></i> 分享到微博</div>
+            </li>
+            <li class="btn btn--link btn-share-item" data-toggle="share" data-target="douban">
+                <div class="text-left"><i class="icon-douban"></i> 分享到豆瓣</div>
+            </li>
+            <li class="btn btn--link btn-share-item small-up--hidden" data-toggle="share" data-target="qrcode">
+                <div class="text-left"><i class="icon-huaban"></i> 生成二维码</div>
+            </li>
+        </ul>
+    </div>
+{% endset %}
+
+{% component %}
+    {% if settings_data.__layout__ == 'D' %}
+    <div class="container product-single layout--D">
+        <section class="{{ 'grid' if settings_data.alignment!="right" else 'grid--rev' }}">
+            <div class="grid__item medium-up--col-1-2">
+
+
+                <div class="product-single__images js-swiper swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for image in product.images %}
+                        <div class="swiper-slide image-wrapper">
+                            <div class="img" style="background-image:url('{{image.src|optimize(1200)}}');"></div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    {# <div class="image-wrapper">
+                        <div class="img js-sku-image"></div>
+                    </div> #}
+                    {% if (product.images and product.images.length > 1) %}
+                        <div class="carousel-swiper-button-prev small--hidden">
+                            <i class="icon-angle-left"></i>
+                        </div>
+                        <div class="carousel-swiper-button-next small--hidden">
+                            <i class="icon-angle-right"></i>
+                        </div>
+                    {% endif %}
+                    <div class="small-up--hidden swiper-pagination"></div>
+                </div>
+                <ul class="grid-uniform product-single__thumbnails small--hidden">
+                    {% for image in product.images %}
+                        <li class="grid__item col-1-5">
+                            <a href="javascript:void(0);" class="image-wrapper js-slick-goto" data-slide="{{loop.index-1}}">
+                                <div class="img" style="background-image:url('{{image.src|optimize(320)}}');"></div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                        {# <li class="grid__item col-1-6">
+                            <a href="javascript:void(0);" class="image-wrapper js-slick-goto js-sku-image-thumbnail" data-slide="{{product.images.length}}">
+                                <div class="img"></div>
+                            </a>
+                        </li> #}
+                </ul>
+            </div>
+            <div class="grid__item medium-up--col-1-2">
+                <div class="product-single__variants js-variants" data-toggle="product-variants">
+                    <form action="">
+                        <input type="hidden" name="variant" value="">
+                        <h2>{{product.title}}</h2>
+                        <h3>
+                          <span class="product-single__price">
+                            <span>¥</span>
+                            <span class="js-price text-number">{{product.price}}</span>
+                          </span>
+                          {% if product.compare_at_price %}
+                            <span class="product-single__price--compare">
+                              <span>¥</span>
+                              <span class="js-compare_at_price text-number">{{product.compare_at_price}}</span>
+                            </span>
+                          {% endif %}
+                        </h3>
+                        <p class="js-inventory-wrapper small">
+                          <span>库存</span>
+                          <span class="variants-inventory js-inventory--web">{{product.inventory_quantity}}</span>
+                          <span>件</span>
+                        </p>
+                        <p class="text-justify">{{ product.description|truncate(100, true) }}</p>
+                        {% for option in product.options %}
+
+                        <fieldset class="product-option product-option--full-width">
+                            <div class="product-option__title">「{{option.title}}」</div>
+                            <div class="product-option__value hidden">
+                                <input type="radio" name="{{option.title}}" value=""><span>全部</span>
+                            </div>
+                            {% for value in option.values %}
+                            <div class="product-option__value">
+                                <input type="radio" name="{{option.title}}" value="{{value}}"><span>{{value}}</span>
+                            </div>
+                            {% endfor %}
+                        </fieldset>
+                        {% endfor %}
+                        <div class="grid product-single__buy small--hidden">
+                            <div class="grid__item col-1-2">
+                                <div class="js-input-qty">
+                                    <button class="js-input-qty__adjust js-input-qty__adjust--minus" type="button">-</button>
+                                    <input type="text" name="quantity" value="1" autocomplete="off">
+                                    <button class="js-input-qty__adjust js-input-qty__adjust--plus" type="button">+</button>
+                                </div>
+                            </div>
+                            <div class="grid__item col-1-2">
+                                <button class="btn btn--full js-add-to-cart" type="button">加入购物车</button>
+                            </div>
+                            <div class="small--hidden share__layout-D">
+                                {{ share_dropdown |safe }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="rte">{{ product.body_html|sanitize|safe }}</div>
+        </section>
+    </div>
+    {% script %}
+        {# Carousel #}
+        var $carousel = $el.find('.js-swiper');
+        var product_single_carousel = new Swiper($carousel, {
+            prevButton:'.carousel-swiper-button-prev',
+            nextButton:'.carousel-swiper-button-next',
+            pagination: $carousel.find('.swiper-pagination')
+
+        });
+        $el.on('click', '.js-slick-goto', function() {
+            {# $carousel.slick('slickGoTo', +$(this).attr('data-slide')); #}
+            product_single_carousel.slideTo(+$(this).attr('data-slide'));
+        });
+
+        {# variants #}
+        var $variants = $el.find('.js-variants');
+        $variants.on('click', '.product-option__value', function() {
+          var $thisInput = $(this).find('input');
+          if ($thisInput.prop('disabled')) {
+            return;
+          }
+          var title = $thisInput.attr('name');
+          var value = $thisInput.val() || '';
+          if (value == $variants.find('[name="' + title + '"]:checked').val()) {
+            $variants.find('[name="' + title + '"]').val(['']);
+            $variants.find('[name="' + title + '"][value=""]').trigger('change');
+          } else {
+            $variants.find('[name="' + title + '"]').val([value]);
+            $thisInput.trigger('change');
+          }
+        });
+        $variants.on('hs.change.variant', function(e, variant) {
+          if (variant) {
+            $el.find('.js-price').text(variant.price);
+            $el.find('.js-compare_at_price').text(variant.compare_at_price);
+            $el.find('.js-inventory--web').text(variant.inventory_quantity||0);
+            if (!variant.compare_at_price) {
+              $el.find('.js-compare_at_price').parent().addClass('hidden');
+            } else {
+              $el.find('.js-compare_at_price').parent().removeClass('hidden');
+            }
+
+            if(variant.inventory_quantity > 0) {
+              $el.find('.js-add-to-cart').prop('disabled', false);
+            }else {
+              $el.find('.js-add-to-cart').prop('disabled', true);
+            }
+            $el.find('.js-add-to-cart').prop('disabled', false);
+          } else {
+            $el.find('.js-price').text('-');
+            $el.find('.js-compare_at_price').parent().addClass('hidden');
+            $el.find('.js-inventory--web').text('0');
+            $el.find('.js-add-to-cart').prop('disabled', true);
+          }
+        });
+        $variants.variants();
+
+        {# Cart #}
+        $el.on('click', '.js-add-to-cart', function() {
+            var variant_id = +$el.find('[name=variant]').val() || null;
+            var quantity = +$el.find('[name=quantity]').val() || 1;
+            if (variant_id) {
+                HeyShop.cart.add(variant_id, quantity, function(err) {
+                    if (err) {
+                        HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+                    } else {
+                        HeyShop.toast.popupToast('成功加入购物车!', 1500);
+                    }
+                });
+            }
+        });
+    {% endscript %}
+
+
+    {% else %}
+    <div class="container product-single">
+      <section class="{{ 'grid' if settings_data.alignment != 'right' else 'grid--rev' }}">
+        <div class="grid__item {{'medium-up--col-3-5' if settings_data.description else 'medium-up--col-5-7'}}">
+          <div class="product-single__images blocks medium-down--hidden">
+            {% for image in product.images %}
+              <img style="margin-bottom: 20px; width: 100%;" src="{{image.src|optimize(1200)}}" alt="">
+            {% endfor %}
+          </div>
+          <div class="product-single__images swiper-container js-carousel medium-up--hidden">
+            <div class="swiper-wrapper">
+              {% for image in product.images %}
+                <div class="swiper-slide">
+                  <div class="image-wrapper">
+                    <div class="img" style="background-image:url('{{image.src|optimize(1200)}}');"></div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="swiper-pagination" style="bottom: -5px;"></div>
+          </div>
+        </div>
+        <div class="grid__item {{'medium-up--col-2-5' if settings_data.description else 'medium-up--col-2-7'}}" style="position: relative;">
+          <div class="product-single__variants js-variants">
+            <input type="hidden" name="variant" value="">
+            <h1 class="product-single__title" style="margin-top: 0;">{{product.title}}</h1>
+            <h4>
+                <span class="product-single__price">
+                    <span>¥</span><span class="js-price">{{product.price}}</span>
+                </span>
+                {% if product.compare_at_price %}
+                <small class="product-single__price--compare">
+                    <span>¥</span><span class="js-compare_at_price">{{product.compare_at_price}}</span>
+                </small>
+                {% endif %}
+            </h4>
+            {% if settings_data.description %}
+              <div class="product-single__description text-justify small--hidden">{{product.description|truncate(140, true)}}</div>
+            {% endif %}
+
+            {% for option in product.options %}
+            <fieldset class="product-option small--hidden">
+                <div class="product-option__title">{{option.title}}</div>
+                <div class="product-option__dropdown text-center js-toggle" data-title="{{option.title}}">
+                    <span>&nbsp;</span>
+                    <ul>
+                        <li class="js-value" data-title="{{option.title}}" data-value="">
+                            <input type="radio" name="{{option.title}}" value=""><span>选择{{option.title}}</span>
+                        </li>
+                        {% for value in option.values %}
+                        <li class="js-value" data-title="{{option.title}}" data-value="{{value}}">
+                            <input type="radio" name="{{option.title}}" value="{{value}}"><span>{{value}}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </fieldset>
+            {% endfor %}
+            <div class="text-center small--hidden" style="width: 180px;">
+                <div class="js-input-qty" style="margin: 2em auto;">
+                    <button class="js-input-qty__adjust js-input-qty__adjust--minus" type="button"><span class="icon-minus"></span></button>
+                    <input type="text" name="quantity" value="1" autocomplete="off">
+                    <button class="js-input-qty__adjust js-input-qty__adjust--plus" type="button"><span class="icon-add"></span></button>
+                </div>
+                <p class="js-inventory-wrapper small">
+                    <span>库存</span>
+                    <span class="variants-inventory js-inventory">{{product.inventory_quantity}}</span>
+                    <span>件</span>
+                </p>
+                <button class="btn btn--full btn--large js-add-to-cart">加入购物车</button>
+            </div>
+            {{ share_dropdown |safe }}
+
+          </div>
+          <div class="product-single__content">
+            {% if settings_data.collapsed %}
+              <h4>详情描述</h4>
+              <div class="rte">{{ product.body_html|sanitize|safe }}</div>
+            {% else %}
+              <div class="js-dropdown-content opened">
+                <div class="dropdown__title">
+                  <span>详情描述</span>
+                  <div class="js-toggle-dropdown">
+                    <i class="js-dropdown-closed icon-add"></i>
+                    <i class="js-dropdown-opened icon-minus"></i>
+                  </div>
+                </div>
+                <div class="dropdown__content">
+                  <div class="rte">{{ product.body_html|sanitize|safe }}</div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+
+          {# mobile mask #}
+          <div class="product-single__mask--mobile small-up--hidden">
+          </div>
+        </div>
+      </section>
+    </div>
+    {% script %}
+      {# Carousel #}
+      var swiper = new Swiper($el.find('.js-carousel'), {
+        direction: 'horizontal',
+        slidesPerView: 1,
+        pagination: $el.find('.swiper-pagination'),
+        paginationClickable :true
+      });
+
+
+      {# variants #}
+      var $variants = $el.find('.js-variants');
+      $variants.on('click', '.product-option__value', function() {
+        var $thisInput = $(this).find('input');
+        if ($thisInput.prop('disabled')) {
+          return;
+        }
+        var title = $thisInput.attr('name');
+        var value = $thisInput.val() || '';
+        if (value == $variants.find('[name="' + title + '"]:checked').val()) {
+          $variants.find('[name="' + title + '"]').val(['']);
+          $variants.find('[name="' + title + '"][value=""]').trigger('change');
+        } else {
+          $variants.find('[name="' + title + '"]').val([value]);
+          $thisInput.trigger('change');
+        }
+      });
+
+      $el.on('click', '.js-toggle', function() {
+          $(this).toggleClass('open');
+          $el.find('.js-toggle').not(this).removeClass('open');
+      });
+      $el.on('click', '.js-value', function() {
+          var $thisInput = $(this).find('input');
+          if ($thisInput.prop('disabled')) {
+              return;
+          }
+          var title = $(this).attr('data-title');
+          var value = $(this).attr('data-value');
+          $(this).parent().siblings('span').text($(this).text());
+          $el.find('input[name="' + title + '"]').val([value]);
+          $thisInput.trigger('change');
+      });
+
+      $variants.on('hs.change.variant', function(e, variant) {
+        if (variant) {
+            variant.options.forEach(function(option){
+                $el.find('.js-toggle[data-title="' + option.title + '"]>span').text(option.value);
+            });
+            $el.find('.js-price').text(variant.price);
+            $el.find('.js-compare_at_price').text(variant.compare_at_price)
+               .parent().toggleClass('hidden', !variant.compare_at_price);
+            $el.find('.js-inventory').text(variant.inventory_quantity || 0);
+            $el.find('.js-add-to-cart').prop('disabled', !(variant.inventory_quantity > 0));
+        } else {
+            {# $el.find('.js-price').text('-'); #}
+            {# $el.find('.js-compare_at_price').parent().addClass('hidden'); #}
+            {# $el.find('.js-inventory').text('0'); #}
+            $el.find('.js-add-to-cart').prop('disabled', true);
+        }
+      });
+      $variants.variants();
+
+
+      {# add to cart in mobile mode #}
+        $el.on('click', '.js-add-to-cart--mobile', function() {
+            $('body').toggleClass('lock-scroll')
+            $('#global-mask').removeClass('hidden');
+            $el.find('.js-ensure-add-and-checkout').addClass('hidden');
+            $el.find('.js-ensure-add-to-cart.hidden').removeClass('hidden');
+            $(this).closest('.product-single__buy--mobile').addClass('popuped');
+            $(document).on("touchmove", function(e) {
+                e.preventDefault();
+            });
+        });
+
+        $el.on('click', '.js-add-and-checkout--mobile', function() {
+            $('body').toggleClass('lock-scroll');
+            $('#global-mask').removeClass('hidden');
+            $el.find('.js-ensure-add-to-cart').addClass('hidden');
+            $el.find('.js-ensure-add-and-checkout.hidden').removeClass('hidden');
+            $(this).closest('.product-single__buy--mobile').addClass('popuped');
+            $(document).on("touchmove", function(e) {
+                e.preventDefault();
+            });
+        });
+
+        $el.on('touchstart', '.product-single__mask--mobile', function() {
+            $('body').toggleClass('lock-scroll')
+            $el.find('.product-single__buy--mobile.popuped').removeClass('popuped');
+            $(document).off("touchmove");
+            $el.find('.share-component__mobile.opened').removeClass('opened');
+            $('#global-mask').addClass('hidden');
+        });
+
+        $el.on('click', '.btn--share__mobile', function() {
+            $('body').toggleClass('lock-scroll')
+            $('#global-mask').removeClass('hidden');
+            $el.find('.share-component__mobile').toggleClass('opened');
+        })
+
+        $('body').on('click', '[data-toggle=dismiss]', function() {
+            $('body').toggleClass('lock-scroll')
+            $el.find('.product-single__buy--mobile.popuped').removeClass('popuped');
+            $(document).off("touchmove");
+            $el.find('.share-component__mobile.opened').removeClass('opened');
+            $('#global-mask').addClass('hidden');
+        });
+
+        var $variantsMobile = $el.find('.js-variants-mobile');
+        $variantsMobile.on('hs.change.variant', function(e, variant) {
+            if (variant) {
+                $el.find('.js-price--mobile').text(variant.price);
+                $el.find('.js-inventory').text(variant.inventory_quantity||0);
+                if(variant.inventory_quantity > 0) {
+                    $el.find('.js-ensure-add-to-cart').prop('disabled', false).attr('disabled', false);
+                    $el.find('.js-ensure-add-and-checkout').prop('disabled', false).attr('disabled', false);
+                }else {
+                    $el.find('.js-ensure-add-to-cart').prop('disabled', false).attr('disabled', true);
+                    $el.find('.js-ensure-add-and-checkout').prop('disabled', false).attr('disabled', true);
+                }
+            } else {
+                $el.find('.js-inventory').text('0');
+                $el.find('.js-price--mobile').text('-');
+                $el.find('.js-ensure-add-to-cart').prop('disabled', true).attr('disabled', true);
+                $el.find('.js-ensure-add-and-checkout').prop('disabled', true).attr('disabled', true);
+            }
+        });
+        $variantsMobile.variants();
+
+        $el.on('click', '.js-ensure-add-to-cart', function() {
+            var variant_id = +$el.find('.variants--mobile-popup [name=variant]').val() || null;
+            var quantity = +$el.find('.variants--mobile-popup [name=quantity]').val() || 1;
+            if (variant_id) {
+                HeyShop.cart.add(variant_id, quantity, function(err) {
+                    if (err) {
+                        HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+                    } else {
+                        HeyShop.toast.popupToast('成功加入购物车！', 1500);
+                        $('body').toggleClass('lock-scroll')
+                        $el.find('.product-single__buy--mobile.popuped').removeClass('popuped');
+                        $(document).off("touchmove");
+                        $el.find('.share-component__mobile.opened').removeClass('opened');
+                        $('#global-mask').addClass('hidden');
+                    }
+                });
+            }
+        });
+
+        $el.on('click', '.js-ensure-add-and-checkout', function() {
+            var variant_id = +$el.find('.variants--mobile-popup [name=variant]').val() || null;
+            var quantity = +$el.find('.variants--mobile-popup [name=quantity]').val() || 1;
+            if (variant_id) {
+                HeyShop.cart.add(variant_id, quantity, function(err) {
+                    if (err) {
+                        HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+                    } else {
+                        HeyShop.toast.popupToast('成功加入购物车！', 1500);
+                    }
+                });
+            }
+        });
+
+      {# Cart #}
+      $el.on('click', '.js-add-to-cart', function() {
+          var variant_id = +$el.find('[name=variant]').val() || null;
+          var quantity = +$el.find('[name=quantity]').val() || 1;
+          if (variant_id) {
+              HeyShop.cart.add(variant_id, quantity, function(err) {
+                  if (err) {
+                      HeyShop.toast.popupToast(err.detail || '出错了，商品信息有误或库存不足', 1500);
+                  } else {
+                      HeyShop.toast.popupToast('成功加入购物车！', 1500);
+                  }
+              });
+          }
+      });
+    {% endscript %}
+    {% endif %}
+{% endcomponent %}

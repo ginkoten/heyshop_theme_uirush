@@ -1,0 +1,92 @@
+
+
+{% component dataEditable="featured_articles" %}
+
+{% asyncset results = articles.query(settings_data.articles) %}
+{% if settings_data.__layout__ and settings_data.__layout__ == 'B' %}
+<div class="featured_articles featured_articles--B">
+    <div class="container container--articles--B">
+
+      {% for article in results|batch(3) %}
+      <div class="grid--full">
+        {% for i in range(3) %}
+        {% if article[i] %}
+        <div class="grid__item small-up--col-1-3">
+          <div class="articles__card">
+            <div class="image-wrapper--wide">
+              <a href="/blog/{{article[i].name}}">
+              <div class="img" data-bg-src="{{article[i].image|optimize(600)}}">
+
+              </div>
+              </a>
+            </div>
+            <div class="articles__title text-ellipsis"><a href="/blog/{{article[i].name}}">{{article[i].title}}</a></div>
+            <div class="articles__description">{{article[i].description|truncate(100,true)}}</div>
+
+            <div class="articles__date">
+              <i class="icon-date-o"></i><span> {{article[i].published_at|date('YYYY-MM-DD')}}</span>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+  </div>
+</div>
+
+{% else %}
+
+<div class="featured_articles" >
+  <div class="swiper-container--farticles">
+    <div class="swiper-wrapper">
+    {% for article in results %}
+
+      <div class="swiper-slide grid--full">
+        <div class="image-wrapper--wide grid__item small-up--col-1-2">
+          <a href="/blog/{{article.name}}">
+          <div class="img swiper-lazy" data-background="{{article.image|optimize(600)}}">
+
+          </div>
+          </a>
+          <div class="article__date--single">
+            <span class="article__date--month">{{article.published_at|date('MMM', 'en-us')|upper}}</span>
+            <span class="article__date--date">{{article.published_at|date('DD')}}</span>
+            <span class="article__date--year">{{article.published_at|date('YYYY')}}年</span>
+          </div>
+
+        </div>
+        <div class="grid__item small-up--col-1-2 farticle__texts">
+            <h3><a href="/blog/{{article.name}}">{{article.title}}</a></h3>
+            <span class="articles__date">{{article.published_at|date('YYYY-MM-DD')}}</span>
+            <p>{{article.description|truncate(100, true)}}</p>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <div class="swiper-button-prev small--hidden">
+      <i class="icon-arrow-left1"></i>
+    </div>
+    <div class="swiper-button-next">
+      <i class="icon-arrow-right1"></i>
+    </div>
+  </div>
+</div>
+{% script %}
+var startSwiper = function(){
+  var mySwiper = new Swiper('.swiper-container--farticles', {
+    speed: 400,
+    paginationClickable: true,
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    loop: true,
+    lazyLoading: true
+});
+};
+startSwiper();
+
+{% endscript %}
+
+{% endif %}
+{% endcomponent %}

@@ -1,0 +1,29 @@
+{
+    "name": "blocks/text_simple",
+    "title": "简易文本",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s1314apaun11bdcsbou006-text.jpg",
+    "settings_schema": [
+        {
+            "type": "Text",
+            "id":"section_title",
+            "title": "板块标题"
+        },
+        {
+            "type": "Text",
+            "id":"section_subtitle",
+            "title": "小标题"
+        },
+        {
+            "type": "Number",
+            "id":"block_height",
+            "title": "板块高度(像素)"
+        }
+    ],
+    "settings_data": {
+        "section_title": "板块标题",
+        "section_subtitle": "小标题"
+    },
+    "metafield": {
+        "category": "text"
+    }
+}

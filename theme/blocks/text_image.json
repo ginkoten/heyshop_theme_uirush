@@ -1,0 +1,104 @@
+{
+    "name": "blocks/text_image",
+    "icon": "http://up.img.heidiancdn.com/o_1b3fi4s0vufmqs9j26rme1bfu05-text-image.jpg",
+    "title": "简易图文",
+    "settings_schema": [
+        {
+            "type": "Layout",
+            "presets": [{
+                "__layout__": "A",
+                "imgSize": "fullscreen",
+                "textPosition": "up"
+            }, {
+                "__layout__": "B",
+                "imgSize": "fullscreen",
+                "textPosition": "down"
+            }, {
+                "__layout__": "C",
+                "imgSize": "halfscreen",
+                "textPosition": "left"
+            }, {
+                "__layout__": "D",
+                "imgSize": "halfscreen",
+                "textPosition": "right"
+            }, {
+                "__layout__": "E",
+                "imgSize": "smallpart",
+                "textPosition": "left"
+            }, {
+                "__layout__": "F",
+                "imgSize": "smallpart",
+                "textPosition": "right"
+            }, {
+                "__layout__": "G",
+                "imgSize": "smallpart",
+                "textPosition": "down"
+            }, {
+                "__layout__": "H",
+                "imgSize": "smallpart",
+                "textPosition": "up"
+            }]
+        },
+        {
+            "type": "Image",
+            "id":"image",
+            "title": "图片"
+        },
+        {
+            "type": "Number",
+            "id":"imageHeight",
+            "title": "区域高度(像素)"
+        },
+        {
+            "type": "Text",
+            "id":"title",
+            "title": "标题"
+        },
+        {
+            "type": "Text",
+            "id":"text",
+            "title": "文字"
+        },
+        {
+            "type": "Selection",
+            "id":"colorSelection",
+            "title": "颜色使用",
+            "options": [
+                { "text": "使用全局配色", "value": "theme" },
+                { "text": "自定义配色", "value": "customize" }
+            ]
+        },
+        {
+            "type": "Color",
+            "id":"titleColor",
+            "title": "标题颜色"
+        },
+        {
+            "type": "Color",
+            "id":"textColor",
+            "title": "文字颜色"
+        },
+        {
+            "type": "Color",
+            "id":"bgColor",
+            "title": "背景色"
+        },
+        {
+            "title": "文字动画",
+            "id":"textAnimation",
+            "type": "Animation"
+        }
+    ],
+    "settings_data": {
+        "text": "花非花，雾非雾，夜半来，天明去。来如春梦不多时，去似朝云无觅处。来如春梦不多时，去似朝云无觅处。来如春梦不多时，去似朝云无觅处。来如春梦不多时，去似朝云无觅处。来如春梦不多时，去似朝云无觅处。",
+        "imageHeight": "500",
+        "imgSize": "fullscreen",
+        "textPosition": "up",
+        "title": "嘿店，一种更好的电商方式",
+        "__layout__": "A",
+        "image": "http://up.img.heidiancdn.com/o_1b2n0bm0g13p31v5gi6h1u819sv0wallhaven-80922.jpg"
+    },
+    "metafield": {
+        "category": "text-image"
+    }
+}

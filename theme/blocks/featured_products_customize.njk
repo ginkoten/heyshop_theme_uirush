@@ -1,0 +1,51 @@
+{% macro customize_grid_image_link_item(image, text, link, hover_style) %}
+    <a href="{{ link or 'javascript:void(0);'}}" class="customize-grid-image-link needsclick" data-bg-src="{{image}}">
+        <div class="customize-grid-image-link__caption {{ hover_style }}">
+            <div class="customize-grid-image-link__caption-text">{{ text }}</div>
+        </div>
+    </a>
+{% endmacro %}
+
+{% macro customize_featured_products_item(product) %}
+    <a href="/products/{{product.name}}/" class="customize_featured_products_item needsclick">
+        <div class="image-wrapper">
+            <div class="img item__image img-bg-color" data-bg-src="{{product.image|optimize(1200)}}"></div>
+        </div>
+        <div class="caption">
+            <div class="item__title">{{product.title|truncate(50, true)}}</div>
+            <div class="price-wrapper">
+                {% if product.inventory_quantity > 0 %}
+                    <span class="price">¥{{+product.price}}</span>
+                    {% if +product.compare_at_price and +product.compare_at_price > +product.price %}
+                        <small class="compare_at_price">¥{{+product.compare_at_price}}</small>
+                    {% endif %}
+                {% else %}
+                    <div class="price">售罄</div>
+                {% endif %}
+            </div>
+        </div>
+    </a>
+{% endmacro %}
+
+{% component dataEditable="featured_products_customize" %}
+    {% asyncset results = products.query(settings_data.products) %}
+    <div class="container container--featured_products_customize">
+        <div class="grid-uniform {{'grid--rev' if not settings_data.cover_left}}">
+            <div class="grid__item medium-up--col-1-2 medium-down--col-1-1 customize_featured_products_item-image-wrapper">
+            {{ customize_grid_image_link_item(settings_data.cover, settings_data.block_title, settings_data.block_link, settings_data.effect) }}
+            </div>
+            <div class="grid__item medium-up--col-1-2 medium-down--col-1-1">
+                <div class="grid-uniform">
+                    {% for item in results %}
+                        {% if loop.index <= 4 %}
+                            <div class="grid__item small-up--col-1-2 small--col-1-1">{{ customize_featured_products_item(item) }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% script %}
+
+    {% endscript %}
+{% endcomponent %}

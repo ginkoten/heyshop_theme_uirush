@@ -1,0 +1,307 @@
+{# -------------------------- Logo in affix navbar -------------------------- #}
+
+{% macro affixLogo(header_image, image_height, title, logo_className) %}
+    <div class="navbar__header {{logo_className}}">
+        {% if header_image %}
+            <a href="/" style="display: block;" class="logo__image">
+                <img src="{{header_image|optimize(320)}}" style="height: {{ image_height or 32 }}px;"/>
+            </a>
+        {% else %}
+            <a href="/" class="logo__title">{{title}}</a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# ------------------------------ Main Navbar ------------------------------ #}
+
+{% macro affixNavbar(menuitems, header_image, title, settings, nav_has_dot, navbar_className) %}
+    <ul class="site-nav {{ navbar_className }} {{ 'invisible' if settings.collapsed }}">
+        {% for item in menuitems %}
+            {% if item.links and item.links.length %}
+                <li class="site-nav--has-dropdown text-center small--hidden">
+                    <a class="site-nav__link level-1" href="{{item.url}}"
+                       style="color: {{ settings_data.header_colored_text if shop.theme.settings_data.header_color == 'colored' }}">{{item.title}}</a>
+                    <ul class="site-nav__dropdown">
+                        {% for subitem in item.links %}
+                            <li><a class="site-nav__link" href="{{subitem.url}}">{{subitem.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="small--hidden">
+                    <a class="site-nav__link level-1 {{ 'has-underline' if shop.theme.settings_data.header_color == 'light' }}" href="{{item.url}}"
+                       style="color: {{ settings_data.header_colored_text if shop.theme.settings_data.header_color == 'colored' }}">
+                       <span class="{{'site-nav__link--underline' if shop.theme.settings_data.header_color == 'light'}}">{{item.title}}</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if nav_has_dot and not loop.last %}
+                <li class="small--hidden" style="color: {{ settings_data.header_colored_text if shop.theme.settings_data.header_color == 'colored' }}">&middot;</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{# ------------------------------ Cart and User ------------------------------ #}
+
+{% macro cartWrapper(settings, className) %}
+    <div class="cart-wrapper clearfix {{className}}">
+        <button class="shopping-cart-wrapper js-open-ajaxCart bracket" style="font-weight: 500;letter-spacing: 1px;color: {{ settings_data.header_colored_text if shop.theme.settings_data.header_color == 'colored' }}">
+            <i class="icon-shopping-cart"></i> <small class="cart-count-wrapper">(<span class="js-cart-count">0</span>)</small>
+        </button>
+        {% if logo_left %}
+            {{ barsWrapper(settings.collapsed, 'medium-up--hidden') }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{# ------------------------------ Cart and User ------------------------------ #}
+
+{% macro barsWrapper(collapsed, position, bars_className) %}
+    {% if collapsed %}
+        <button class="js-open-drawer nav__btn pull-{{ position }}">
+            <i class="icon-menu"></i>
+        </button>
+    {% else %}
+        <button class="js-open-drawer nav__btn pull-{{ position }} {{ bars_className }}">
+            <i class="icon-menu"></i>
+        </button>
+    {% endif %}
+{% endmacro %}
+
+{# ------------------------------ Component ------------------------------ #}
+
+{% component %}
+    {% asyncset results = menu.query(global.menu) %}
+    {% set header_image = settings_data.header_image or shop.theme.settings_data.header_image %}
+    {% set header_navbar_height = null %}
+    {% if settings_data.__layout__ == "A" %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: true,
+                nav_position: "right",
+                collapsed: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "B" %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: true,
+                nav_position: "center",
+                collapsed: true
+            }
+        %}
+    {% elif settings_data.__layout__ == "C" %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: false,
+                nav_position: "left",
+                collapsed: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "D" %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: true,
+                nav_position: "center",
+                collapsed: false
+            }
+        %}
+    {% elif settings_data.__layout__ == "E" %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: false,
+                nav_position: "left",
+                collapsed: true
+            }
+        %}
+    {% elif settings_data.__layout__ == "F" %}
+        {% set data_layout = {
+                two_rows: true,
+                logo_left: true,
+                nav_position: "center",
+                collapsed: false
+            }
+        %}
+    {% else %}
+        {% set data_layout = {
+                two_rows: false,
+                logo_left: true,
+                nav_position: "center",
+                collapsed: false
+            }
+        %}
+    {% endif %}
+
+    {% if settings_data.header_image_height and (settings_data.header_image_height > 32) %}
+        {% set header_navbar_height = +settings_data.header_image_height + 11 * 2 %}
+    {% else %}
+        {% set header_navbar_height = 32 + 11 * 2 %}
+    {% endif %}
+    <div class="site-header {{shop.theme.settings_data.header_color or 'light'}} {{ 'opacity-true' if settings_data.has_opacity }} small--hidden"
+         style="{{'border-bottom: 4px solid;' if settings_data.has_border and shop.theme.settings_data.header_color == 'light'}}">
+        <div class="{{'text-center' if not data_layout.logo_left else 'text-left'}}" style="position: relative;">
+            {% if data_layout.two_rows %}
+                <div class="container--full">
+                    <div class="site-header__logo js-affix-invisible medium-down--hidden">
+                        {% if header_image %}
+                            <a href="/">
+                                <img src="{{ header_image|optimize(1200) }}"
+                                    style="height:{{ settings_data.header_image_height or 32 }}px; min-height: 32px;">
+                            </a>
+                        {% else %}
+                            <a href="/" style="font-size: 4em;">{{shop.title}}</a>
+                        {% endif %}
+                    </div>
+                    <div class="js-affix row--nav-cart" style="{{'height: 54px' if data_layout.two_rows}}">
+                        <nav class="navbar clearfix">
+                            {{affixNavbar(results, header_image, shop.title, data_layout, settings_data.nav_has_dot, 'absolute-center medium-down--hidden')}}
+                            {{affixLogo(header_image, 32, title, 'js-affix-show medium-up--hidden pull-left logo__has-padding')}}
+                            {{barsWrapper(data_layout.collapsed, 'right', 'medium-up--hidden')}}
+                            {{cartWrapper(data_layout, 'pull-right')}}
+                        </nav>
+                    </div>
+                </div>
+            {% else %}
+                <div class="container--full">
+                    <div class="js-affix row--nav-cart" style="height: {{ header_navbar_height }}px">
+                        <nav class="navbar clearfix">
+
+                            {% if data_layout.nav_position == 'right' %}
+                                {% if data_layout.logo_left %}
+                                    {# LOGO(左) + navbar(右) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'pull-left')}}
+                                    {{barsWrapper(data_layout.collapsed, 'right', 'medium-up--hidden')}}
+                                {% else %}
+                                    {# LOGO(中) + navbar(右) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'absolute-center')}}
+                                    {{barsWrapper(data_layout.collapsed, 'left', 'large-up--hidden')}}
+                                {% endif %}
+                                {{cartWrapper(data_layout, 'pull-right')}}
+                                {{affixNavbar(results, header_image, shop.title, data_layout, settings_data.nav_has_dot, 'pull-right medium-down--hidden')}}
+
+                            {% elif data_layout.nav_position == 'left' %}
+                                {% if data_layout.logo_left %}
+                                    {# LOGO(左) + navbar(左) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'pull-left')}}
+                                    {{barsWrapper(data_layout.collapsed, 'right', 'medium-up--hidden')}}
+                                    {{affixNavbar(results, header_image, shop.title, data_layout, settings_data.nav_has_dot, 'pull-left medium-down--hidden')}}
+                                {% else %}
+                                    {# LOGO(左) + navbar(左) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'absolute-center')}}
+                                    {{barsWrapper(data_layout.collapsed, 'left', 'large-up--hidden')}}
+                                    {{affixNavbar(results, header_image, shop.title, data_layout, settings_data.nav_has_dot, 'pull-left large--hidden medium-down--hidden')}}
+                                {% endif %}
+                                {{cartWrapper(data_layout, 'pull-right')}}
+
+                            {% else %}
+                                {{affixNavbar(results, header_image, shop.title, data_layout, settings_data.nav_has_dot, 'absolute-center medium-down--hidden')}}
+
+                                {% if data_layout.logo_left %}
+                                    {# LOGO(左) + navbar(中) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'pull-left')}}
+                                    {{barsWrapper(data_layout.collapsed, 'right', 'medium-up--hidden')}}
+                                {% else %}
+                                    {# LOGO(中) + navbar(中) + cart(右) #}
+                                    {{affixLogo(header_image, settings_data.header_image_height, title, 'absolute-center')}}
+                                    {{barsWrapper(data_layout.collapsed, 'left', 'large-up--hidden')}}
+                                {% endif %}
+
+                                {{cartWrapper(data_layout, 'pull-right')}}
+                            {% endif %}
+
+                        </nav>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% script %}
+        var $header = $el;
+
+        {# --------------------- toggle fixed navigation -------------------- #}
+
+        var toggleAffix = _.throttle(function() {
+            var $affix = $header.find('.js-affix');
+            var gap = $affix.offset().top;
+            var scrollTop = $(window).scrollTop();
+
+            if (scrollTop >= gap) {
+                $affix.find('.navbar').addClass('navbar--fixed color--{{shop.theme.settings_data.header_color or 'light'}}');
+                $el.find('.js-affix-hide').addClass('hidden');
+                $el.find('.js-affix-invisible').addClass('invisible');
+            } else {
+                $affix.find('.navbar').removeClass('navbar--fixed color--{{shop.theme.settings_data.header_color or 'light'}}');
+                $el.find('.js-affix-hide.hidden').removeClass('hidden');
+                $el.find('.js-affix-invisible').removeClass('invisible');
+
+            }
+        }, 50);
+        toggleAffix();
+        $(window).scroll(toggleAffix);
+
+        {# ----------------------------  Drawer ------------------------------#}
+
+        $header.on('click', '.js-open-drawer', function() {
+            Rush.drawerLeft.open();
+        });
+        $header.on('click', '.js-close-drawer', function() {
+            $('body').removeClass('js-drawer-open js-drawer-open-left');
+        });
+
+        $el.on('click', '.js-close-drawer', function() {
+            Rush.drawerLeft.close();
+        });
+
+        $el.on('click', '.js-open-ajaxCart', function(e) {
+            if ($('body').width() > 480) {
+                e.preventDefault && e.preventDefault();
+                Rush.ajaxCart.open($(this));
+            }else {
+                window.location.href = '/cart';
+            }
+        });
+
+        {# ------------------------  Get Cart Count --------------------------#}
+
+        function getCartCount() {
+            if(HeyShop.cart.count() && HeyShop.cart.count() > 10) {
+                $header.find('.js-cart-count').text('10+');
+            }else {
+                $header.find('.js-cart-count').text(HeyShop.cart.count() || '0');
+            }
+        };
+
+        HeyShop.cart.on('change', function() {
+          getCartCount();
+        });
+
+        {# --------------------------  Init Page  ----------------------------#}
+
+        function initActiveNav() {
+          var pathname = location.pathname;
+          _.each($header.find('.site-nav__link.level-1.has-underline'), function(nav) {
+            if($(nav).data('href') == pathname) {
+              $(nav).find('.site-nav__link--underline').addClass('active');
+            }
+          })
+          getCartCount();
+        }
+
+        initActiveNav();
+
+        $('.js-goto-chinese-site').on('click', function(e) {
+            e.preventDefault() && e.stopPropagation();
+            location.hostname = 'offline.com'
+        });
+        $('.js-goto-english-site').on('click', function(e) {
+            e.preventDefault() && e.stopPropagation();
+            location.hostname = 'en.offline.com'
+        });
+
+    {% endscript %}
+    {% set header_navbar_height = null %}
+    {% set data_layout = null %}
+    {% set header_image = null %}
+{% endcomponent %}
